@@ -6,50 +6,87 @@ import java.awt.BorderLayout;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class InscripcionAtletaView extends JFrame {
+	private JPanel panel;
+	private JLabel lblIndiqueEmail;
+	private JTextField txtIndiqueEmail;
+	private JLabel lblIndiqueCompeticion;
+	private JTextField txtIndiqueCompeticion;
+	private JButton btnAceptar;
+	private JButton btnCancelar;
 	public InscripcionAtletaView() {
-		setResizable(false);
-		
-		JPanel panel = new JPanel();
-		getContentPane().add(panel, BorderLayout.CENTER);
-		panel.setLayout(null);
-		
-		JLabel lblIntroduceEmail = new JLabel("Introduzca su email: ");
-		lblIntroduceEmail.setFont(new Font("Calibri", Font.PLAIN, 15));
-		lblIntroduceEmail.setBounds(33, 71, 147, 37);
-		panel.add(lblIntroduceEmail);
-		
-		txtIntroduceEmail = new JTextField();
-		txtIntroduceEmail.setBounds(184, 71, 216, 37);
-		panel.add(txtIntroduceEmail);
-		txtIntroduceEmail.setColumns(10);
-		
-		JLabel lblCarrera = new JLabel("Introduzca el codigo de la carrera:");
-		lblCarrera.setFont(new Font("Calibri", Font.PLAIN, 15));
-		lblCarrera.setBounds(33, 157, 216, 44);
-		panel.add(lblCarrera);
-		
-		textField = new JTextField();
-		textField.setBounds(259, 157, 141, 44);
-		panel.add(textField);
-		textField.setColumns(10);
-		
-		JButton btnAceptar = new JButton("Aceptar");
-		btnAceptar.setBounds(315, 241, 85, 21);
-		panel.add(btnAceptar);
-		
-		JButton btnCancelar = new JButton("Cancelar");
-		btnCancelar.setBounds(220, 241, 85, 21);
-		panel.add(btnCancelar);
+		getContentPane().add(getPanel(), BorderLayout.CENTER);
 	}
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	private JTextField txtIntroduceEmail;
-	private JTextField textField;
+	private JPanel getPanel() {
+		if (panel == null) {
+			panel = new JPanel();
+			panel.setLayout(null);
+			panel.add(getLblIndiqueEmail());
+			panel.add(getTxtIndiqueEmail());
+			panel.add(getLblIndiqueCompeticion());
+			panel.add(getTxtIndiqueCompeticion());
+			panel.add(getBtnAceptar());
+			panel.add(getBtnCancelar());
+		}
+		return panel;
+	}
+	private JLabel getLblIndiqueEmail() {
+		if (lblIndiqueEmail == null) {
+			lblIndiqueEmail = new JLabel("Introduzca su email:");
+			lblIndiqueEmail.setFont(new Font("Calibri", Font.PLAIN, 17));
+			lblIndiqueEmail.setBounds(25, 66, 147, 43);
+		}
+		return lblIndiqueEmail;
+	}
+	private JTextField getTxtIndiqueEmail() {
+		if (txtIndiqueEmail == null) {
+			txtIndiqueEmail = new JTextField();
+			txtIndiqueEmail.setBounds(182, 66, 198, 43);
+			txtIndiqueEmail.setColumns(10);
+		}
+		return txtIndiqueEmail;
+	}
+	private JLabel getLblIndiqueCompeticion() {
+		if (lblIndiqueCompeticion == null) {
+			lblIndiqueCompeticion = new JLabel("Introduzca competicion:");
+			lblIndiqueCompeticion.setFont(new Font("Calibri", Font.PLAIN, 17));
+			lblIndiqueCompeticion.setBounds(25, 141, 177, 43);
+		}
+		return lblIndiqueCompeticion;
+	}
+	private JTextField getTxtIndiqueCompeticion() {
+		if (txtIndiqueCompeticion == null) {
+			txtIndiqueCompeticion = new JTextField();
+			txtIndiqueCompeticion.setColumns(10);
+			txtIndiqueCompeticion.setBounds(214, 141, 166, 43);
+		}
+		return txtIndiqueCompeticion;
+	}
+	private JButton getBtnAceptar() {
+		if (btnAceptar == null) {
+			btnAceptar = new JButton("Aceptar");
+			btnAceptar.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					//CheckAllGood();
+				}
+			});
+			btnAceptar.setBounds(295, 262, 85, 21);
+		}
+		return btnAceptar;
+	}
+	private JButton getBtnCancelar() {
+		if (btnCancelar == null) {
+			btnCancelar = new JButton("Cancelar");
+			btnCancelar.setBounds(200, 262, 85, 21);
+		}
+		return btnCancelar;
+	}
+	
+	
+
 }

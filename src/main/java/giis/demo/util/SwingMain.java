@@ -2,6 +2,9 @@ package giis.demo.util;
 
 import java.awt.EventQueue;
 import javax.swing.JFrame;
+
+import Atleta.InscripcionAtletaView;
+
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -17,6 +20,8 @@ import giis.demo.tkrun.*;
  */
 public class SwingMain {
 
+	
+	private InscripcionAtletaView iav;
 	private JFrame frame;
 
 	/**
@@ -46,6 +51,7 @@ public class SwingMain {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		iav = new InscripcionAtletaView();
 		frame = new JFrame();
 		frame.setTitle("Main");
 		frame.setBounds(0, 0, 287, 185);
@@ -80,6 +86,14 @@ public class SwingMain {
 			}
 		});
 		frame.getContentPane().add(btnCargarDatosIniciales);
+		
+		JButton btnInscribirse = new JButton("Inscripcion para atletas");
+		btnInscribirse.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				iav.setVisible(true);
+			}
+		});
+		frame.getContentPane().add(btnInscribirse);
 	}
 
 	public JFrame getFrame() { return this.frame; }

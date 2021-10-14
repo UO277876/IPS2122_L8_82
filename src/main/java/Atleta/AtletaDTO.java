@@ -1,5 +1,7 @@
 package Atleta;
 
+import java.util.Date;
+
 public class AtletaDTO {
 	
 
@@ -9,15 +11,15 @@ public class AtletaDTO {
 	private String name;
 	private String surname;
 	private genero gender;
-	private int age;
+	private Date fechaNacimiento;
 	
 	
-	public AtletaDTO(String name, String surname, String email, genero gender, int age) {
+	public AtletaDTO(String name, String surname, String email, genero gender, Date fechaNacimiento) {
 		setName(name);
 		setSurname(surname);
 		setEmail(email);
 		setGender(gender);
-		setAge(age);
+		setFechaNacimiento(fechaNacimiento);
 	}
 	
 	
@@ -48,12 +50,12 @@ public class AtletaDTO {
 	}
 	
 	
-	public void setAge(int age) {
-		this.age = age;
+	public void setFechaNacimiento(Date fechaNacimiento) {
+		this.fechaNacimiento = fechaNacimiento;
 	}
 	
-	public int getAge() {
-		return this.age;
+	public Date getFechaNacimiento() {
+		return this.fechaNacimiento;
 	}
 	
 	
