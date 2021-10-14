@@ -4,18 +4,18 @@
 --Para giis.demo.tkrun:
 
 
-drop table Atleta;
+drop table if exists Atleta;
 
 create table Atleta (
   email varchar(32) primary key not null,
   
   nombre varchar(32) NOT NULL,
   apellidos varchar(32) NOT NULL,
-  genero enum('masculino','femenino') not null,
-  fechaNacimiento date not null
+  genero ENUM('masculino','femenino') NOT NULL,
+  fechaNacimiento date NOT NULL
 );
 
-drop table Competicion;
+drop table if exists Competicion;
 
 create table Competicion(
 	id int primary key not null,
@@ -32,12 +32,12 @@ create table Competicion(
 	check(fin<fecha)  
 );
 
-drop table Inscripcion;
+drop table if exists Inscripcion;
 
 create table Inscripcion(
 	inicio date not null, 
 	fin date not null,
-	categoriaSexo enum ('masculino','femenino') not null,
+	categoriaSexo enum('masculino','femenino') not null,
 	dorsal varchar(32) not null,
 	tiempo int not null,
 	metodoPago enum ('metalico', 'tarjeta') not null,
