@@ -8,16 +8,15 @@ drop table Atleta;
 
 create table Atleta (
   email varchar(32) primary key not null,
-  
   nombre varchar(32) NOT NULL,
   apellidos varchar(32) NOT NULL,
   genero enum('masculino','femenino') not null,
   fechaNacimiento date not null
 );
 
-drop table Competicion;
+drop table carreras;
 
-create table Competicion(
+create table carreras(
 	id int primary key not null,
 	inicio date not null, 
 	fin date not null,
