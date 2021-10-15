@@ -4,43 +4,43 @@
 --Para giis.demo.tkrun:
 
 
-drop table Atleta;
+drop table if exists Atleta;
 
 create table Atleta (
   email varchar(32) primary key not null,
+  genero varchar(1) NOT NULL,
   nombre varchar(32) NOT NULL,
   apellidos varchar(32) NOT NULL,
-  genero enum('masculino','femenino') not null,
-  fechaNacimiento date not null
+  fechaNacimiento date NOT NULL
 );
 
-drop table carreras;
+drop table if exists Competicion;
 
-create table carreras(
+create table Competicion(
 	id int primary key not null,
 	inicio date not null, 
 	fin date not null,
+	tipo varchar(32) not null,
 	numPlazas int not null,
 	fecha date not null,
 	nombre varchar(32) not null, 
 	descr varchar(32), 
-	tipo enum('montaña','asfalto') not null,
 	distancia int not null,
 	check(numPlazas>=0),	
 	check(inicio<=fin), 
 	check(fin<fecha)  
 );
 
-drop table Inscripcion;
+drop table if exists Inscripcion;
 
 create table Inscripcion(
 	inicio date not null, 
 	fin date not null,
-	categoriaSexo enum ('masculino','femenino') not null,
 	dorsal varchar(32) not null,
 	tiempo int not null,
-	metodoPago enum ('metalico', 'tarjeta') not null,
 	email_atleta varchar(32) not null,
+	categoriaSexo varchar(1) not null,
+	metodoPago varchar(32) not null,
 	id_competicion int not null,
 	foreign key (email_atleta) references Atleta (email),
 	foreign key (id_competicion) references Competicion (id),
