@@ -14,12 +14,12 @@ public class CompeticionModel {
 	public String listado_competiciones = "SELECT * FROM Competicion c WHERE i.competicion_id = ? ";
 	
 	/**
-	 * Obtiene todas las inscripciones de un 
+	 * Obtiene la competición de un solo id
 	 */
-	public List<Object[]> getListadoCompeticiones(int id) {
+	public List<CompeticionDTO> getListadoCompeticiones(int id) {
 		validateNotNull(id,MSG_ID_NO_NULO);
 		
-		return db.executeQueryArray(listado_competiciones, id);
+		return db.executeQueryPojo(CompeticionDTO, listado_competiciones, id);
 	}
 	
 	/* De uso general para validacion de objetos */

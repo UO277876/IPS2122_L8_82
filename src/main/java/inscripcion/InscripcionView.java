@@ -108,11 +108,16 @@ public class InscripcionView extends JFrame {
 			// 2. Listo inscripciones por emails
 			String email = txEmail.getText();	
 			// 2.1 Compruebo que el email existe
-			List<String> listado = ic.listarPorIds(email);
+			List<String> listadoIns = ic.listarPorIds(email);
 			
-			// 3. Listo competiciones por ids de inscripciones
+			if(listadoIns.size() <= 0) {
+				getTxaListado().setText("No se han encontrado inscripciones con el email introducido.");
+			} else {
+				// 3. Listo competiciones por ids de inscripciones
+				
 
-			// 4. Imprimo por pantalla
+				// 4. Imprimo por pantalla
+			}
 
 		}
 	}

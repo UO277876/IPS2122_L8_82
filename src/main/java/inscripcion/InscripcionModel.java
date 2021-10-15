@@ -20,7 +20,7 @@ public class InscripcionModel {
 	public List<InscripcionDTO> getListadoInscripciones(String email) {
 		validateNotNull(email,MSG_EMAIL_NO_NULO);
 		
-		return db.executeQueryArray(listado_inscripciones, email);
+		return db.executeQueryPojo(InscripcionDTO, listado_inscripciones, email);
 	}
 	
 	/* De uso general para validacion de objetos */
