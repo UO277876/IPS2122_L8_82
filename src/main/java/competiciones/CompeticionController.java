@@ -1,8 +1,7 @@
-package giis.demo.competiciones;
+package competiciones;
 
 public class CompeticionController {
 	
 	private CompeticionModel model;
-	private CompeticionView view;
 
 }

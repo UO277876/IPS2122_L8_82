@@ -1,4 +1,4 @@
-package giis.demo.competiciones;
+package competiciones;
 
 import java.util.Date;
 

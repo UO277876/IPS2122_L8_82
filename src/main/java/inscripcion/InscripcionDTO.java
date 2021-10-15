@@ -1,4 +1,4 @@
-package giis.demo.inscripcion;
+package inscripcion;
 
 import java.util.Date;
 

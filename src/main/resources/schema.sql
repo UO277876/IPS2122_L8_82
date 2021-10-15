@@ -38,6 +38,7 @@ create table Inscripcion(
 	fin date not null,
 	dorsal varchar(32) not null,
 	tiempo int not null,
+	precio int not null;
 	email_atleta varchar(32) not null,
 	categoriaSexo varchar(1) not null,
 	metodoPago varchar(32) not null,
