@@ -44,20 +44,13 @@ public class CarrerasView {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.setTitle("Carreras");
-		frame.setName("Carreras");
-		frame.setBounds(0, 0, 492, 422);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(new MigLayout("", "[grow]", "[][][grow][][][][][][][][]"));
+		frame =  this.getFrame();
 		
-		final JLabel lblSimulacion;
 		final JLabel lblFechaHoy;
 		final JLabel lblLstCarreras;
 
-		lblSimulacion = new JLabel("Simulación de la fecha de hoy para mostrar las carreras");
-		frame.getContentPane().add(lblSimulacion, "cell 0 1");
-		
+		frame.getContentPane().add(this.getLblSimulacion(), "cell 0 1");
+		frame.getContentPane().add(this.getBtnTablaCarreras(), "cell 0 3");
 		lblFechaHoy = new JLabel("Fecha de hoy (formato ISO):");
 		frame.getContentPane().add(lblFechaHoy, "flowx,cell 0 3");
 		
@@ -66,9 +59,9 @@ public class CarrerasView {
 		frame.getContentPane().add(txtFechaHoy, "cell 0 3,growx");
 		txtFechaHoy.setColumns(10);
 		
-		btnTabCarreras = new JButton("Ver carreras en esta tabla");
+		
 		lblFechaHoy.setLabelFor(btnTabCarreras);
-		frame.getContentPane().add(btnTabCarreras, "cell 0 3");
+		
 		
 		JLabel lblLbltable = new JLabel("Proximas carreras:");
 		frame.getContentPane().add(lblLbltable, "cell 0 4");
@@ -110,10 +103,31 @@ public class CarrerasView {
 	}
 
 	//Getters y Setters anyadidos para acceso desde el controlador (repersentacion compacta)
-	public JFrame getFrame() { return this.frame; }
+	public JFrame getFrame() { 
+		frame = new JFrame();
+		frame.setTitle("Carreras");
+		frame.setName("Carreras");
+		frame.setBounds(0, 0, 492, 422);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(new MigLayout("", "[grow]", "[][][grow][][][][][][][][]"));
+		return frame; 
+		
+	}
+	
+	public JLabel getLblSimulacion() {
+		final JLabel lblSimulacion;
+		lblSimulacion = new JLabel("Simulación de la fecha de hoy para mostrar las carreras");
+		return lblSimulacion;
+	}
+	
 	public String getFechaHoy()  { return this.txtFechaHoy.getText(); }
 	public void setFechaHoy(String fechaIso)  { this.txtFechaHoy.setText(fechaIso); }
-	public JButton getBtnTablaCarreras() { return this.btnTabCarreras; }
+	
+	public JButton getBtnTablaCarreras() { 
+		btnTabCarreras = new JButton("Ver carreras en esta tabla");
+		return btnTabCarreras; 
+	}
+	
 	public JTable getTablaCarreras() { return this.tabCarreras; }
 	public JComboBox<Object> getListaCarreras() { return this.lstCarreras; }
 	public void setDescuento(String descuento) { this.descuento.setText(descuento+"%"); }
