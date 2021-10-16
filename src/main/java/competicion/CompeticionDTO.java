@@ -10,7 +10,7 @@ public class CompeticionDTO {
 	private String descr;
 	private String nombre;
 	private int cuota;
-	private Tipo tipo;
+	private String tipo;
 
 	public int getId() {
 		return this.id;
@@ -76,11 +76,11 @@ public class CompeticionDTO {
 		this.numPlazas = numPlazas;
 	}
 
-	public Tipo getTipo() {
+	public String getTipo() {
 		return tipo;
 	}
 
-	public void setTipo(Tipo tipo) {
+	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
 
@@ -90,13 +90,5 @@ public class CompeticionDTO {
 
 	public void setCuota(int cuota) {
 		this.cuota = cuota;
-	}
-
-	public enum Tipo {
-		ASFALTO, MONTAÑA
-	}
-
-	public enum Sexo {
-		MASCULINO, FEMENINO
 	}
 }

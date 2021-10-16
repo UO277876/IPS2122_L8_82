@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.EventQueue;
 
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -13,6 +14,10 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.Window;
+import javax.swing.JButton;
+import java.awt.Color;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class CompeticionView extends JFrame {
 
@@ -24,8 +29,10 @@ public class CompeticionView extends JFrame {
 	private JScrollPane spCompeticiones;
 	private JTable tabCompeticiones;
 	private JLabel lblDisponibles;
-
+	private JButton btnTablaCarreras;
+	
 	private String fechaHoy;
+	
 
 	/**
 	 * Launch the application.
@@ -50,25 +57,27 @@ public class CompeticionView extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 656, 475);
 		contentPane = new JPanel();
+		contentPane.setForeground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
 		contentPane.add(getScrollPane_1(), BorderLayout.CENTER);
 		contentPane.add(getLblDisponibles(), BorderLayout.NORTH);
+		contentPane.add(getBtnTablaCarrerasForContentPane(), BorderLayout.SOUTH);
 	}
 
 	private JScrollPane getScrollPane_1() {
 		if (spCompeticiones == null) {
-			spCompeticiones = new JScrollPane();
-			spCompeticiones.setViewportView(getTabCompeticiones());
+			spCompeticiones = new JScrollPane(getTabCompeticionesForContentPane());
+//			spCompeticiones.setViewportView(getTabCompeticionesForContentPane());
 		}
 		return spCompeticiones;
 	}
 
-	private JTable getTabCompeticiones() {
+	private JTable getTabCompeticionesForContentPane() {
 		if (tabCompeticiones == null) {
 			tabCompeticiones = new JTable();
-			tabCompeticiones.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+			tabCompeticiones.setRowSelectionAllowed(false);
 			tabCompeticiones.setDefaultEditor(Object.class, null);
 		}
 		return tabCompeticiones;
@@ -82,6 +91,19 @@ public class CompeticionView extends JFrame {
 		return lblDisponibles;
 	}
 
+	private JButton getBtnTablaCarrerasForContentPane() {
+		if (btnTablaCarreras == null) {
+			btnTablaCarreras = new JButton("APUNTARME");
+			btnTablaCarreras.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+				}
+			});
+			btnTablaCarreras.setBackground(new Color(34, 139, 34));
+			btnTablaCarreras.setForeground(new Color(0, 0, 0));
+		}
+		return btnTablaCarreras;
+	}
+
 	public JTable getTablaCompeticiones() {
 		return tabCompeticiones;
 	}
@@ -92,6 +114,14 @@ public class CompeticionView extends JFrame {
 
 	public String getFechaHoy() {
 		return this.fechaHoy;
+	}
+
+	public JTable getTabCompeticiones() {
+		return this.tabCompeticiones;
+	}
+
+	public JButton getBtnTablaCarreras() {
+		return this.btnTablaCarreras;
 	}
 
 }
