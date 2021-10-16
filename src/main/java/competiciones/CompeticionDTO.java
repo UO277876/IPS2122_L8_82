@@ -6,8 +6,8 @@ public class CompeticionDTO {
 	
 	int id;
 	String tipo;
-	Date inicio;
-	Date fin;
+	String inicio;
+	String fin;
 	int numPlazas;
 	String nombre;
 	String descripcion;
@@ -15,7 +15,7 @@ public class CompeticionDTO {
 	
 	public CompeticionDTO(){};
 	
-	public CompeticionDTO(int id, String tipo, Date inicio, Date fin, int numPlazas, String nombre, String descripcion
+	public CompeticionDTO(int id, String tipo, String inicio, String fin, int numPlazas, String nombre, String descripcion
 			, int distancia){
 		this.id = id;
 		this.inicio = inicio;
@@ -26,54 +26,22 @@ public class CompeticionDTO {
 		this.distancia = distancia;
 	};
 	
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
-	public String getTipo() {
-		return tipo;
-	}
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
-	}
-	public Date getInicion() {
-		return inicio;
-	}
-	public void setInicio(Date inicio) {
-		this.inicio = inicio;
-	}
-	public Date getFin() {
-		return fin;
-	}
-	public void setFin(Date fin) {
-		this.fin = fin;
-	}
-	public int getNumPlazas() {
-		return numPlazas;
-	}
-	public void setNumPlazas(int numPlazas) {
-		this.numPlazas = numPlazas;
-	}
-	public String getNombre() {
-		return nombre;
-	}
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-	public String getDescripcion() {
-		return descripcion;
-	}
-	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion;
-	}
-	public int getDistancia() {
-		return distancia;
-	}
-	public void setDistancia(int distancia) {
-		this.distancia = distancia;
-	}
+	public int getId() { return id; }
+	public void setId(int id) { this.id = id; }
+	public String getTipo() { return tipo; }
+	public void setTipo(String tipo) { this.tipo = tipo; }
+	public String getInicion() { return inicio; }
+	public void setInicio(String inicio) { this.inicio = inicio; }
+	public String getFin() { return fin; }
+	public void setFin(String fin) { this.fin = fin; }
+	public int getNumPlazas() { return numPlazas; }
+	public void setNumPlazas(int numPlazas) { this.numPlazas = numPlazas; }
+	public String getNombre() { return nombre; }
+	public void setNombre(String nombre) { this.nombre = nombre; }
+	public String getDescripcion() { return descripcion; }
+	public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
+	public int getDistancia() { return distancia; }
+	public void setDistancia(int distancia) { this.distancia = distancia; }
 	
 	
 	

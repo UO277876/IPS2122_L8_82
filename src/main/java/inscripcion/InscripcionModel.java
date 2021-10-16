@@ -11,7 +11,7 @@ public class InscripcionModel {
 	private static final String MSG_EMAIL_NO_NULO = "El email no puede ser nulo";
 	
 	private Database db=new Database();
-	private String listado_inscripciones = "SELECT *  FROM Inscripcion WHERE i.atleta_email = ? ORDER BY ";
+	private String listado_inscripciones = "SELECT * FROM Inscripcion WHERE email_atleta = ? ";
 	
 	/**
 	 * Obtiene todas las inscripciones de un atleta
@@ -19,16 +19,13 @@ public class InscripcionModel {
 	public List<InscripcionDTO> getListadoInscripciones(String email) {
 		validateNotNull(email,MSG_EMAIL_NO_NULO);
 		
-		return db.executeQueryPojo(InscripcionDTO, listado_inscripciones, email);
+		List<InscripcionDTO> result = db.executeQueryPojo(InscripcionDTO.class, listado_inscripciones, email);
+		return result;
 	}
 	
 	/* De uso general para validacion de objetos */
 	private void validateNotNull(Object obj, String message) {
 		if (obj==null)
-			throw new ApplicationException(message);
-	}
-	private void validateCondition(boolean condition, String message) {
-		if (!condition)
 			throw new ApplicationException(message);
 	}
 

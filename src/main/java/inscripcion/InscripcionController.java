@@ -66,7 +66,7 @@ public class InscripcionController {
 	 * 
 	 * @return la competición
 	 */
-	protected CompeticionDTO obtenerCompeticion(int id) {
+	public CompeticionDTO obtenerCompeticion(int id) {
 		return cm.obtenerCompeticion(id);
 	}
 	
@@ -81,7 +81,7 @@ public class InscripcionController {
 	public String imprimirListado(List<String> listadoIns) {
 		String listado = "";
 		for(int i=0; i < listadoIns.size(); i++) {
-			listado = "> " + listadoIns.get(i) + "\n";
+			listado += "> " + listadoIns.get(i) + "\n";
 		}
 		return listado;
 	}
@@ -93,6 +93,10 @@ public class InscripcionController {
 	 */
 	private void setIdto(String email) {
 		this.idto = im.getListadoInscripciones(email);
+		
+		for(InscripcionDTO ic : this.idto ) {
+			ic.actualizaEstado();
+		}
 	}
 	
 	/**

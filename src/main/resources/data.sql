@@ -5,4 +5,20 @@ insert into Atleta(email,nombre,apellidos,genero,fechaNacimiento) values
 	('juangg73@hotmail.es','Juan','Gomez Garcia','masculino','1973-05-23'),
 	('albertoce11@hotmail.es','Alberto','Castillo Egea','masculino','1988-02-18'),
 	('frangg80@hotmail.es','Fran','Gomez Garcia','masculino','1980-08-12'),
-	('laurarl@hotmail.es','Laura','Romano Lopez','femenino','1997-01-20'),
+	('laurarl@hotmail.es','Laura','Romano Lopez','femenino','1997-01-20');
+	
+delete from Inscripcion;
+insert into Inscripcion(dorsal,tiempo,precio,email_atleta,categoriaSexo, metodoPago, id_competicion) values 
+	('A','---',3,'mariafdz92@hotmail.es','femenino','tarjeta',3244),
+	('12','---',3,'mariafdz92@hotmail.es','femenino','tarjeta',56564),
+	('15','---',13,'juangg73@hotmail.es','masculino','transferencia',56564),
+	('10','50',2,'albertoce11@hotmail.es','femenino','tarjeta',3244),
+	('11','1',6,'frangg80@hotmail.es','masculino','transferencia',5332),
+	('B','---',5,'laurarl@hotmail.es','femenino','tarjeta',5332);	
+	
+delete from Competicion;
+insert into Competicion(id,inicio,fin,tipo,numPlazas, fecha, nombre, descr, distancia) values 
+	(3244,'2021-05-04','2021-05-12','asfalto',50, '2021-06-12','Asfalto por Oviedo', 'Carrera que recorre toda la ciudad de Oviedo',25),
+	(56564,'2021-07-10','2021-08-01','montaña',60, '2021-10-15','Somiedo', 'Carrera que recorre parte de la fauna de Somiedo',40),
+	(5332,'2021-01-21','2021-02-28','montaña',30, '2021-03-17','Lagunas', 'Recorrido por las lagunas',15);	
+	

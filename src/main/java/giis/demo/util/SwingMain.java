@@ -10,6 +10,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import giis.demo.tkrun.*;
+import inscripcion.InscripcionView;
 
 /**
  * Punto de entrada principal que incluye botones para la ejecucion de las pantallas 
@@ -20,8 +21,8 @@ import giis.demo.tkrun.*;
  */
 public class SwingMain {
 
-	
 	private InscripcionAtletaView iav;
+	private InscripcionView iiv;
 	private JFrame frame;
 
 	/**
@@ -52,6 +53,8 @@ public class SwingMain {
 	 */
 	private void initialize() {
 		iav = new InscripcionAtletaView();
+		iiv = new InscripcionView();
+		
 		frame = new JFrame();
 		frame.setTitle("Main");
 		frame.setBounds(0, 0, 287, 185);
@@ -94,6 +97,14 @@ public class SwingMain {
 			}
 		});
 		frame.getContentPane().add(btnInscribirse);
+		
+		JButton btnListadoIns = new JButton("Listado de inscripciones");
+		btnListadoIns.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				iiv.setVisible(true);
+			}
+		});
+		frame.getContentPane().add(btnListadoIns);
 	}
 
 	public JFrame getFrame() { return this.frame; }

@@ -11,7 +11,7 @@ public class CompeticionModel {
 	private static final String MSG_ID_NO_NULO = "El id no puede ser nulo";
 	
 	private Database db=new Database();
-	public String listado_competiciones = "SELECT * FROM Competicion c WHERE i.competicion_id = ? ";
+	public String listado_competiciones = "SELECT * FROM Competicion c WHERE id = ? ";
 	
 	/**
 	 * Obtiene la competición de un solo id
@@ -19,16 +19,13 @@ public class CompeticionModel {
 	public List<CompeticionDTO> getListadoCompeticiones(int id) {
 		validateNotNull(id,MSG_ID_NO_NULO);
 		
-		return db.executeQueryPojo(CompeticionDTO, listado_competiciones, id);
+		List<CompeticionDTO> result = db.executeQueryPojo(CompeticionDTO.class, listado_competiciones, id);
+		return result;
 	}
 	
 	/* De uso general para validacion de objetos */
 	private void validateNotNull(Object obj, String message) {
 		if (obj==null)
-			throw new ApplicationException(message);
-	}
-	private void validateCondition(boolean condition, String message) {
-		if (!condition)
 			throw new ApplicationException(message);
 	}
 

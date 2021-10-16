@@ -21,16 +21,16 @@ public class InscripcionView extends JFrame {
 	private JLabel lbEmail;
 	private JButton btnEmail;
 	private JTextField txEmail;
+	private TextArea txaListado;
 
 	// Otros atributos
 	private InscripcionController ic;
 	private JScrollPane scrpListado;
-	private TextArea txaListado;
 
 	public InscripcionView() {
+		setResizable(false);
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setTitle("Listado de inscripciones");
-		setResizable(false);
 		getContentPane().setBackground(Color.WHITE);
 		getContentPane().setForeground(Color.WHITE);
 		getContentPane().setLayout(null);
@@ -38,6 +38,7 @@ public class InscripcionView extends JFrame {
 		getContentPane().add(getBtnEmail());
 		getContentPane().add(getTxEmail());
 		getContentPane().add(getScrollPane_1());
+		setBounds(100, 100, 700, 400);
 
 		// Inicializacion de la clase InscripcionController
 		this.ic = new InscripcionController();
