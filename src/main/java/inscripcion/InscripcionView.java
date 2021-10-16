@@ -8,6 +8,7 @@ import javax.swing.JButton;
 import javax.swing.JTextField;
 import java.awt.Font;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
 import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
@@ -57,7 +58,12 @@ public class InscripcionView extends JFrame {
 			btnEmail = new JButton("Aceptar");
 			btnEmail.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					listarPorEmail();
+					try {
+						listarPorEmail();
+					} catch (ParseException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 				}
 			});
 			btnEmail.setBackground(new Color(0, 204, 0));
@@ -99,8 +105,9 @@ public class InscripcionView extends JFrame {
 	// ----------------------------- Métodos independientes de la interfaz ---------------------------------------
 	/**
 	 * Añade pedidos y calcula su precio total
+	 * @throws ParseException 
 	 */
-	private void listarPorEmail() {
+	private void listarPorEmail() throws ParseException {
 		// 1.Verificar que la casilla email no esta vacía
 		if (isVacio()) {
 			JOptionPane.showMessageDialog(null, "Error: Campo email en blanco");
@@ -113,10 +120,8 @@ public class InscripcionView extends JFrame {
 			if(listadoIns.size() <= 0) {
 				getTxaListado().setText("No se han encontrado inscripciones con el email introducido.");
 			} else {
-				// 3. Listo competiciones por ids de inscripciones
-				
-
-				// 4. Imprimo por pantalla
+				// 3. Obtengo la cadena 
+				getTxaListado().setText(ic.imprimirListado(listadoIns));
 			}
 
 		}

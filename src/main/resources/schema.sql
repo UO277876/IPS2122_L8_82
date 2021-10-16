@@ -40,6 +40,7 @@ create table Inscripcion(
 	email_atleta varchar(32) not null,
 	categoriaSexo varchar(1) not null,
 	metodoPago varchar(32) not null,
+	estado varchar(32) not null,
 	id_competicion int not null,
 	foreign key (email_atleta) references Atleta (email),
 	foreign key (id_competicion) references Competicion (id),

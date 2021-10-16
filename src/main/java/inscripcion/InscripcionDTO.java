@@ -1,6 +1,14 @@
 package inscripcion;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class InscripcionDTO {
+	
+	private final String ESTADO1 = "solicitado";
+	private final String ESTADO2 = "inscrito";
+	private final String ESTADO3 = "participado";
 	
 	String dorsal;
 	int tiempo;
@@ -9,6 +17,8 @@ public class InscripcionDTO {
 	String categoriaSexo;
 	String metodoPago;
 	int id_competicion;
+	String estado;
+	Date ultFechaModif;
 	
 	public InscripcionDTO() {
 		
@@ -23,6 +33,8 @@ public class InscripcionDTO {
 		this.email_atleta = email_atleta;
 		this.metodoPago = metodoPago;
 		this.id_competicion = id_competicion;
+		
+		setEstado(ESTADO1);
 	}
 
 	public String getDorsal() {
@@ -79,6 +91,25 @@ public class InscripcionDTO {
 
 	protected void setId_competicion(int id_competicion) {
 		this.id_competicion = id_competicion;
+	}
+	
+	public String getIEstado() {
+		return estado;
+	}
+
+	protected void setEstado(String estado) {
+		if(estado.equals(ESTADO1) || estado.equals(ESTADO2) || estado.equals(ESTADO3) ) {
+			this.estado = estado;
+			this.ultFechaModif = new Date();
+		} 
+	}
+	
+	public Date getUltFechaModif() throws ParseException {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		
+		String result = "";
+		this.ultFechaModif = dateFormat.parse(result);
+		return ultFechaModif;
 	}
 	
 	

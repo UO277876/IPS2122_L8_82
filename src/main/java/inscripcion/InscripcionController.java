@@ -1,5 +1,6 @@
 package inscripcion;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,31 +36,54 @@ public class InscripcionController {
 	}
 	
 	/**
+	 * Devuelve una lista de cadenas de texto con la información:
+	 * Nombre competicion + estado actual inscripcion + fecha ult. cambio de estado
 	 * 
-	 * 
-	 * @param email
-	 * @return
+	 * @param email, el email de la persona a buscar las inscripciones
+	 * @return una lista de cadenas de texto con toda la información
+	 * @throws ParseException 
 	 */
-	public List<String> listarPorIds(String email) {
-		List<String> result = new ArrayList<String>();
+	public List<String> listarPorIds(String email) throws ParseException {
+		setIdto(email);
+		CompeticionDTO lm = new CompeticionDTO();
 		
+		List<String> result = new ArrayList<String>();
+		String linea = "";
+		
+		for(InscripcionDTO ic : this.idto) {
+			lm = obtenerCompeticion(ic.id_competicion);
+			linea = lm.getNombre() + " - " + ic.getIEstado() + " - " + ic.getUltFechaModif();
+			
+			result.add(linea);
+		}
 		
 		return result;
 	}
 	
 	/**
-	 * Devuelve una lista de competiciones según las inscripciones de un atleta
+	 * Devuelve la competicion de id pasado como parámetro. Para ello,
+	 * llama al CompeticionController
 	 * 
-	 * @return la lista de competiciones
+	 * @return la competición
 	 */
-	public List<CompeticionDTO> obtenerCompeticiones() {
-		List<CompeticionDTO> competiciones = new ArrayList<CompeticionDTO>();
-		
-		for(int i=0; i < idto.size(); i++) {
-			competiciones.add(cm.obtenerCompeticion(idto.get(i).getId_competicion()));
+	protected CompeticionDTO obtenerCompeticion(int id) {
+		return cm.obtenerCompeticion(id);
+	}
+	
+	/**
+	 * Imprime el listado en el formato 
+	 * Nombre competicion + estado actual inscripcion + fecha ult. cambio de estado
+	 * De un solo String
+	 * 
+	 * @param listadoIns, la lista de String a concatenar
+	 * @return un string con todo el listado
+	 */
+	public String imprimirListado(List<String> listadoIns) {
+		String listado = "";
+		for(int i=0; i < listadoIns.size(); i++) {
+			listado = "> " + listadoIns.get(i) + "\n";
 		}
-		
-		return competiciones;
+		return listado;
 	}
 	
 	/**
@@ -67,7 +91,7 @@ public class InscripcionController {
 	 * 
 	 * @param email, el email a analizar
 	 */
-	public void setIdto(String email) {
+	private void setIdto(String email) {
 		this.idto = im.getListadoInscripciones(email);
 	}
 	

@@ -1,7 +1,5 @@
 package competiciones;
 
-import java.util.List;
-
 public class CompeticionController {
 	
 	private CompeticionModel cm;
