@@ -8,13 +8,13 @@ insert into Atleta(email,nombre,apellidos,genero,fechaNacimiento) values
 	('laurarl@hotmail.es','Laura','Romano Lopez','femenino','1997-01-20');
 	
 delete from Inscripcion;
-insert into Inscripcion(dorsal,tiempo,precio,email_atleta,categoriaSexo, metodoPago, id_competicion) values 
-	('A','---',3,'mariafdz92@hotmail.es','femenino','tarjeta',3244),
-	('12','---',3,'mariafdz92@hotmail.es','femenino','tarjeta',56564),
-	('15','---',13,'juangg73@hotmail.es','masculino','transferencia',56564),
-	('10','50',2,'albertoce11@hotmail.es','femenino','tarjeta',3244),
-	('11','1',6,'frangg80@hotmail.es','masculino','transferencia',5332),
-	('B','---',5,'laurarl@hotmail.es','femenino','tarjeta',5332);	
+insert into Inscripcion(dorsal,tiempo,precio,email_atleta, ultFechaModif,categoriaSexo, metodoPago, id_competicion) values 
+	('A','---',3,'mariafdz92@hotmail.es','2021-05-05','femenino','tarjeta',3244),
+	('12','---',3,'mariafdz92@hotmail.es','2021-07-22','femenino','tarjeta',56564),
+	('15','---',13,'juangg73@hotmail.es','2021-07-20','masculino','transferencia',56564),
+	('10','50',2,'albertoce11@hotmail.es','2021-05-07','femenino','tarjeta',3244),
+	('11','1',6,'frangg80@hotmail.es','2021-01-22','masculino','transferencia',5332),
+	('B','---',5,'laurarl@hotmail.es','2021-02-12','femenino','tarjeta',5332);	
 	
 delete from Competicion;
 insert into Competicion(id,inicio,fin,tipo,numPlazas, fecha, nombre, descr, distancia) values 

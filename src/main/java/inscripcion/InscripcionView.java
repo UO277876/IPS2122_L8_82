@@ -29,7 +29,6 @@ public class InscripcionView extends JFrame {
 
 	public InscripcionView() {
 		setResizable(false);
-		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setTitle("Listado de inscripciones");
 		getContentPane().setBackground(Color.WHITE);
 		getContentPane().setForeground(Color.WHITE);

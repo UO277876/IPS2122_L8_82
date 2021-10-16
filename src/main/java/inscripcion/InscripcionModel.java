@@ -11,7 +11,7 @@ public class InscripcionModel {
 	private static final String MSG_EMAIL_NO_NULO = "El email no puede ser nulo";
 	
 	private Database db=new Database();
-	private String listado_inscripciones = "SELECT * FROM Inscripcion WHERE email_atleta = ? ";
+	private String listado_inscripciones = "SELECT * FROM Inscripcion WHERE email_atleta = ? ORDER BY ultFechaModif";
 	
 	/**
 	 * Obtiene todas las inscripciones de un atleta

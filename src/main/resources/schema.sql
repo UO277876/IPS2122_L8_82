@@ -37,6 +37,7 @@ create table Inscripcion(
 	dorsal varchar(32) not null,
 	tiempo String not null,
 	precio int not null,
+	ultFechaModif date not null,
 	email_atleta varchar(32) not null,
 	categoriaSexo varchar(1) not null,
 	metodoPago varchar(32) not null,

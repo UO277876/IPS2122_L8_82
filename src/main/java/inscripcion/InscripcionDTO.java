@@ -1,6 +1,6 @@
 package inscripcion;
 
-import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class InscripcionDTO {
@@ -16,21 +16,22 @@ public class InscripcionDTO {
 	String tiempo;
 	int precio;
 	String email_atleta;
+	String ultFechaModif;
 	String categoriaSexo;
 	String metodoPago;
 	int id_competicion;
 	String estado;
-	String ultFechaModif;
-	
+
 	public InscripcionDTO() {
 		
 	}
 	
-	public InscripcionDTO(String dorsal, String tiempo, int precio,
-			String categoriaSexo, String email_atleta, String metodoPago, int id_competicion) {
+	public InscripcionDTO(String dorsal, String tiempo, int precio, String categoriaSexo, 
+			String ultFechaModif, String email_atleta, String metodoPago, int id_competicion) {
 		this.dorsal = dorsal;
 		this.tiempo = tiempo;
 		this.precio = precio;
+		this.ultFechaModif = ultFechaModif;
 		this.categoriaSexo = categoriaSexo;
 		this.email_atleta = email_atleta;
 		this.metodoPago = metodoPago;
@@ -74,23 +75,32 @@ public class InscripcionDTO {
 	public void setEstado(String estado) {
 		if(estado.equals(ESTADO1) || estado.equals(ESTADO2) || estado.equals(ESTADO3) ) {
 			this.estado = estado;
-			this.ultFechaModif = new Date().toString();
 		} 
 	}
 	
+	/**
+	 * Actualiza el estado de la inscripción según se ha pagado, o ha acabado la carrera,
+	 * incluyendo la fecha de modificación
+	 */
 	public void actualizaEstado() {
-		if(tiempo.equals("---")) {
+		if(!tiempo.equals("---")) {
+			SimpleDateFormat dateFormat = new SimpleDateFormat ("yyyy-MM-dd");
 			setEstado(ESTADO1);
-		} else if(metodoPago.equals(tc)) {
-			setEstado(ESTADO2);
-		} else {
+			Date dateAct = new Date();
+			this.ultFechaModif = dateFormat.format(dateAct);
+		} else if(metodoPago.equals(transf)) {
+			SimpleDateFormat dateFormat = new SimpleDateFormat ("yyyy-MM-dd");
 			setEstado(ESTADO3);
-		} 
-		
-		this.ultFechaModif = new Date().toString();
+			Date dateAct = new Date();
+			this.ultFechaModif = dateFormat.format(dateAct);
+		} else {
+			setEstado(ESTADO2);
+		}
 	}
 	
-	public String getUltFechaModif() throws ParseException { return ultFechaModif; }
+	public String getUltFechaModif() { return ultFechaModif; }
+	
+	public void setUltFechaModif(String ultFechaModif) { this.ultFechaModif = ultFechaModif; }
 	
 	
 }
