@@ -1,6 +1,5 @@
 package inscripcion;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,7 +42,7 @@ public class InscripcionController {
 	 * @return una lista de cadenas de texto con toda la información
 	 * @throws ParseException 
 	 */
-	public List<String> listarPorIds(String email) throws ParseException {
+	public List<String> listarPorIds(String email) {
 		setIdto(email);
 		CompeticionDTO lm = new CompeticionDTO();
 		
