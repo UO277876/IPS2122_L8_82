@@ -39,8 +39,8 @@ public class InscripcionController {
 	 * 
 	 * @param id, el id de la carrera
 	 */
-	public void rellenarIdGen(int id) {
-		this.idto = im.getListadoInsIdGen(id);
+	public void rellenarIdGen(int id, String genero) {
+		this.idto = im.getListadoInsIdGen(id, genero);
 	}
 	
 	/**
@@ -88,10 +88,18 @@ public class InscripcionController {
 	 * @return una lista de String con la clasificación
 	 */
 	private List<String> clasifGenero(int id) {
-		rellenarIdGen(id);
-		List<String> result = rellenarConAtletas();
+		rellenarIdGen(id,"masculino");
+		List<String> result1 = rellenarConAtletas();
+		result1.add(0, "MASCULINO");
 		
-		return result;
+		
+		rellenarIdGen(id,"femenino");
+		List<String> result2 = rellenarConAtletas();
+		result2.add(0, "FEMENINO");
+		
+		result1.addAll(result2);
+		
+		return result1;
 	}
 	
 	/**
