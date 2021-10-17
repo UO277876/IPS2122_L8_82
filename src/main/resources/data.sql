@@ -10,9 +10,9 @@ insert into Atleta(email,nombre,apellidos,genero,fechaNacimiento) values
 delete from Inscripcion;
 insert into Inscripcion(dorsal,tiempo,precio,email_atleta, ultFechaModif,categoriaSexo, metodoPago, id_competicion) values 
 	('A','---',3,'mariafdz92@hotmail.es','2021-05-05','femenino','tarjeta',3244),
-	('12','---',3,'mariafdz92@hotmail.es','2021-07-22','femenino','tarjeta',56564),
+	('12','12',3,'mariafdz92@hotmail.es','2021-07-22','femenino','tarjeta',56564),
 	('15','---',13,'juangg73@hotmail.es','2021-07-20','masculino','transferencia',56564),
-	('10','50',2,'albertoce11@hotmail.es','2021-05-07','femenino','tarjeta',3244),
+	('10','50',2,'albertoce11@hotmail.es','2021-05-07','masculino','tarjeta',3244),
 	('11','1',6,'frangg80@hotmail.es','2021-01-22','masculino','transferencia',5332),
 	('B','---',5,'laurarl@hotmail.es','2021-02-12','femenino','tarjeta',5332);	
 	

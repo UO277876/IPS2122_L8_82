@@ -2,143 +2,146 @@ package inscripcion;
 
 import javax.swing.JFrame;
 import java.awt.Color;
-import javax.swing.JTextField;
-import java.awt.BorderLayout;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JTextField;
 import java.awt.Font;
-import javax.swing.JComboBox;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
+import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
+import java.awt.TextArea;
+import javax.swing.UIManager;
+import javax.swing.JComboBox;
 
 @SuppressWarnings("serial")
 public class ClasificacionesView extends JFrame {
-	
-	private JTextField txClasificacion;
-	private JLabel lbClasificacion;
-	private JButton btnAceptar;
-	private JComboBox<String> cbClasificaciones;
-	private JScrollPane scrClasificaciones;
-	private JTextArea txClasificaciones;
-	
+
+	private JLabel lbId;
+	private JButton btnID;
+	private JTextField txID;
+	private TextArea txaClasificacion;
+
+	// Otros atributos
 	private InscripcionController ic;
-	
+	private JScrollPane scrpClasificacion;
+	private JComboBox<String> cbId;
+
 	public ClasificacionesView() {
-		setTitle("Clasificaciones");
-		getContentPane().setBackground(Color.WHITE);
-		getContentPane().setLayout(null);
-		getContentPane().add(txClasificacion);
-		getContentPane().add(lbClasificacion);
-		getContentPane().add(btnAceptar);
-		getContentPane().add(cbClasificaciones);
-		getContentPane().add(scrClasificaciones);
-		
-		JTextArea txClasificaciones = new JTextArea();
-		txClasificaciones.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		txClasificaciones.setEditable(false);
-		
 		setResizable(false);
+		setTitle("Listado de inscripciones");
+		getContentPane().setBackground(Color.WHITE);
+		getContentPane().setForeground(Color.WHITE);
+		getContentPane().setLayout(null);
+		getContentPane().add(getLbId());
+		getContentPane().add(getBtnID());
+		getContentPane().add(getTxID());
+		getContentPane().add(getScrollPane_1());
+		//getContentPane().add(getCbId());
+		setBounds(100, 100, 700, 400);
+
+		// Inicializacion de la clase InscripcionController
+		this.ic = new InscripcionController();
 	}
-	
-	private JTextField getTxClasificacion( ) {
-		if(txClasificacion == null) {
-			txClasificacion = new JTextField();
-			txClasificacion.setBounds(209, 23, 172, 19);
-			txClasificacion.setColumns(10);
+
+	private JLabel getLbId() {
+		if (lbId == null) {
+			lbId = new JLabel("Introduzca ID:");
+			lbId.setLabelFor(getTxID());
+			lbId.setFont(new Font("Tahoma", Font.PLAIN, 15));
+			lbId.setBounds(81, 35, 150, 13);
 		}
-		return txClasificacion;
+		return lbId;
 	}
-	
-	private JLabel getLbClasificacion() {
-		if(lbClasificacion == null) {
-			lbClasificacion = new JLabel("Introduzca el ID de la carrera:");
-			lbClasificacion.setLabelFor(txClasificacion);
-			lbClasificacion.setFont(new Font("Tahoma", Font.PLAIN, 13));
-			lbClasificacion.setBounds(22, 25, 177, 13);
-		}
-		return lbClasificacion;
-	}
-	
-	private JButton btnAceptar() {
-		if(btnAceptar == null) {
-			btnAceptar = new JButton("Aceptar");
-			btnAceptar.addActionListener(new ActionListener() {
+
+	private JButton getBtnID() {
+		if (btnID == null) {
+			btnID = new JButton("Aceptar");
+			btnID.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					mostrarClasificaciones();
+					try {
+						listarPorEmail();
+					} catch (ParseException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 				}
 			});
-			btnAceptar.setFont(new Font("Tahoma", Font.BOLD, 11));
-			btnAceptar.setBackground(new Color(51, 204, 0));
-			btnAceptar.setBounds(508, 22, 85, 21);
+			btnID.setBackground(new Color(0, 204, 0));
+			btnID.setFont(new Font("Tahoma", Font.BOLD, 13));
+			btnID.setForeground(Color.WHITE);
+			btnID.setBounds(486, 32, 85, 21);
 		}
-		return btnAceptar;
+		return btnID;
 	}
-	
-	private JComboBox<String> getCbClasificaciones() {
-		if(cbClasificaciones == null) {
-			cbClasificaciones = new JComboBox<String>();
-			cbClasificaciones.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					
-				}
-			});
-			//cbArticulos.setModel(new DefaultComboBoxModel<Articulo>(carta.getArticulos()));
-			cbClasificaciones.setModel(new DefaultComboBoxModel<String>(ic.getTipoClasif()));
-			cbClasificaciones.setBounds(391, 22, 107, 21);
+
+	private JTextField getTxID() {
+		if (txID == null) {
+			txID = new JTextField();
+			txID.setBounds(187, 30, 169, 27);
+			txID.setColumns(10);
 		}
-		
-		return cbClasificaciones;
+		return txID;
 	}
-	
-	private JScrollPane getScrClasificaciones() {
-		if(scrClasificaciones == null) {
-			scrClasificaciones = new JScrollPane();
-			scrClasificaciones.setBounds(22, 66, 580, 247);
-			scrClasificaciones.setViewportView(txClasificaciones);
+
+	private JScrollPane getScrollPane_1() {
+		if (scrpClasificacion == null) {
+			scrpClasificacion = new JScrollPane();
+			scrpClasificacion.setBounds(81, 99, 546, 255);
+			scrpClasificacion.setViewportView(getTxaClasificacion());
 		}
-		return scrClasificaciones;
+		return scrpClasificacion;
 	}
-	
-	private JTextArea getTxClasificaciones() {
-		if(txClasificaciones == null) {
-			txClasificaciones = new JTextArea();
-			txClasificaciones.setFont(new Font("Tahoma", Font.PLAIN, 12));
-			txClasificaciones.setEditable(false);
+
+	private TextArea getTxaClasificacion() {
+		if (txaClasificacion == null) {
+			txaClasificacion = new TextArea();
+			txaClasificacion.setFont(new Font("Tahoma", Font.PLAIN, 13));
+			txaClasificacion.setBackground(UIManager.getColor("Button.light"));
+			txaClasificacion.setEditable(false);
 		}
-		
-		return txClasificaciones;
-		
+		return txaClasificacion;
 	}
-	
+
+	// ----------------------------- Métodos independientes de la interfaz ---------------------------------------
 	/**
-	 * Muestra las clasificaciones dependiendo del id de la carrera
+	 * Añade pedidos y calcula su precio total
+	 * @throws ParseException 
 	 */
-	private void mostrarClasificaciones() {
-		// 1. Verificar que el campo ID no esta en blanco
-		if(isVacio()) {
-			JOptionPane.showMessageDialog(null, "Error: Campo id en blanco");
+	private void listarPorEmail() throws ParseException {
+		// 1.Verificar que la casilla email no esta vacía
+		if (isVacio()) {
+			JOptionPane.showMessageDialog(null, "Error: Campo ID en blanco");
 		} else {
-			//2. Se almacena el tipo de clasificacion que se desea y el id
-			int id = Integer.valueOf(txClasificacion.getText());
-			String tipo = (String) getCbClasificaciones().getSelectedItem();
+			// 2. Listo inscripciones por emails
+			int id = Integer.valueOf(getTxID().getText());	
+			//String tipo = (String) getCbId().getSelectedItem();
+			String tipo = "Absoluta";
 			
-			// 3. Ejecutamos
-			ic.clasificacion(tipo,id);
+			// 2.1 Compruebo que el id existe
+			List<String> listadoIns = ic.clasificacion(tipo,id);
 			
+			if(listadoIns.size() <= 0) {
+				getTxaClasificacion().setText("No se han encontrado competiciones con el id introducido.");
+			} else {
+				// 3. Obtengo la cadena 
+				getTxaClasificacion().setText(ic.imprimirListadoClasif(listadoIns));
+			}
+
 		}
 	}
-	
+
 	// ----------------------------- Métodos de revision ---------------------------------------
 	/**
-	 * Comprueba si el campo txClasificacion esta vacío
+	 * Comprueba si el campo txNombre esta vacío
 	 * 
 	 * @return true si lo esta y false si no
 	 */
 	private boolean isVacio() {
-		return txClasificacion.getText().contentEquals("");
+		return txID.getText().contentEquals("");
 	}
+
 }

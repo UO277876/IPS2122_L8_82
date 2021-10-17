@@ -7,6 +7,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import giis.demo.tkrun.*;
+import inscripcion.ClasificacionesView;
 
 /**
  * Punto de entrada principal que incluye botones para la ejecucion de las pantallas 
@@ -18,6 +19,7 @@ import giis.demo.tkrun.*;
 public class SwingMain {
 
 	private JFrame frame;
+	private ClasificacionesView cv;
 
 	/**
 	 * Launch the application.
@@ -46,6 +48,8 @@ public class SwingMain {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		this.cv = new ClasificacionesView();
+		
 		frame = new JFrame();
 		frame.setTitle("Main");
 		frame.setBounds(0, 0, 287, 185);
@@ -80,6 +84,14 @@ public class SwingMain {
 			}
 		});
 		frame.getContentPane().add(btnCargarDatosIniciales);
+		
+		JButton btnClasificaciones = new JButton("Clasificaciones");
+		btnClasificaciones.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cv.setVisible(true);
+			}
+		});
+		frame.getContentPane().add(btnClasificaciones);
 	}
 
 	public JFrame getFrame() { return this.frame; }

@@ -11,15 +11,26 @@ public class InscripcionModel {
 	private static final String MSG_ID_NO_NULO = "El id no puede ser nulo";
 	
 	private Database db=new Database();
-	private String listado_inscripciones_id = "SELECT * FROM Inscripcion WHERE id_competicion = ? ORDER BY tiempo";
+	private String listado_inscr_id_genero = "SELECT * FROM Inscripcion WHERE id_competicion = ? ORDER BY tiempo, categoriaSexo";
+	private String listado_inscr_id_absoluta = "SELECT * FROM Inscripcion WHERE id_competicion = ? ORDER BY tiempo";
 	
 	/**
-	 * Obtiene todas las inscripciones de un atleta mediante el id de una carrera
+	 * Obtiene todas las inscripciones de un atleta mediante el id de una carrera, ordenadas por categoria sexo
 	 */
-	public List<InscripcionDTO> getListadoInsId(int id) {
+	public List<InscripcionDTO> getListadoInsIdGen(int id) {
 		validateNotNull(id,MSG_ID_NO_NULO);
 		
-		List<InscripcionDTO> result = db.executeQueryPojo(InscripcionDTO.class, listado_inscripciones_id, id);
+		List<InscripcionDTO> result = db.executeQueryPojo(InscripcionDTO.class, listado_inscr_id_genero, id);
+		return result;
+	}
+	
+	/**
+	 * Obtiene todas las inscripciones de un atleta mediante el id de una carrera, ordenadas por categoria absoluta
+	 */
+	public List<InscripcionDTO> getListadoInsIdAbs(int id) {
+		validateNotNull(id,MSG_ID_NO_NULO);
+		
+		List<InscripcionDTO> result = db.executeQueryPojo(InscripcionDTO.class, listado_inscr_id_absoluta, id);
 		return result;
 	}
 	
