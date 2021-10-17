@@ -11,7 +11,6 @@ public class InscripcionController {
 	private InscripcionModel im;
 	private AtletaController ac;
 	private List<InscripcionDTO> idto;
-	private String[] tipoClasif;
 	
 	/**
 	 * Constructor sin parámetros de la clase InscripcionController
@@ -21,9 +20,6 @@ public class InscripcionController {
 		this.ac = new AtletaController();
 		
 		this.idto = new ArrayList<InscripcionDTO>();
-		this.tipoClasif = new String[2];
-		tipoClasif[0] = "Absoluta";
-		tipoClasif[1] = "Genero";
 	}
 	
 	/**
@@ -36,9 +32,6 @@ public class InscripcionController {
 		this.ac = new AtletaController();
 		
 		this.idto = new ArrayList<InscripcionDTO>();
-		this.tipoClasif = new String[2];
-		tipoClasif[0] = "Absoluta";
-		tipoClasif[1] = "Genero";
 	}
 	
 	/**
@@ -154,15 +147,6 @@ public class InscripcionController {
 	 */
 	public List<InscripcionDTO> getIdto() {
 		return idto;
-	}
-	
-	/**
-	 * Devuelve los tipos de clasificaciones disponibles
-	 * 
-	 * @return la lista de tipos de clasificacion 
-	 */
-	public String[] getTipoClasif() {
-		return tipoClasif;
 	}
 	
 }

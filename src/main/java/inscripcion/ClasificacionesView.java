@@ -2,6 +2,8 @@ package inscripcion;
 
 import javax.swing.JFrame;
 import java.awt.Color;
+import java.awt.Component;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.DefaultComboBoxModel;
@@ -40,12 +42,13 @@ public class ClasificacionesView extends JFrame {
 		getContentPane().add(getBtnID());
 		getContentPane().add(getTxID());
 		getContentPane().add(getScrollPane_1());
-		//getContentPane().add(getCbId());
+		getContentPane().add(getCbId());
 		setBounds(100, 100, 700, 400);
 
 		// Inicializacion de la clase InscripcionController
 		this.ic = new InscripcionController();
 	}
+
 
 	private JLabel getLbId() {
 		if (lbId == null) {
@@ -105,6 +108,15 @@ public class ClasificacionesView extends JFrame {
 		}
 		return txaClasificacion;
 	}
+	
+	private JComboBox<String> getCbId() {
+		if (cbId == null) {
+			cbId = new JComboBox<String>();
+			cbId.setModel(new DefaultComboBoxModel<String>(new String[] {"Absoluta", "Genero"}));
+			cbId.setBounds(376, 33, 98, 21);
+		}
+		return cbId;
+	}
 
 	// ----------------------------- Métodos independientes de la interfaz ---------------------------------------
 	/**
@@ -118,8 +130,7 @@ public class ClasificacionesView extends JFrame {
 		} else {
 			// 2. Listo inscripciones por emails
 			int id = Integer.valueOf(getTxID().getText());	
-			//String tipo = (String) getCbId().getSelectedItem();
-			String tipo = "Absoluta";
+			String tipo = (String) getCbId().getSelectedItem();
 			
 			// 2.1 Compruebo que el id existe
 			List<String> listadoIns = ic.clasificacion(tipo,id);
