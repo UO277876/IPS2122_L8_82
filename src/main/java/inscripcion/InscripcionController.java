@@ -6,10 +6,16 @@ import java.util.List;
 import atleta.AtletaController;
 import atleta.AtletaDTO;
 
+import competiciones.CompeticionController;
+import competiciones.CompeticionDTO;
+
 public class InscripcionController {
 	
 	private InscripcionModel im;
+
 	private AtletaController ac;
+	private CompeticionController cm;
+
 	private List<InscripcionDTO> idto;
 	
 	/**
@@ -18,6 +24,7 @@ public class InscripcionController {
 	public InscripcionController() {
 		this.im = new InscripcionModel();
 		this.ac = new AtletaController();
+		this.cm = new CompeticionController();
 		
 		this.idto = new ArrayList<InscripcionDTO>();
 	}
@@ -30,6 +37,7 @@ public class InscripcionController {
 	public InscripcionController(InscripcionModel im) {
 		this.im = im;
 		this.ac = new AtletaController();
+		this.cm = new CompeticionController();
 		
 		this.idto = new ArrayList<InscripcionDTO>();
 	}
@@ -68,6 +76,44 @@ public class InscripcionController {
 	
 	/**
 	 * Imprime la clasificación dependiendo del tipo seleccionado (genero o absoluta)
+	 * Devuelve una lista de cadenas de texto con la información:
+	 * Nombre competicion + estado actual inscripcion + fecha ult. cambio de estado
+	 * 
+	 * @param email, el email de la persona a buscar las inscripciones
+	 * @return una lista de cadenas de texto con toda la información
+	 * @throws ParseException 
+	 */
+	public List<String> listarPorIds(String email) {
+		setIdto(email);
+		CompeticionDTO lm = new CompeticionDTO();
+		
+		List<String> result = new ArrayList<String>();
+		String linea = "";
+		
+		for(InscripcionDTO ic : this.idto) {
+			lm = obtenerCompeticion(ic.id_competicion);
+			linea = lm.getNombre() + " - " + ic.getIEstado() + " - " + ic.getUltFechaModif();
+			
+			result.add(linea);
+		}
+		
+		return result;
+	}
+	
+	/**
+	 * Devuelve la competicion de id pasado como parámetro. Para ello,
+	 * llama al CompeticionController
+	 * 
+	 * @return la competición
+	 */
+	public CompeticionDTO obtenerCompeticion(int id) {
+		return cm.obtenerCompeticion(id);
+	}
+	
+	/**
+	 * Imprime el listado en el formato 
+	 * Nombre competicion + estado actual inscripcion + fecha ult. cambio de estado
+	 * De un solo String
 	 * 
 	 * @param listadoIns, la lista de String a concatenar
 	 * @return un string con todo el listado
@@ -148,6 +194,27 @@ public class InscripcionController {
 		return result;
 	}
 
+	public String imprimirListado(List<String> listadoIns) {
+		String listado = "";
+		for(int i=0; i < listadoIns.size(); i++) {
+			listado += "> " + listadoIns.get(i) + "\n";
+		}
+		return listado;
+	}
+	
+	/**
+	 * Almacena la lista de inscripciones según el email de un atleta
+	 * 
+	 * @param email, el email a analizar
+	 */
+	private void setIdto(String email) {
+		this.idto = im.getListadoInscripciones(email);
+		
+		for(InscripcionDTO ic : this.idto ) {
+			ic.actualizaEstado();
+		}
+	}
+	
 	/**
 	 * Devuelve la lista de inscripciones actual según el email de un atleta
 	 * 

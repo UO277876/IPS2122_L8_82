@@ -2,12 +2,16 @@ package giis.demo.util;
 
 import java.awt.EventQueue;
 import javax.swing.JFrame;
+
+import Atleta.InscripcionAtletaView;
+
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import giis.demo.tkrun.*;
 import inscripcion.ClasificacionesView;
+import inscripcion.InscripcionView;
 
 /**
  * Punto de entrada principal que incluye botones para la ejecucion de las pantallas 
@@ -18,6 +22,8 @@ import inscripcion.ClasificacionesView;
  */
 public class SwingMain {
 
+	private InscripcionAtletaView iav;
+	private InscripcionView iiv;
 	private JFrame frame;
 	private ClasificacionesView cv;
 
@@ -48,7 +54,9 @@ public class SwingMain {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		this.cv = new ClasificacionesView();
+		cv = new ClasificacionesView();
+		iav = new InscripcionAtletaView();
+		iiv = new InscripcionView();
 		
 		frame = new JFrame();
 		frame.setTitle("Main");
@@ -92,6 +100,22 @@ public class SwingMain {
 			}
 		});
 		frame.getContentPane().add(btnClasificaciones);
+		
+		JButton btnInscribirse = new JButton("Inscripcion para atletas");
+		btnInscribirse.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				iav.setVisible(true);
+			}
+		});
+		frame.getContentPane().add(btnInscribirse);
+		
+		JButton btnListadoIns = new JButton("Listado de inscripciones");
+		btnListadoIns.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				iiv.setVisible(true);
+			}
+		});
+		frame.getContentPane().add(btnListadoIns);
 	}
 
 	public JFrame getFrame() { return this.frame; }
