@@ -13,11 +13,9 @@ public class CompeticionModel {
 
 	private Database db = new Database();
 
-	// SQL para obtener la lista de carreras activas para una fecha dada,
-	// se incluye aqui porque se usara en diferentes versiones de los metodos bajo
-	// prueba
+	// SQL para obtener la lista de competiciones
 	public static final String SQL_LISTA_COMPETICIONES = "SELECT nombre,fecha,tipo,distancia,fin,numPlazas"
-			+ " from Competicion  where fecha>=? order by fecha";
+			+ " from Competicion";
 
 	/**
 	 * Obtiene la lista de carreras futuras (posteriores a una fecha dada) con el id
@@ -26,7 +24,7 @@ public class CompeticionModel {
 	public List<Object[]> getListaCompeticionesArray(Date fechaInscripcion) {
 		validateNotNull(fechaInscripcion, MSG_FECHA_INSCRIPCION_NO_NULA);
 		String d = Util.dateToIsoString(fechaInscripcion);
-		return db.executeQueryArray(SQL_LISTA_COMPETICIONES, d);
+		return db.executeQueryArray(SQL_LISTA_COMPETICIONES);
 	}
 
 	/**
@@ -36,7 +34,7 @@ public class CompeticionModel {
 	public List<CompeticionDTO> getListaCarreras(Date fechaInscripcion) {
 		validateNotNull(fechaInscripcion, MSG_FECHA_INSCRIPCION_NO_NULA);
 		String d = Util.dateToIsoString(fechaInscripcion);
-		return db.executeQueryPojo(CompeticionDTO.class, SQL_LISTA_COMPETICIONES, d);
+		return db.executeQueryPojo(CompeticionDTO.class, SQL_LISTA_COMPETICIONES);
 	}
 
 	/**

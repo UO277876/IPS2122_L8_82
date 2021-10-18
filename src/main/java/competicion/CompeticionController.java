@@ -22,11 +22,9 @@ public class CompeticionController {
 	}
 
 	public void initView() {
-		// Inicializa la fecha de hoy a un valor que permitira mostrar carreras en
-		// diferentes fases y actualiza los datos de la vista
 		view.setFechaHoy("2021-10-10");
 		this.getListaCarreras();
-		// Abre la ventana 
+
 		view.setVisible(true);
 	}
 
