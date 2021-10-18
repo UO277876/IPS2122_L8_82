@@ -5,7 +5,6 @@ import java.awt.Font;
 import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.ParseException;
 import java.util.List;
 
 import javax.swing.DefaultComboBoxModel;
@@ -48,7 +47,6 @@ public class ClasificacionesView extends JFrame {
 		this.ic = new InscripcionController();
 	}
 
-
 	private JLabel getLbId() {
 		if (lbId == null) {
 			lbId = new JLabel("Introduzca ID:");
@@ -64,12 +62,7 @@ public class ClasificacionesView extends JFrame {
 			btnID = new JButton("Aceptar");
 			btnID.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					try {
-						listarPorEmail();
-					} catch (ParseException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
+					clasificar();
 				}
 			});
 			btnID.setBackground(new Color(0, 204, 0));
@@ -107,11 +100,11 @@ public class ClasificacionesView extends JFrame {
 		}
 		return txaClasificacion;
 	}
-	
+
 	private JComboBox<String> getCbId() {
 		if (cbId == null) {
 			cbId = new JComboBox<String>();
-			cbId.setModel(new DefaultComboBoxModel<String>(new String[] {"Absoluta", "Genero"}));
+			cbId.setModel(new DefaultComboBoxModel<String>(new String[] { "Absoluta", "Genero" }));
 			cbId.setBounds(376, 33, 98, 21);
 		}
 		return cbId;
@@ -119,26 +112,31 @@ public class ClasificacionesView extends JFrame {
 
 	// ----------------------------- Métodos independientes de la interfaz ---------------------------------------
 	/**
-	 * Añade pedidos y calcula su precio total
-	 * @throws ParseException 
+	 * Clasifica a los competidores de la competicion pasada como ID
+	 * 
+	 * No se aceptan en el campo ID letras
 	 */
-	private void listarPorEmail() throws ParseException {
+	private void clasificar() {
 		// 1.Verificar que la casilla email no esta vacía
 		if (isVacio()) {
 			JOptionPane.showMessageDialog(null, "Error: Campo ID en blanco");
 		} else {
 			// 2. Listo inscripciones por emails
-			int id = Integer.valueOf(getTxID().getText());	
-			String tipo = (String) getCbId().getSelectedItem();
-			
-			// 2.1 Compruebo que el id existe
-			List<String> listadoIns = ic.clasificacion(tipo,id);
-			
-			if(listadoIns.size() <= 0) {
-				getTxaClasificacion().setText("No se han encontrado competiciones con el id introducido.");
-			} else {
-				// 3. Obtengo la cadena 
-				getTxaClasificacion().setText(ic.imprimirListadoClasif(listadoIns));
+			try {
+				int id = Integer.valueOf(getTxID().getText());
+				String tipo = (String) getCbId().getSelectedItem();
+
+				// 2.1 Compruebo que el id existe
+				List<String> listadoIns = ic.clasificacion(tipo, id);
+
+				if ((listadoIns.size() <= 0 && tipo.equals("Absoluta")) || (listadoIns.size() == 2 && tipo.equals("Genero"))) {
+					getTxaClasificacion().setText("No se han encontrado competiciones con el id introducido.");
+				} else {
+					// 3. Obtengo la cadena
+					getTxaClasificacion().setText(ic.imprimirListadoClasif(listadoIns));
+				}
+			} catch (NumberFormatException e) {
+				getTxaClasificacion().setText("Error, solo se aceptan números en el campo ID.");
 			}
 
 		}

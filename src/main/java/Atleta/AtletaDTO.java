@@ -3,69 +3,68 @@ package atleta;
 public class AtletaDTO {
 	
 
-	public enum genero{masculino, femenino};
+	private final static String mas = "masculino";
+	private final static String fem = "femenino";
 	
 	private String email;
-	private String name;
-	private String surname;
-	private genero gender;
+	private String nombre;
+	private String apellidos;
+	private String genero;
 	private String fechaNacimiento;
 	
 	
-	public AtletaDTO(String name, String surname, String email, genero gender, String fechaNacimiento) {
-		setName(name);
-		setSurname(surname);
-		setEmail(email);
-		setGender(gender);
-		setFechaNacimiento(fechaNacimiento);
+	public AtletaDTO(String nombre, String apellidos, String email, String genero, String fechaNacimiento) {
+		this.nombre = nombre;
+		this.apellidos = apellidos;
+		this.email = email;
+		this.genero = genero;
+		this.fechaNacimiento = fechaNacimiento;
 	}
 	
 	public AtletaDTO() {	}
 
+	public String getEmail() {
+		return email;
+	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
-	
-	public String getName() {
-		return this.name;
-	}
-	
-	
-	public void setSurname(String surname) {
-		this.surname = surname;
-	}
-	
-	public String getSurname() {
-		return this.surname;
-	}
-	
-	
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
-	public String getEmail() {
-		return this.email;
+
+	public String getNombre() {
+		return nombre;
 	}
-	
-	
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public String getApellidos() {
+		return apellidos;
+	}
+
+	public void setApellidos(String apellidos) {
+		this.apellidos = apellidos;
+	}
+
+	public String getGenero() {
+		return genero;
+	}
+
+	public void setGenero(String genero) {
+		if(genero.equals(mas) || genero.equals(fem)) {
+			this.genero = genero;
+		}
+	}
+
+	public String getFechaNacimiento() {
+		return fechaNacimiento;
+	}
+
 	public void setFechaNacimiento(String fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
 	}
-	
-	public String getFechaNacimiento() {
-		return this.fechaNacimiento;
-	}
-	
-	
-	public void setGender(genero gender) {
-		this.gender = gender;
-	}
-	
-	public genero getGender() {
-		return this.gender;
-	}
+
 
 	  
 }

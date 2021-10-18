@@ -175,7 +175,7 @@ public class InscripcionController {
 		
 		for(InscripcionDTO ic : this.idto) {
 			am = obtenerAtleta(ic.getEmail_atleta());
-			linea = index + ", " + ic.categoriaSexo + ", " + am.getName() + ", " + ic.getTiempo();
+			linea = index + ", " + ic.categoriaSexo + ", " + am.getNombre() + ", " + ic.getTiempo();
 			
 			result.add(linea);
 			index++;
