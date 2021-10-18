@@ -35,6 +35,7 @@ public class InscripcionModel {
 		validateNotNull(id,MSG_ID_NO_NULO);
 		
 		List<InscripcionDTO> result = db.executeQueryPojo(InscripcionDTO.class, listado_inscr_id_absoluta, id);
+		return result;
 	}
 	
 	/**

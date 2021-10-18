@@ -1,6 +1,4 @@
-package Atleta;
-
-import java.util.Date;
+package atleta;
 
 public class AtletaDTO {
 	
@@ -11,10 +9,10 @@ public class AtletaDTO {
 	private String name;
 	private String surname;
 	private genero gender;
-	private Date fechaNacimiento;
+	private String fechaNacimiento;
 	
 	
-	public AtletaDTO(String name, String surname, String email, genero gender, Date fechaNacimiento) {
+	public AtletaDTO(String name, String surname, String email, genero gender, String fechaNacimiento) {
 		setName(name);
 		setSurname(surname);
 		setEmail(email);
@@ -22,7 +20,9 @@ public class AtletaDTO {
 		setFechaNacimiento(fechaNacimiento);
 	}
 	
-	
+	public AtletaDTO() {	}
+
+
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -50,11 +50,11 @@ public class AtletaDTO {
 	}
 	
 	
-	public void setFechaNacimiento(Date fechaNacimiento) {
+	public void setFechaNacimiento(String fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
 	}
 	
-	public Date getFechaNacimiento() {
+	public String getFechaNacimiento() {
 		return this.fechaNacimiento;
 	}
 	

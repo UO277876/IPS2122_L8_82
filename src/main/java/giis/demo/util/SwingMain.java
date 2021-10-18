@@ -1,15 +1,17 @@
 package giis.demo.util;
 
 import java.awt.EventQueue;
-import javax.swing.JFrame;
-
-import Atleta.InscripcionAtletaView;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import giis.demo.tkrun.*;
+import javax.swing.JFrame;
+
+import atleta.InscripcionAtletaView;
+import giis.demo.tkrun.CarrerasController;
+import giis.demo.tkrun.CarrerasModel;
+import giis.demo.tkrun.CarrerasView;
 import inscripcion.ClasificacionesView;
 import inscripcion.InscripcionView;
 
