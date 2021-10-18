@@ -1,4 +1,4 @@
-package Atleta;
+package atleta;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -10,6 +10,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+@SuppressWarnings("serial")
 public class InscripcionAtletaView extends JFrame {
 	private JPanel panel;
 	private JLabel lblIndiqueEmail;

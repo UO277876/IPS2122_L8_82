@@ -34,12 +34,12 @@ create table Competicion(
 drop table if exists Inscripcion;
 
 create table Inscripcion(
-	inicio date not null, 
-	fin date not null,
 	dorsal varchar(32) not null,
-	tiempo int not null,
+	tiempo String not null,
+	precio int not null,
+	ultFechaModif date not null,
 	email_atleta varchar(32) not null,
-	categoriaSexo varchar(1) not null,
+	categoriaSexo varchar(32) not null,
 	metodoPago varchar(32) not null,
 	id_competicion int not null,
 	foreign key (email_atleta) references Atleta (email),

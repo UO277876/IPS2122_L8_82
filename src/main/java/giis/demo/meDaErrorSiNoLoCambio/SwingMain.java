@@ -1,15 +1,19 @@
-package giis.demo.meDaErrorSiNoLoCambio;
+package giis.demo.util;
 
 import java.awt.EventQueue;
-import javax.swing.JFrame;
-
-import Atleta.InscripcionAtletaView;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import giis.demo.tkrun.*;
+import javax.swing.JFrame;
+
+import atleta.InscripcionAtletaView;
+import giis.demo.tkrun.CarrerasController;
+import giis.demo.tkrun.CarrerasModel;
+import giis.demo.tkrun.CarrerasView;
+import inscripcion.ClasificacionesView;
+import inscripcion.InscripcionView;
 
 /**
  * Punto de entrada principal que incluye botones para la ejecucion de las pantallas 
@@ -20,9 +24,10 @@ import giis.demo.tkrun.*;
  */
 public class SwingMain {
 
-	
 	private InscripcionAtletaView iav;
+	private InscripcionView iiv;
 	private JFrame frame;
+	private ClasificacionesView cv;
 
 	/**
 	 * Launch the application.
@@ -51,7 +56,10 @@ public class SwingMain {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		cv = new ClasificacionesView();
 		iav = new InscripcionAtletaView();
+		iiv = new InscripcionView();
+		
 		frame = new JFrame();
 		frame.setTitle("Main");
 		frame.setBounds(0, 0, 287, 185);
@@ -87,6 +95,14 @@ public class SwingMain {
 		});
 		frame.getContentPane().add(btnCargarDatosIniciales);
 		
+		JButton btnClasificaciones = new JButton("Clasificaciones");
+		btnClasificaciones.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cv.setVisible(true);
+			}
+		});
+		frame.getContentPane().add(btnClasificaciones);
+		
 		JButton btnInscribirse = new JButton("Inscripcion para atletas");
 		btnInscribirse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -94,6 +110,14 @@ public class SwingMain {
 			}
 		});
 		frame.getContentPane().add(btnInscribirse);
+		
+		JButton btnListadoIns = new JButton("Listado de inscripciones");
+		btnListadoIns.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				iiv.setVisible(true);
+			}
+		});
+		frame.getContentPane().add(btnListadoIns);
 	}
 
 	public JFrame getFrame() { return this.frame; }
