@@ -3,13 +3,13 @@ package inscripcion;
 import java.util.ArrayList;
 import java.util.List;
 
-import competiciones.CompeticionController;
-import competiciones.CompeticionDTO;
+import atleta.AtletaController;
+import atleta.AtletaDTO;
 
 public class InscripcionController {
 	
 	private InscripcionModel im;
-	private CompeticionController cm;
+	private AtletaController ac;
 	private List<InscripcionDTO> idto;
 	
 	/**
@@ -17,7 +17,7 @@ public class InscripcionController {
 	 */
 	public InscripcionController() {
 		this.im = new InscripcionModel();
-		this.cm = new CompeticionController();
+		this.ac = new AtletaController();
 		
 		this.idto = new ArrayList<InscripcionDTO>();
 	}
@@ -29,75 +29,125 @@ public class InscripcionController {
 	 */
 	public InscripcionController(InscripcionModel im) {
 		this.im = im;
-		this.cm = new CompeticionController();
+		this.ac = new AtletaController();
 		
 		this.idto = new ArrayList<InscripcionDTO>();
 	}
 	
 	/**
-	 * Devuelve una lista de cadenas de texto con la información:
-	 * Nombre competicion + estado actual inscripcion + fecha ult. cambio de estado
+	 * Crea la lista de inscripciones usando los id de una carrera ordenando por tiempo y genero
 	 * 
-	 * @param email, el email de la persona a buscar las inscripciones
+	 * @param id, el id de la carrera
+	 */
+	public void rellenarIdGen(int id, String genero) {
+		this.idto = im.getListadoInsIdGen(id, genero);
+	}
+	
+	/**
+	 * Crea la lista de inscripciones usando los id de una carrera ordenando por tiempo y clasif abs
+	 * 
+	 * @param id, el id de la carrera
+	 */
+	public void rellenarIdAbs(int id) {
+		this.idto = im.getListadoInsIdAbs(id);
+	}
+	
+	/**
+	 * Devuelve una lista de cadenas de texto con la clasificacion correspondiente
+	 * 
+	 * @param id, el id de la carrera
 	 * @return una lista de cadenas de texto con toda la información
-	 * @throws ParseException 
 	 */
-	public List<String> listarPorIds(String email) {
-		setIdto(email);
-		CompeticionDTO lm = new CompeticionDTO();
-		
-		List<String> result = new ArrayList<String>();
-		String linea = "";
-		
-		for(InscripcionDTO ic : this.idto) {
-			lm = obtenerCompeticion(ic.id_competicion);
-			linea = lm.getNombre() + " - " + ic.getIEstado() + " - " + ic.getUltFechaModif();
-			
-			result.add(linea);
+	public List<String> clasificacion(String tipo, int id) {
+		if(tipo.equals("Genero")) {
+			return clasifGenero(id);
+		} else {
+			return clasifAbs(id);
 		}
-		
-		return result;
 	}
 	
 	/**
-	 * Devuelve la competicion de id pasado como parámetro. Para ello,
-	 * llama al CompeticionController
-	 * 
-	 * @return la competición
-	 */
-	public CompeticionDTO obtenerCompeticion(int id) {
-		return cm.obtenerCompeticion(id);
-	}
-	
-	/**
-	 * Imprime el listado en el formato 
-	 * Nombre competicion + estado actual inscripcion + fecha ult. cambio de estado
-	 * De un solo String
+	 * Imprime la clasificación dependiendo del tipo seleccionado (genero o absoluta)
 	 * 
 	 * @param listadoIns, la lista de String a concatenar
 	 * @return un string con todo el listado
 	 */
-	public String imprimirListado(List<String> listadoIns) {
+	public String imprimirListadoClasif(List<String> listadoIns) {
 		String listado = "";
 		for(int i=0; i < listadoIns.size(); i++) {
-			listado += "> " + listadoIns.get(i) + "\n";
+			listado += listadoIns.get(i) + "\n";
 		}
 		return listado;
+
 	}
 	
 	/**
-	 * Almacena la lista de inscripciones según el email de un atleta
+	 * Clasifica dependiendo del sexo
 	 * 
-	 * @param email, el email a analizar
+	 * @param id, el id de la carrera
+	 * @return una lista de String con la clasificación
 	 */
-	private void setIdto(String email) {
-		this.idto = im.getListadoInscripciones(email);
+	private List<String> clasifGenero(int id) {
+		rellenarIdGen(id,"masculino");
+		List<String> result1 = rellenarConAtletas();
+		result1.add(0, "MASCULINO");
 		
-		for(InscripcionDTO ic : this.idto ) {
-			ic.actualizaEstado();
-		}
+		
+		rellenarIdGen(id,"femenino");
+		List<String> result2 = rellenarConAtletas();
+		result2.add(0, "FEMENINO");
+		
+		result1.addAll(result2);
+		
+		return result1;
 	}
 	
+	/**
+	 * Clasifica independientemente del sexo
+	 * 
+	 * @param id, el id de la carrera
+	 * @return una lista de String con la clasificación
+	 */
+	private List<String> clasifAbs(int id) {
+		rellenarIdAbs(id);
+		List<String> result = rellenarConAtletas();
+		
+		return result;
+	}
+
+	/**
+	 * Relelna la clasificación con atletas
+	 * 
+	 * @return una lista de String
+	 */
+	private List<String> rellenarConAtletas() {
+		AtletaDTO am = new AtletaDTO();
+		
+		List<String> result = new ArrayList<String>();
+		String linea = "";
+		int index = 1;
+		
+		for(InscripcionDTO ic : this.idto) {
+			am = obtenerAtleta(ic.getEmail_atleta());
+			linea = index + ", " + ic.categoriaSexo + ", " + am.getNombre() + ", " + ic.getTiempo();
+			
+			result.add(linea);
+			index++;
+		}
+		return result;
+	}
+
+	/**
+	 * Obtiene el atleta deseado introduciendo su email
+	 * 
+	 * @param email_atleta, el email del atleta
+	 * @return un AtletaDTO
+	 */
+	private AtletaDTO obtenerAtleta(String email_atleta) {
+		AtletaDTO result = ac.obtenerAtletaEmail(email_atleta);
+		return result;
+	}
+
 	/**
 	 * Devuelve la lista de inscripciones actual según el email de un atleta
 	 * 

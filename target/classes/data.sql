@@ -10,9 +10,9 @@ insert into Atleta(email,nombre,apellidos,genero,fechaNacimiento) values
 delete from Inscripcion;
 insert into Inscripcion(dorsal,tiempo,precio,email_atleta, ultFechaModif,categoriaSexo, metodoPago, id_competicion) values 
 	('A','---',3,'mariafdz92@hotmail.es','2021-05-05','femenino','tarjeta',3244),
-	('12','---',3,'mariafdz92@hotmail.es','2021-07-22','femenino','tarjeta',56564),
+	('12','12',3,'mariafdz92@hotmail.es','2021-07-22','femenino','tarjeta',56564),
 	('15','---',13,'juangg73@hotmail.es','2021-07-20','masculino','transferencia',56564),
-	('10','50',2,'albertoce11@hotmail.es','2021-05-07','femenino','tarjeta',3244),
+	('10','50',2,'albertoce11@hotmail.es','2021-05-07','masculino','tarjeta',3244),
 	('11','1',6,'frangg80@hotmail.es','2021-01-22','masculino','transferencia',5332),
 	('B','---',5,'laurarl@hotmail.es','2021-02-12','femenino','tarjeta',5332);	
 	
@@ -21,4 +21,3 @@ insert into Competicion(id,inicio,fin,tipo,numPlazas, fecha, nombre, descr, dist
 	(3244,'2021-05-04','2021-05-12','asfalto',50, '2021-06-12','Asfalto por Oviedo', 'Carrera que recorre toda la ciudad de Oviedo',25),
 	(56564,'2021-07-10','2021-08-01','montaña',60, '2021-10-15','Somiedo', 'Carrera que recorre parte de la fauna de Somiedo',40),
 	(5332,'2021-01-21','2021-02-28','montaña',30, '2021-03-17','Lagunas', 'Recorrido por las lagunas',15);	
-	

@@ -1,7 +1,5 @@
 package competiciones;
 
-import java.util.Date;
-
 public class CompeticionDTO {
 	
 	int id;
