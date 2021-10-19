@@ -62,7 +62,7 @@ public class SwingMain {
 		
 		frame = new JFrame();
 		frame.setTitle("Main");
-		frame.setBounds(0, 0, 287, 185);
+		frame.setBounds(0, 0, 287, 303);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JButton btnEjecutarTkrun = new JButton("Ejecutar giis.demo.tkrun");
@@ -118,6 +118,8 @@ public class SwingMain {
 			}
 		});
 		frame.getContentPane().add(btnListadoIns);
+		
+		
 	}
 
 	public JFrame getFrame() { return this.frame; }

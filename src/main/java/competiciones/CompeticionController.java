@@ -1,5 +1,7 @@
 package competiciones;
 
+import java.util.List;
+
 public class CompeticionController {
 	
 	private CompeticionModel cm;
@@ -29,5 +31,13 @@ public class CompeticionController {
 	public CompeticionDTO obtenerCompeticion(int id) {
 		return cm.getListadoCompeticiones(id).get(0);
 	}
+	
+	
+	//NECESITO IMPLEMENTAR PRECIO EN LA COMPETICION 
+	/*public int getPrecioCompeticion(String id) {
+		List<CompeticionDTO> competiciones = cm.getListadoCompeticiones(id);
+		CompeticionDTO competicion = competiciones.get(0);
+		return competicion.getPrecio();
+	}*/
 
 }

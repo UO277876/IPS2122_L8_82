@@ -41,15 +41,6 @@ public class AtletaController {
 	}
 	
 	
-	public void CheckAllGood(String email, String id_competicion) {
-		if(obtenerAtletaEmail(email) != null) {
-			ic.inscribirAtleta(obtenerAtletaEmail(email), Integer.parseInt(id_competicion), ic.getNewDorsal(), 13, "metalico");
-		}
-		else {
-			System.out.println("El atleta no esta registrado, por favor revise si el correo es correcto");
-		}
-	}
-	
 	
 	
 

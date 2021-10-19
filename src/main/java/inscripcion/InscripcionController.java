@@ -25,6 +25,11 @@ public class InscripcionController {
 
 	private List<InscripcionDTO> idto;
 	
+	
+	private String emailProvisionalParaPago;
+	private int idProvisionalParaPago;
+	
+	
 	/**
 	 * Constructor sin parámetros de la clase InscripcionController
 	 */
@@ -48,6 +53,27 @@ public class InscripcionController {
 		
 		this.idto = new ArrayList<InscripcionDTO>();
 	}
+	
+	
+	
+	public void setEmailProvisionalParaPago(String email) {
+		this.emailProvisionalParaPago = email;
+	}
+	
+	
+	public String getEmailProvisionalParaPago() {
+		return this.emailProvisionalParaPago;
+	}
+	
+	public void setIdProvisionalParaPago(int id) {
+		this.idProvisionalParaPago = id;
+	}
+	
+	public int getIdProvisionalParaPago() {
+		return this.idProvisionalParaPago;
+	}
+	
+	
 	
 	/**
 	 * Crea la lista de inscripciones usando los id de una carrera ordenando por tiempo y genero
@@ -255,4 +281,11 @@ public class InscripcionController {
 		return dateFormat.format(dateAct);
 	}
 	
+	
+	
+	/*
+	public void ChangePaidMethod(String email, String id, String newPaidMethod) {
+		im.changePaidMethodForInscripcion(email, id, newPaidMethod);
+	}
+	*/
 }

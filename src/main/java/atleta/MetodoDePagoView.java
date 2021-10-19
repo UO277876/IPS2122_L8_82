@@ -2,10 +2,15 @@ package atleta;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+
+import inscripcion.InscripcionController;
+
 import java.awt.Font;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 import javax.swing.DefaultComboBoxModel;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class MetodoDePagoView extends JFrame{
 	
@@ -15,14 +20,20 @@ public class MetodoDePagoView extends JFrame{
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	private InscripcionController ic;
+	private AtletaController ac;
 	
 	private JLabel lblMetodoDePago;
 	private JComboBox<String> cbMetodoDePago;
 	private JButton btnAceptar;
 	private JButton btnCancelar;
+
 	
 	
-	public MetodoDePagoView() {
+	public MetodoDePagoView(InscripcionController ic, AtletaController ac) {
+		this.ic = ic;
+		this.ac = ac;
+		
 		setResizable(false);
 		getContentPane().setLayout(null);
 		getContentPane().add(getLblMetodoDePago());
@@ -52,6 +63,18 @@ public class MetodoDePagoView extends JFrame{
 	private JButton getBtnAceptar() {
 		if (btnAceptar == null) {
 			btnAceptar = new JButton("Aceptar");
+			btnAceptar.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					if(ac.obtenerAtletaEmail(ic.getEmailProvisionalParaPago()) != null) {
+						ic.inscribirAtleta(ac.obtenerAtletaEmail(ic.getEmailProvisionalParaPago()), ic.getIdProvisionalParaPago(), ic.getNewDorsal(), 13, cbMetodoDePago.getSelectedItem().toString());
+						System.out.println("Inscripcion Correcta, tenga una buena tarde");
+					}		
+					else {
+						System.out.println("El atleta no esta registrado, por favor revise si el correo es correcto");
+					}
+					
+				}
+			});
 			btnAceptar.setBounds(142, 174, 89, 23);
 		}
 		return btnAceptar;

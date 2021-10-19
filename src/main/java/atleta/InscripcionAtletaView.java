@@ -9,6 +9,8 @@ import javax.swing.JOptionPane;
 import java.awt.Font;
 import javax.swing.JTextField;
 
+import inscripcion.InscripcionController;
+
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -17,6 +19,8 @@ import java.awt.event.ActionEvent;
 public class InscripcionAtletaView extends JFrame {
 	
 	private AtletaController ac;
+	private InscripcionController ic;
+	private MetodoDePagoView metododepagoview;
 	
 	private JPanel panel;
 	private JLabel lblIndiqueEmail;
@@ -29,6 +33,9 @@ public class InscripcionAtletaView extends JFrame {
 	public InscripcionAtletaView() {
 		setResizable(false);
 		ac = new AtletaController();
+		ic = new InscripcionController();
+		
+		
 		getContentPane().add(getPanel(), BorderLayout.CENTER);
 		setBounds(100, 100, 500, 350);
 	}
@@ -83,8 +90,11 @@ public class InscripcionAtletaView extends JFrame {
 			btnAceptar = new JButton("Aceptar");
 			btnAceptar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					ac.CheckAllGood(txtIndiqueEmail.getText(), txtIndiqueCompeticion.getText());
-					JOptionPane.showMessageDialog(panel, "Enhorabuena, su solicitud se ha tramitado con exito");
+					ic.setEmailProvisionalParaPago(txtIndiqueEmail.getText());
+					ic.setIdProvisionalParaPago(Integer.parseInt(txtIndiqueCompeticion.getText()));
+
+					metododepagoview = new MetodoDePagoView(ic, ac);
+					metododepagoview.setVisible(true);
 				}
 			});
 			btnAceptar.setBounds(345, 262, 85, 21);
