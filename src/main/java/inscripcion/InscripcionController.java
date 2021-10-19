@@ -1,7 +1,10 @@
 package inscripcion;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import atleta.AtletaController;
 import atleta.AtletaDTO;
@@ -10,6 +13,10 @@ import competiciones.CompeticionController;
 import competiciones.CompeticionDTO;
 
 public class InscripcionController {
+	
+
+	private static final String characters = "1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	
 	
 	private InscripcionModel im;
 
@@ -23,7 +30,7 @@ public class InscripcionController {
 	 */
 	public InscripcionController() {
 		this.im = new InscripcionModel();
-		this.ac = new AtletaController();
+		this.ac = new AtletaController(this);
 		this.cm = new CompeticionController();
 		
 		this.idto = new ArrayList<InscripcionDTO>();
@@ -36,7 +43,7 @@ public class InscripcionController {
 	 */
 	public InscripcionController(InscripcionModel im) {
 		this.im = im;
-		this.ac = new AtletaController();
+		this.ac = new AtletaController(this);
 		this.cm = new CompeticionController();
 		
 		this.idto = new ArrayList<InscripcionDTO>();
@@ -222,6 +229,30 @@ public class InscripcionController {
 	 */
 	public List<InscripcionDTO> getIdto() {
 		return idto;
+	}
+	
+	
+	
+	public String getNewDorsal() {
+		Random rng = new Random();
+		char[] text = new char[4];
+	    for (int i = 0; i < 4; i++)
+	    {
+	        text[i] = characters.charAt(rng.nextInt(characters.length()));
+	    }
+	    return new String(text);
+	}
+	
+	
+	public void inscribirAtleta(AtletaDTO atleta, int id_competicion, String dorsal, int precio, String metodoPago) {
+		im.inscribirse(atleta, id_competicion, dorsal, precio, getActualDate(), metodoPago);
+	}
+	
+	
+	public String getActualDate() {
+		SimpleDateFormat dateFormat = new SimpleDateFormat ("yyyy-MM-dd");
+		Date dateAct = new Date();
+		return dateFormat.format(dateAct);
 	}
 	
 }
