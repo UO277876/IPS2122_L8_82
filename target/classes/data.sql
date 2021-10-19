@@ -14,7 +14,7 @@ insert into Inscripcion(dorsal,tiempo,precio,email_atleta, ultFechaModif,categor
 	('15','---',13,'juangg73@hotmail.es','2021-07-20','masculino','transferencia',56564),
 	('10','50',2,'albertoce11@hotmail.es','2021-05-07','masculino','tarjeta',3244),
 	('11','1',6,'frangg80@hotmail.es','2021-01-22','masculino','transferencia',5332),
-	('B','---',5,'laurarl@hotmail.es','2021-02-12','femenino','tarjeta',5332);	
+	('B','---',5,'laurarl@hotmail.es','2021-02-12','femenino','tarjeta',5332);
 	
 delete from Competicion;
 insert into Competicion(id,inicio,fin,tipo,numPlazas, fecha, nombre, descr, distancia) values 

@@ -4,13 +4,37 @@ public class CompeticionDTO {
 	private int id;
 	private int distancia;
 	private int numPlazas;
-	private String inicio; // las fechas son string (vienen de sqlite)
+	private String inicio;
 	private String fin;
 	private String fecha;
 	private String descr;
 	private String nombre;
 	private int cuota;
 	private String tipo;
+
+	public CompeticionDTO(int distancia, int numPlazas, String fecha, String nombre, String tipo) {
+		this.distancia = distancia;
+		this.numPlazas = numPlazas;
+		this.fecha = fecha;
+		this.nombre = nombre;
+		this.tipo = tipo;
+	}
+
+	public CompeticionDTO(int id, int distancia, int numPlazas, String inicio, String fin, String fecha, String descr,
+			String nombre, String tipo) {
+		this.id = id;
+		this.distancia = distancia;
+		this.numPlazas = numPlazas;
+		this.inicio = inicio;
+		this.fin = fin;
+		this.fecha = fecha;
+		this.descr = descr;
+		this.nombre = nombre;
+		this.tipo = tipo;
+	}
+
+	public CompeticionDTO() {
+	}
 
 	public int getId() {
 		return this.id;

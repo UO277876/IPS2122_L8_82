@@ -14,8 +14,11 @@ public class CompeticionModel {
 	private Database db = new Database();
 
 	// SQL para obtener la lista de competiciones
-	public static final String SQL_LISTA_COMPETICIONES = "SELECT nombre,fecha,tipo,distancia,fin,numPlazas"
-			+ " from Competicion";
+	public static final String SQL_LISTA_COMPETICIONES = "SELECT * from Competicion where fecha>=? order by fecha";
+
+	public CompeticionModel() {
+		db.loadDatabase();
+	}
 
 	/**
 	 * Obtiene la lista de carreras futuras (posteriores a una fecha dada) con el id
@@ -24,17 +27,19 @@ public class CompeticionModel {
 	public List<Object[]> getListaCompeticionesArray(Date fechaInscripcion) {
 		validateNotNull(fechaInscripcion, MSG_FECHA_INSCRIPCION_NO_NULA);
 		String d = Util.dateToIsoString(fechaInscripcion);
-		return db.executeQueryArray(SQL_LISTA_COMPETICIONES);
+		List<Object[]> competiciones = db.executeQueryArray(SQL_LISTA_COMPETICIONES, d);
+		return competiciones;
 	}
 
 	/**
 	 * Obtiene la lista de carreras activas en forma objetos para una fecha de
 	 * inscripcion dada
 	 */
-	public List<CompeticionDTO> getListaCarreras(Date fechaInscripcion) {
+	public List<CompeticionDTO> getListaCompeticiones(Date fechaInscripcion) {
 		validateNotNull(fechaInscripcion, MSG_FECHA_INSCRIPCION_NO_NULA);
 		String d = Util.dateToIsoString(fechaInscripcion);
-		return db.executeQueryPojo(CompeticionDTO.class, SQL_LISTA_COMPETICIONES);
+		List<CompeticionDTO> competiciones = db.executeQueryPojo(CompeticionDTO.class, SQL_LISTA_COMPETICIONES, d);
+		return competiciones;
 	}
 
 	/**
@@ -51,6 +56,7 @@ public class CompeticionModel {
 	 * Actualiza las fechas de inscripcion de una carrera
 	 */
 	public void updateFechasInscripcion(int id, Date inicio, Date fin) {
+
 		CompeticionDTO competicion = this.getCompeticion(id);
 		validateFechasInscripcion(inicio, fin, Util.isoStringToDate(competicion.getFecha()));
 		String sql = "UPDATE carreras SET inicio=?, fin=? WHERE id=?";
