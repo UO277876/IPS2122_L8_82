@@ -1,7 +1,6 @@
 package inscripcion;
 
 import java.util.List;
-import java.util.Random;
 
 import atleta.AtletaDTO;
 import giis.demo.util.ApplicationException;
@@ -23,8 +22,8 @@ public class InscripcionModel {
 	private String listado_inscripciones = "SELECT * FROM Inscripcion WHERE email_atleta = ? ORDER BY ultFechaModif";
 	
 	
-	private static final String SQL_GET_INSCRIPCION = 
-			"SELECT * FROM Inscripcion WHERE email_atleta = ? AND id_competicion = ?";
+	/*private static final String SQL_GET_INSCRIPCION = 
+			"SELECT * FROM Inscripcion WHERE email_atleta = ? AND id_competicion = ?";*/
 	
 	private static final String SQL_OBTENER_DORSALES = 
 			"SELECT * FROM Inscripcion WHERE id_competicion = ?";

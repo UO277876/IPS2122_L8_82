@@ -35,7 +35,7 @@ public class InscripcionController {
 	 */
 	public InscripcionController() {
 		this.im = new InscripcionModel();
-		this.ac = new AtletaController(this);
+		this.ac = new AtletaController();
 		this.cm = new CompeticionController();
 		
 		this.idto = new ArrayList<InscripcionDTO>();
@@ -48,7 +48,7 @@ public class InscripcionController {
 	 */
 	public InscripcionController(InscripcionModel im) {
 		this.im = im;
-		this.ac = new AtletaController(this);
+		this.ac = new AtletaController();
 		this.cm = new CompeticionController();
 		
 		this.idto = new ArrayList<InscripcionDTO>();

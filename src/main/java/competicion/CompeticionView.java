@@ -11,6 +11,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
+
+import atleta.InscripcionAtletaView;
+
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.Window;
@@ -34,6 +37,9 @@ public class CompeticionView extends JFrame {
 	private String fechaHoy;
 	
 
+	private InscripcionAtletaView iav;
+	
+
 	/**
 	 * Launch the application.
 	 */
@@ -54,6 +60,9 @@ public class CompeticionView extends JFrame {
 	 * Create the frame.
 	 */
 	public CompeticionView() {
+
+		iav = new InscripcionAtletaView();
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 656, 475);
 		contentPane = new JPanel();
@@ -96,6 +105,7 @@ public class CompeticionView extends JFrame {
 			btnTablaCarreras = new JButton("APUNTARME");
 			btnTablaCarreras.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					iav.setVisible(true);
 				}
 			});
 			btnTablaCarreras.setBackground(new Color(34, 139, 34));
