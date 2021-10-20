@@ -117,26 +117,4 @@ public class CompeticionDTO {
 	public void setCuota(int cuota) {
 		this.cuota = cuota;
 	}
-
-	/**
-	 * Código de relleno para que calcule algo.
-	 * 
-	 * @param sexo
-	 * @param edad
-	 * @return
-	 */
-	public String calculatarCategoria(String sexo, int edad) {
-		String categoria = "";
-		if (edad < 30)
-			categoria = "NOV";
-		else if (edad < 40)
-			categoria = "EXP";
-		else
-			categoria = "VET";
-		if (sexo.equalsIgnoreCase(AtletaDTO.fem))
-			categoria += "F";
-		else
-			categoria += "M";
-		return categoria;
-	}
 }

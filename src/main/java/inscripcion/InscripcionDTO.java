@@ -121,25 +121,15 @@ public class InscripcionDTO {
 	
 	public void setUltFechaModif(String ultFechaModif) { this.ultFechaModif = ultFechaModif; }
 	
-	/**
-	 * Calcula la categoría.
-	 */
-	@SuppressWarnings("deprecation")
 	public String calculateCategoria() {
 		//obtiene el atleta
 		AtletaModel amodel = new AtletaModel();
 		List<AtletaDTO> atleta = amodel.getAtletaEmail(email_atleta);
 		
-		//calcula la edad del atleta
-		Date date = Util.isoStringToDate(atleta.get(0).getFechaNacimiento());
-		int edad = LocalDate.now().getYear() - date.getYear();
-		
-		//obtiene la competición
-		CompeticionModel cmodel = new CompeticionModel();
-		CompeticionDTO competicion = cmodel.getCompeticion(id_competicion);
-		
-		//obtiene la categoria
-		this.categoria = competicion.calculatarCategoria(atleta.get(0).getGenero(), edad);
+		if (atleta.get(0).getGenero().equalsIgnoreCase(AtletaDTO.fem))
+			categoria += "F";
+		else
+			categoria += "M";
 		return categoria;
 	}
 	
