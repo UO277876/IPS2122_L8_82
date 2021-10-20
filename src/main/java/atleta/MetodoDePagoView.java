@@ -51,6 +51,8 @@ public class MetodoDePagoView extends JFrame{
 		}
 		return lblMetodoDePago;
 	}
+	
+	
 	private JComboBox<String> getCbMetodoDePago() {
 		if (cbMetodoDePago == null) {
 			cbMetodoDePago = new JComboBox<String>();
@@ -60,6 +62,10 @@ public class MetodoDePagoView extends JFrame{
 		}
 		return cbMetodoDePago;
 	}
+	
+	
+	
+	
 	private JButton getBtnAceptar() {
 		if (btnAceptar == null) {
 			btnAceptar = new JButton("Aceptar");
@@ -68,6 +74,7 @@ public class MetodoDePagoView extends JFrame{
 					if(ac.obtenerAtletaEmail(ic.getEmailProvisionalParaPago()) != null) {
 						ic.inscribirAtleta(ac.obtenerAtletaEmail(ic.getEmailProvisionalParaPago()), ic.getIdProvisionalParaPago(), ic.getNewDorsal(), 13, cbMetodoDePago.getSelectedItem().toString());
 						System.out.println("Inscripcion Correcta, tenga una buena tarde");
+						reset();
 					}		
 					else {
 						System.out.println("El atleta no esta registrado, por favor revise si el correo es correcto");
@@ -79,11 +86,24 @@ public class MetodoDePagoView extends JFrame{
 		}
 		return btnAceptar;
 	}
+	
 	private JButton getBtnCancelar() {
 		if (btnCancelar == null) {
 			btnCancelar = new JButton("Cancelar");
+			btnCancelar.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					reset();
+				}
+			});
 			btnCancelar.setBounds(30, 174, 89, 23);
 		}
 		return btnCancelar;
+	}
+	
+	
+	
+	public void reset() {
+		this.cbMetodoDePago.setSelectedIndex(0);
+		this.setVisible(false);
 	}
 }

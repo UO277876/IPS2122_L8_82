@@ -104,11 +104,21 @@ public class InscripcionAtletaView extends JFrame {
 	private JButton getBtnCancelar() {
 		if (btnCancelar == null) {
 			btnCancelar = new JButton("Cancelar");
+			btnCancelar.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					reset();
+				}
+			});
 			btnCancelar.setBounds(250, 262, 85, 21);
 		}
 		return btnCancelar;
 	}
 	
+	public void reset() {
+		this.txtIndiqueCompeticion.setText("");
+		this.txtIndiqueEmail.setText("");
+		setVisible(false);
+	}
 	
 
 }
