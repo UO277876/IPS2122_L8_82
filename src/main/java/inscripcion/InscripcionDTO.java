@@ -16,7 +16,9 @@ public class InscripcionDTO {
 	private final String ESTADO1 = "solicitado";
 	private final String ESTADO2 = "inscrito";
 	private final String ESTADO3 = "participado";
+	private final String ESTADO4 = "Pre-inscrito";
 	
+	private final String metalic = "metalico";
 	private final String tc = "tarjeta";
 	private final String transf = "transferencia";
 	
@@ -71,7 +73,7 @@ public class InscripcionDTO {
 	public String getMetodoPago() { return metodoPago; }
 
 	public void setMetodoPago(String metodoPago) {
-		if(metodoPago.equals(tc) || metodoPago.equals(transf)) {
+		if(metodoPago.equals(tc) || metodoPago.equals(transf) || metodoPago.equals(metalic)) {
 			this.metodoPago = metodoPago;
 		} 
 	}
@@ -83,7 +85,7 @@ public class InscripcionDTO {
 	public String getIEstado() { return estado; }
 
 	public void setEstado(String estado) {
-		if(estado.equals(ESTADO1) || estado.equals(ESTADO2) || estado.equals(ESTADO3) ) {
+		if(estado.equals(ESTADO1) || estado.equals(ESTADO2) || estado.equals(ESTADO3) || estado.equals(ESTADO4) ) {
 			this.estado = estado;
 		} 
 	}
@@ -98,7 +100,14 @@ public class InscripcionDTO {
 			setEstado(ESTADO1);
 			Date dateAct = new Date();
 			this.ultFechaModif = dateFormat.format(dateAct);
-		} else if(metodoPago.equals(transf)) {
+		} 
+		else if(metodoPago.equals(metalic)) {
+			SimpleDateFormat dateFormat = new SimpleDateFormat ("yyyy-MM-dd");
+			setEstado(ESTADO4);
+			Date dateAct = new Date();
+			this.ultFechaModif = dateFormat.format(dateAct);
+		}
+		else if(metodoPago.equals(transf)) {
 			SimpleDateFormat dateFormat = new SimpleDateFormat ("yyyy-MM-dd");
 			setEstado(ESTADO3);
 			Date dateAct = new Date();

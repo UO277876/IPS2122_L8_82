@@ -77,7 +77,7 @@ public class CompeticionView extends JFrame {
 	private JTable getTabCompeticionesForContentPane() {
 		if (tabCompeticiones == null) {
 			tabCompeticiones = new JTable();
-			tabCompeticiones.setRowSelectionAllowed(false);
+			tabCompeticiones.setRowSelectionAllowed(true);
 			tabCompeticiones.setDefaultEditor(Object.class, null);
 		}
 		return tabCompeticiones;
