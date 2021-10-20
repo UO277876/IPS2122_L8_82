@@ -1,5 +1,7 @@
 package competicion;
 
+import atleta.AtletaDTO;
+
 public class CompeticionDTO {
 	private int id;
 	private int distancia;

@@ -3,8 +3,8 @@ package atleta;
 public class AtletaDTO {
 	
 
-	private final static String mas = "masculino";
-	private final static String fem = "femenino";
+	public final static String mas = "masculino";
+	public final static String fem = "femenino";
 	
 	private String email;
 	private String nombre;

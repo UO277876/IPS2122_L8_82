@@ -1,7 +1,15 @@
 package inscripcion;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
+
+import atleta.AtletaDTO;
+import atleta.AtletaModel;
+import competicion.CompeticionDTO;
+import competicion.CompeticionModel;
+import giis.demo.util.Util;
 
 public class InscripcionDTO {
 	
@@ -23,6 +31,7 @@ public class InscripcionDTO {
 	String metodoPago;
 	int id_competicion;
 	String estado;
+	private String categoria;
 
 	public InscripcionDTO() {
 		
@@ -38,6 +47,7 @@ public class InscripcionDTO {
 		this.email_atleta = email_atleta;
 		this.metodoPago = metodoPago;
 		this.id_competicion = id_competicion;
+		this.calculateCategoria();
 	}
 
 	public String getDorsal() { return dorsal; }
@@ -111,5 +121,16 @@ public class InscripcionDTO {
 	
 	public void setUltFechaModif(String ultFechaModif) { this.ultFechaModif = ultFechaModif; }
 	
+	public String calculateCategoria() {
+		//obtiene el atleta
+		AtletaModel amodel = new AtletaModel();
+		List<AtletaDTO> atleta = amodel.getAtletaEmail(email_atleta);
+		
+		if (atleta.get(0).getGenero().equalsIgnoreCase(AtletaDTO.fem))
+			categoria += "F";
+		else
+			categoria += "M";
+		return categoria;
+	}
 	
 }
