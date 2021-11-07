@@ -1,6 +1,6 @@
 package competiciones;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 import giis.demo.util.ApplicationException;
@@ -35,8 +35,10 @@ public class CompeticionModel {
 	 */
 	public void addCompeticion(CompeticionDTO dto) {
 		validateNotNull(dto,MSG_DTO);
+		//validateFechasInscripcion(Util.isoStringToDate(dto.getInicio()), Util.isoStringToDate(dto.getFin()), Util.isoStringToDate(dto.getFecha()));
 		
-		db.executeUpdate(INTRODUCIR_COMPETICION, dto.id, dto.inicio, dto.fin, dto.tipo, dto.numPlazas, Util.isoStringToDate(dto.getFecha()), dto.nombre, dto.descripcion,dto.distancia);
+		db.executeUpdate(INTRODUCIR_COMPETICION, dto.id, dto.inicio, dto.fin, dto.tipo, 
+				dto.numPlazas, Util.isoStringToDate(dto.getFecha()), dto.nombre, dto.descripcion,dto.distancia);
 	}
 	
 	/**

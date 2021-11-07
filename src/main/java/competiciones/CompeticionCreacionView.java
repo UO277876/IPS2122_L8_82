@@ -230,7 +230,7 @@ public class CompeticionCreacionView extends JFrame {
 		if (txFecha == null) {
 			txFecha = new JTextField();
 			txFecha.setForeground(Color.GRAY);
-			txFecha.setText("YYYY/MM/DD");
+			txFecha.setText("YYYY-MM-DD");
 			txFecha.setFont(new Font("Tahoma", Font.PLAIN, 13));
 			txFecha.setColumns(10);
 			txFecha.setBounds(245, 198, 155, 28);
@@ -316,8 +316,8 @@ public class CompeticionCreacionView extends JFrame {
 			correcto = false;
 		}
 		
-		if(getTxFecha().getText().equals("YYYY/MM/DD")) {
-			listado += ">" + "Debe introducir la fecha";
+		if(getTxFecha().getText().equals("YYYY-MM-DD")) {
+			listado += ">" + "Debe introducir la fecha en el formato correcto";
 			correcto = false;
 		}
 		
