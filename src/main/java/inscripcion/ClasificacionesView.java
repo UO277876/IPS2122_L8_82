@@ -2,7 +2,6 @@ package inscripcion;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
@@ -14,8 +13,12 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.UIManager;
+import javax.swing.table.TableModel;
+
+import competiciones.CompeticionController;
+import giis.demo.util.SwingUtil;
 
 @SuppressWarnings("serial")
 public class ClasificacionesView extends JFrame {
@@ -23,12 +26,13 @@ public class ClasificacionesView extends JFrame {
 	private JLabel lbId;
 	private JButton btnID;
 	private JTextField txID;
-	private TextArea txaClasificacion;
 
 	// Otros atributos
 	private InscripcionController ic;
+	private CompeticionController cm;
 	private JScrollPane scrpClasificacion;
 	private JComboBox<String> cbId;
+	private JTable tbClasificacion;
 
 	public ClasificacionesView() {
 		setResizable(false);
@@ -41,18 +45,19 @@ public class ClasificacionesView extends JFrame {
 		getContentPane().add(getTxID());
 		getContentPane().add(getScrollPane_1());
 		getContentPane().add(getCbId());
-		setBounds(100, 100, 700, 400);
+		setBounds(100, 100, 661, 420);
 
 		// Inicializacion de la clase InscripcionController
 		this.ic = new InscripcionController();
+		this.cm = new CompeticionController();
 	}
 
 	private JLabel getLbId() {
 		if (lbId == null) {
-			lbId = new JLabel("Introduzca ID:");
+			lbId = new JLabel("Nombre de la competición:");
 			lbId.setLabelFor(getTxID());
 			lbId.setFont(new Font("Tahoma", Font.PLAIN, 15));
-			lbId.setBounds(81, 35, 150, 13);
+			lbId.setBounds(21, 35, 182, 13);
 		}
 		return lbId;
 	}
@@ -68,7 +73,7 @@ public class ClasificacionesView extends JFrame {
 			btnID.setBackground(new Color(0, 204, 0));
 			btnID.setFont(new Font("Tahoma", Font.BOLD, 13));
 			btnID.setForeground(Color.WHITE);
-			btnID.setBounds(486, 32, 85, 21);
+			btnID.setBounds(542, 32, 85, 21);
 		}
 		return btnID;
 	}
@@ -76,7 +81,7 @@ public class ClasificacionesView extends JFrame {
 	private JTextField getTxID() {
 		if (txID == null) {
 			txID = new JTextField();
-			txID.setBounds(187, 30, 169, 27);
+			txID.setBounds(213, 30, 211, 27);
 			txID.setColumns(10);
 		}
 		return txID;
@@ -85,29 +90,28 @@ public class ClasificacionesView extends JFrame {
 	private JScrollPane getScrollPane_1() {
 		if (scrpClasificacion == null) {
 			scrpClasificacion = new JScrollPane();
-			scrpClasificacion.setBounds(81, 99, 546, 255);
-			scrpClasificacion.setViewportView(getTxaClasificacion());
+			scrpClasificacion.setBounds(21, 87, 606, 267);
+			scrpClasificacion.setViewportView(getTbClasificacion());
 		}
 		return scrpClasificacion;
 	}
 
-	private TextArea getTxaClasificacion() {
-		if (txaClasificacion == null) {
-			txaClasificacion = new TextArea();
-			txaClasificacion.setFont(new Font("Tahoma", Font.PLAIN, 13));
-			txaClasificacion.setBackground(UIManager.getColor("Button.light"));
-			txaClasificacion.setEditable(false);
-		}
-		return txaClasificacion;
-	}
+
 
 	private JComboBox<String> getCbId() {
 		if (cbId == null) {
 			cbId = new JComboBox<String>();
 			cbId.setModel(new DefaultComboBoxModel<String>(new String[] { "Absoluta", "Genero" }));
-			cbId.setBounds(376, 33, 98, 21);
+			cbId.setBounds(434, 33, 98, 21);
 		}
 		return cbId;
+	}
+	
+	private JTable getTbClasificacion() {
+		if (tbClasificacion == null) {
+			tbClasificacion = new JTable();
+		}
+		return tbClasificacion;
 	}
 
 	// ----------------------------- Métodos independientes de la interfaz ---------------------------------------
@@ -122,24 +126,29 @@ public class ClasificacionesView extends JFrame {
 			JOptionPane.showMessageDialog(null, "Error: Campo ID en blanco");
 		} else {
 			// 2. Listo inscripciones por emails
-			try {
-				int id = Integer.valueOf(getTxID().getText());
+				String name = getTxID().getText();
 				String tipo = (String) getCbId().getSelectedItem();
 
-				// 2.1 Compruebo que el id existe
-				List<String> listadoIns = ic.clasificacion(tipo, id);
+				// 2.1 Compruebo que el name existe
+				if(!cm.obtenerCompeticionNameBool(name)) {
+					JOptionPane.showMessageDialog(null, "No se han encontrado competiciones con el nombre introducido.");
+				} else  {
+					List<ClasificacionDTO> listadoIns = ic.clasificacion(tipo, name);
 
-				if ((listadoIns.size() <= 0 && tipo.equals("Absoluta")) || (listadoIns.size() == 2 && tipo.equals("Genero"))) {
-					getTxaClasificacion().setText("No se han encontrado competiciones con el id introducido.");
-				} else {
 					// 3. Obtengo la cadena
-					getTxaClasificacion().setText(ic.imprimirListadoClasif(listadoIns));
-				}
-			} catch (NumberFormatException e) {
-				getTxaClasificacion().setText("Error, solo se aceptan números en el campo ID.");
-			}
+					//getTxaClasificacion().setText(ic.imprimirListadoClasif(listadoIns));
+					getListaClasificaciones(listadoIns);
+			} 
 
 		}
+
+	}
+	
+	public void getListaClasificaciones(List<ClasificacionDTO> listadoIns) {
+		TableModel tmodel = SwingUtil.getTableModelFromPojos(listadoIns,
+				new String[] { "numero", "genero", "nombre", "tiempo" });
+		getTbClasificacion().setModel(tmodel);
+		SwingUtil.autoAdjustColumns(getTbClasificacion());
 	}
 
 	// ----------------------------- Métodos de revision ---------------------------------------
@@ -151,5 +160,4 @@ public class ClasificacionesView extends JFrame {
 	private boolean isVacio() {
 		return txID.getText().contentEquals("");
 	}
-
 }

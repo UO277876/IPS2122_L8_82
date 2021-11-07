@@ -1,19 +1,22 @@
 package inscripcion;
 
-import javax.swing.JFrame;
 import java.awt.Color;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JButton;
-import javax.swing.JTextField;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.util.List;
-import java.awt.event.ActionEvent;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
-import java.awt.TextArea;
-import javax.swing.UIManager;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.table.TableModel;
+
+import giis.demo.util.SwingUtil;
 
 @SuppressWarnings("serial")
 public class InscripcionView extends JFrame {
@@ -21,11 +24,11 @@ public class InscripcionView extends JFrame {
 	private JLabel lbEmail;
 	private JButton btnEmail;
 	private JTextField txEmail;
-	private TextArea txaListado;
 
 	// Otros atributos
 	private InscripcionController ic;
 	private JScrollPane scrpListado;
+	private JTable tbListado;
 
 	public InscripcionView() {
 		setResizable(false);
@@ -87,19 +90,17 @@ public class InscripcionView extends JFrame {
 		if (scrpListado == null) {
 			scrpListado = new JScrollPane();
 			scrpListado.setBounds(81, 99, 546, 255);
-			scrpListado.setViewportView(getTxaListado());
+			
+			scrpListado.setViewportView(getTbListado());
 		}
 		return scrpListado;
 	}
-
-	private TextArea getTxaListado() {
-		if (txaListado == null) {
-			txaListado = new TextArea();
-			txaListado.setFont(new Font("Tahoma", Font.PLAIN, 13));
-			txaListado.setBackground(UIManager.getColor("Button.light"));
-			txaListado.setEditable(false);
+	
+	private JTable getTbListado() {
+		if (tbListado == null) {
+			tbListado = new JTable();
 		}
-		return txaListado;
+		return tbListado;
 	}
 
 	// ----------------------------- Métodos independientes de la interfaz ---------------------------------------
@@ -115,16 +116,23 @@ public class InscripcionView extends JFrame {
 			// 2. Listo inscripciones por emails
 			String email = txEmail.getText();	
 			// 2.1 Compruebo que el email existe
-			List<String> listadoIns = ic.listarPorIds(email);
+			List<ListadoDTO> listadoIns = ic.listarPorIds(email);
 			
 			if(listadoIns.size() <= 0) {
-				getTxaListado().setText("No se han encontrado inscripciones con el email introducido.");
+				JOptionPane.showMessageDialog(null, "No se han encontrado inscripciones con el email introducido.");
 			} else {
 				// 3. Obtengo la cadena 
-				getTxaListado().setText(ic.imprimirListado(listadoIns));
+				getListado(listadoIns);
 			}
 
 		}
+	}
+	
+	public void getListado(List<ListadoDTO> listadoIns) {
+		TableModel tmodel = SwingUtil.getTableModelFromPojos(listadoIns,
+				new String[] { "nombre", "estado", "fecha" });
+		getTbListado().setModel(tmodel);
+		SwingUtil.autoAdjustColumns(getTbListado());
 	}
 
 	// ----------------------------- Métodos de revision ---------------------------------------

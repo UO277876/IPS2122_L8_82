@@ -15,6 +15,7 @@ public class CompeticionModel {
 
 	// SQL para obtener la lista de competiciones
 	public static final String SQL_LISTA_COMPETICIONES = "SELECT * from Competicion where fecha>=? order by fecha";
+	public static final String SQL_GET_LISTA_NOMBRE = "SELECT * from Competicion where nombre = ?";
 
 	public CompeticionModel() {
 		db.loadDatabase();
@@ -81,4 +82,5 @@ public class CompeticionModel {
 		if (!condition)
 			throw new ApplicationException(message);
 	}
+	
 }

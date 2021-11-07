@@ -26,7 +26,7 @@ public class InscripcionModel {
 			"SELECT * FROM Inscripcion WHERE email_atleta = ? AND id_competicion = ?";*/
 	
 	private static final String SQL_OBTENER_DORSALES = 
-			"SELECT * FROM Inscripcion WHERE id_competicion = ?";
+			"SELECT * FROM Inscripcion WHERE competicion_id = ?";
 	
 	public static final String SQL_INSCRIBIRSE = 
 			"INSERT into Inscripcion (email_atleta, id_competicion, dorsal, tiempo, precio, ultFechaModif, categoriaSexo, metodoPago) VALUES (?,?,?,?,?,?,?,?)";
