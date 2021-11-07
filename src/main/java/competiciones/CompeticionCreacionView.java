@@ -42,7 +42,7 @@ public class CompeticionCreacionView extends JFrame {
 
 	public CompeticionCreacionView() {
 		setResizable(false);
-		setTitle("Listado de inscripciones");
+		setTitle("Creación Competiciones");
 		getContentPane().setBackground(Color.WHITE);
 		getContentPane().setForeground(Color.WHITE);
 		getContentPane().setLayout(null);
@@ -84,7 +84,7 @@ public class CompeticionCreacionView extends JFrame {
 			lbProblemas.setDisplayedMnemonic('I');
 			lbProblemas.setLabelFor(txProblemas);
 			lbProblemas.setFont(new Font("Tahoma", Font.PLAIN, 15));
-			lbProblemas.setBounds(517, 32, 81, 19);
+			lbProblemas.setBounds(494, 32, 81, 19);
 		}
 		return lbProblemas;
 	}
@@ -241,7 +241,7 @@ public class CompeticionCreacionView extends JFrame {
 	private JScrollPane getScrollPane_1() {
 		if (scrollPane_1 == null) {
 			scrollPane_1 = new JScrollPane();
-			scrollPane_1.setBounds(517, 67, 245, 164);
+			scrollPane_1.setBounds(494, 67, 268, 164);
 			
 			txProblemas = new JTextArea();
 			txProblemas.setEditable(false);
@@ -261,7 +261,7 @@ public class CompeticionCreacionView extends JFrame {
 				}
 			});
 			btInscripcion.setFont(new Font("Tahoma", Font.PLAIN, 13));
-			btInscripcion.setBounds(517, 267, 176, 21);
+			btInscripcion.setBounds(494, 266, 176, 21);
 		}
 		return btInscripcion;
 	}
@@ -302,22 +302,22 @@ public class CompeticionCreacionView extends JFrame {
 		String listado = "";
 		boolean correcto = true;
 		if(isVacio()) {
-			listado += ">" + "El campo nombre o fecha no puede estar vacío";
+			listado += ">" + "El campo nombre o fecha no puede estar vacío" + "\n";
 			correcto = false;
 		}
 		
 		if(numPlazas < 0) {
-			listado += ">" + "El número de plazas debe ser mayor o igual a 0";
+			listado += ">" + "El número de plazas debe ser mayor o igual a 0" + "\n";
 			correcto = false;
 		}
 		
 		if(distancia < 0) {
-			listado += ">" + "La distancia debe ser mayor o igual a 0";
+			listado += ">" + "La distancia debe ser mayor o igual a 0" + "\n";
 			correcto = false;
 		}
 		
 		if(getTxFecha().getText().equals("YYYY-MM-DD")) {
-			listado += ">" + "Debe introducir la fecha en el formato correcto";
+			listado += ">" + "Debe introducir la fecha en el formato correcto"+ "\n";
 			correcto = false;
 		}
 		
