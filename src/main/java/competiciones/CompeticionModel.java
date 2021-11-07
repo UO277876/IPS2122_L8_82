@@ -12,8 +12,10 @@ public class CompeticionModel {
 	private static final String MSG_NOMBRE = "El nombre no puede ser nulo o vacío";
 	
 	private Database db=new Database();
-	public String listado_competiciones = "SELECT * FROM Competicion c WHERE id = ? ";
-	public static final String SQL_GET_LISTA_NOMBRE = "SELECT * from Competicion where nombre = ?";
+	private static final String LISTADO_COMPETICIONES = "SELECT * FROM Competicion c WHERE id = ? ";
+	private static final String SQL_GET_LISTA_NOMBRE = "SELECT * from Competicion where nombre = ?";
+	private static final String INTRODUCIR_COMPETICION = "INSERT INTO Competicion(id, inicio, fin, tipo, numPlazas, fecha, nombre, descr, distancia) VALUES (?,?,?,?,?,?,?,?,?)"
+	
 	
 	/**
 	 * Obtiene la competición de un solo id
