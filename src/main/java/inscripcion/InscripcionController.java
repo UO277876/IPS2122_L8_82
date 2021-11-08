@@ -237,22 +237,31 @@ public class InscripcionController {
 		return idto;
 	}
 	
+	/**
+	 * Primer método para añadir un carácter al dorsal
+	 * @return
+	 */
 	public String getNewDorsal() {
 		Random rng = new Random();
-		char[] text = new char[4];
-	    for (int i = 0; i < 4; i++)
+		char[] text = new char[1];
+	    for (int i = 0; i < 1; i++)
 	    {
 	        text[i] = characters.charAt(rng.nextInt(characters.length()));
 	    }
 	    return new String(text);
 	}
 	
-	public String getNewDorsalDouble() {
+	/**
+	 * Si se ha encontrado un dorsal asignado, este método añade
+	 * otro carácter random al dorsal 
+	 */
+	public String getNewDorsalDouble(char dorsal) {
 		Random rng = new Random();
-		char[] text = new char[4];
-	    for (int i = 0; i < 4; i++)
+		char[] text = new char[1];
+		text[0] = dorsal;
+	    for (int i = 1; i < 2; i++)
 	    {
-	        text[i] = characters.charAt(rng.nextInt(characters.length()));
+	        text[i] = characters2.charAt(rng.nextInt(characters2.length()));
 	    }
 	    return new String(text);
 	}
@@ -277,7 +286,7 @@ public class InscripcionController {
 		if(pc.getEstado(email)) {
 			String dorsal = getNewDorsal();
 			while(im.verificarDorsal(dorsal, email, id_competicion)) {
-				dorsal = getNewDorsalDouble();
+				dorsal = getNewDorsalDouble(dorsal.charAt(0));
 			}
 			
 			im.actualizarDorsal(dorsal, email, id_competicion);
