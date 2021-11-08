@@ -266,9 +266,9 @@ public class InscripcionController {
 	    return new String(text);
 	}
 	
-	
 	public void inscribirAtleta(AtletaDTO atleta, int id_competicion, String dorsal, int precio, String metodoPago) {
 		im.inscribirse(atleta, id_competicion, dorsal, precio, getActualDate(), metodoPago);
+		asignarDorsal(atleta.getEmail(), id_competicion);
 	}
 	
 	
