@@ -1,5 +1,6 @@
 package inscripcion;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -8,23 +9,24 @@ import java.util.Random;
 
 import atleta.AtletaController;
 import atleta.AtletaDTO;
-
 import competiciones.CompeticionController;
 import competiciones.CompeticionDTO;
+import metododepago.MetodoDePagoController;
 
 public class InscripcionController {
 	
 
-	private static final String characters = "1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	private static final String characters = "1234567890OPQRSTUVWXYZ";
+	private static final String characters2 = "1234567890";
 	
 	
 	private InscripcionModel im;
 
 	private AtletaController ac;
 	private CompeticionController cm;
+	private MetodoDePagoController pc;
 
 	private List<InscripcionDTO> idto;
-	
 	
 	private String emailProvisionalParaPago;
 	private int idProvisionalParaPago;
@@ -35,8 +37,10 @@ public class InscripcionController {
 	 */
 	public InscripcionController() {
 		this.im = new InscripcionModel();
+		
 		this.ac = new AtletaController();
 		this.cm = new CompeticionController();
+		this.pc = new MetodoDePagoController();
 		
 		this.idto = new ArrayList<InscripcionDTO>();
 	}
@@ -72,8 +76,6 @@ public class InscripcionController {
 	public int getIdProvisionalParaPago() {
 		return this.idProvisionalParaPago;
 	}
-	
-	
 	
 	/**
 	 * Crea la lista de inscripciones usando los id de una carrera ordenando por tiempo y genero
@@ -179,31 +181,9 @@ public class InscripcionController {
 		
 		return result;
 	}
-
-//	/**
-//	 * Relelna la clasificación con atletas
-//	 * 
-//	 * @return una lista de ClasificacionDTO
-//	 */
-//	private List<ClasificacionDTO> rellenarConAtletas() {
-//		AtletaDTO am = new AtletaDTO();
-//		
-//		List<String> result = new ArrayList<String>();
-//		String linea = "";
-//		int index = 1;
-//		
-//		for(InscripcionDTO ic : this.idto) {
-//			am = obtenerAtleta(ic.getEmail_atleta());
-//			linea = index + ", " + ic.categoriaSexo + ", " + am.getNombre() + ", " + ic.getTiempo();
-//			
-//			result.add(linea);
-//			index++;
-//		}
-//		return result;
-//	}
 	
 	/**
-	 * Relelna la clasificación con atletas
+	 * Rellena la clasificación con atletas
 	 * 
 	 * @return una lista de ClasificacionDTO
 	 */
@@ -234,14 +214,6 @@ public class InscripcionController {
 		AtletaDTO result = ac.obtenerAtletaEmail(email_atleta);
 		return result;
 	}
-
-	public String imprimirListado(List<String> listadoIns) {
-		String listado = "";
-		for(int i=0; i < listadoIns.size(); i++) {
-			listado += "> " + listadoIns.get(i) + "\n";
-		}
-		return listado;
-	}
 	
 	/**
 	 * Almacena la lista de inscripciones según el email de un atleta
@@ -265,9 +237,17 @@ public class InscripcionController {
 		return idto;
 	}
 	
-	
-	
 	public String getNewDorsal() {
+		Random rng = new Random();
+		char[] text = new char[4];
+	    for (int i = 0; i < 4; i++)
+	    {
+	        text[i] = characters.charAt(rng.nextInt(characters.length()));
+	    }
+	    return new String(text);
+	}
+	
+	public String getNewDorsalDouble() {
 		Random rng = new Random();
 		char[] text = new char[4];
 	    for (int i = 0; i < 4; i++)
@@ -289,7 +269,20 @@ public class InscripcionController {
 		return dateFormat.format(dateAct);
 	}
 	
-	
+	/**
+	 * Asigna un dorsal a un atleta en concreto, recién inscrito
+	 * 	RESERVADOS: A B C D E F G H I J K L M N
+	 */
+	public void asignarDorsal(String email, int id_competicion) {
+		if(pc.getEstado(email)) {
+			String dorsal = getNewDorsal();
+			while(im.verificarDorsal(dorsal, email, id_competicion)) {
+				dorsal = getNewDorsalDouble();
+			}
+			
+			im.actualizarDorsal(dorsal, email, id_competicion);
+		}
+	}
 	
 	/*
 	public void ChangePaidMethod(String email, String id, String newPaidMethod) {

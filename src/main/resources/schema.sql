@@ -51,7 +51,7 @@ create table Inscripcion(
 drop table if exists MetodoDePago;
 
 create table MetodoDePago(
-	id_metodopago varchar(32) NOT NULL,
+	id_metodopago int NOT NULL,
 	tipo varchar(32) NOT NULL,
 	estado boolean,
 	email_atleta varchar(32) not null,

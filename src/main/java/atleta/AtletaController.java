@@ -30,9 +30,5 @@ public class AtletaController {
 		return am.getAtletaEmail(email).get(0);
 	}
 	
-	
-	
-	
-
 
 }

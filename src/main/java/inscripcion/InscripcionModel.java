@@ -8,19 +8,19 @@ import giis.demo.util.Database;
 
 public class InscripcionModel {
 	
-	
-	
-	
 	// Mensajes de error
 	private static final String MSG_ID_NO_NULO = "El id no puede ser nulo";
 	private static final String MSG_GENERO_NO_NULO = "El genero no puede ser nulo";
-	private static final String MSG_EMAIL_NO_NULO = "El email no puede ser nulo";
+	private static final String MSG_EMAIL_NO_NULO = "El email no puede ser nulo o vacio";
+	private static final String MSG_DORSAL_NO_NULO = "El email no puede ser nulo o vacio";
 	
+	// Sentencias
 	private Database db=new Database();
 	private String listado_inscr_id_genero = "SELECT * FROM Inscripcion WHERE id_competicion = ? and categoriaSexo = ? ORDER BY tiempo";
 	private String listado_inscr_id_absoluta = "SELECT * FROM Inscripcion WHERE id_competicion = ? ORDER BY tiempo";
 	private String listado_inscripciones = "SELECT * FROM Inscripcion WHERE email_atleta = ? ORDER BY ultFechaModif";
-	
+	private String actualizar_dorsal = "UPDATE Inscripcion SET dorsal = ? WHERE email_atleta = ? and id_competicion = ?";
+	private String obtener_por_dorsal = "SELECT * FROM Inscripcion WHERE dorsal = ? and email_atleta = ? and id_competicion = ?";
 	
 	/*private static final String SQL_GET_INSCRIPCION = 
 			"SELECT * FROM Inscripcion WHERE email_atleta = ? AND id_competicion = ?";*/
@@ -84,16 +84,51 @@ public class InscripcionModel {
 		db.executeUpdate(sql, atleta.getEmail(), id_competicion, dorsal, "---" , precio, ultFechaModif, atleta.getGenero(), metodoPago);
 	}
 	
+	/**
+	 * Actualiza el dorsal de un atleta de una competición en concreto
+	 * @param email_atleta
+	 * @param id_competicion
+	 */
+	public void actualizarDorsal(String dorsal, String email, int id_competicion) {
+		VerificarCondicionesDorsal(dorsal, email, id_competicion);
+		
+		db.executeUpdate(actualizar_dorsal, dorsal, email, id_competicion);
+	}
 	
+	/**
+	 * Verifica si una inscripcion tiene ya dorsal asociado
+	 */
+	public boolean verificarDorsal(String dorsal, String email, int id_competicion) {
+		validateNotNull(email,MSG_EMAIL_NO_NULO);
+		
+		List<InscripcionDTO> result = db.executeQueryPojo(InscripcionDTO.class, obtener_por_dorsal, dorsal, email, id_competicion);
+		return result.size() > 0;
+	}
 	
 	/* De uso general para validacion de objetos */
 	private void validateNotNull(Object obj, String message) {
 		if (obj==null)
 			throw new ApplicationException(message);
 	}
+	
+	private void validateNotEmpty(String obj, String message) {
+		if (obj.equals(""))
+			throw new ApplicationException(message);
+	}
+	
+	/**
+	 * Verifica las condiciones de dorsal, email e id_competicion
+	 * - Que no sean null
+	 * - Que las cadenas no sean vacías
+	 */
+	private void VerificarCondicionesDorsal(String dorsal, String email, int id_competicion) {
+		validateNotNull(email, MSG_EMAIL_NO_NULO);
+		validateNotNull(id_competicion, MSG_ID_NO_NULO);
+		validateNotEmpty(email, MSG_EMAIL_NO_NULO);
+		validateNotNull(dorsal, MSG_DORSAL_NO_NULO);
+		validateNotEmpty(dorsal, MSG_DORSAL_NO_NULO);
+	}
 
-	
-	
 	
 	//METODOS PARA CAMBIAR LA FORMA DE PAGO DE UNA COMPETICION YA INSCRITA HECHOS SIN QUERER (OSCAR)
 	/*
