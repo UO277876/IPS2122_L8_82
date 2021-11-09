@@ -1,27 +1,22 @@
 package atleta;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
 import java.awt.BorderLayout;
-import javax.swing.JLabel;
-
+import java.awt.Color;
 import java.awt.Font;
-import javax.swing.JTextField;
-
-import inscripcion.InscripcionController;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.Color;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 @SuppressWarnings("serial")
 public class RegistroAtletaView extends JFrame {
 	
 	private AtletaController ac;
-	private InscripcionController ic;
-	private MetodoDePagoView metododepagoview;
 	
 	private JPanel panel;
 	private JLabel lbNombre;
@@ -41,7 +36,6 @@ public class RegistroAtletaView extends JFrame {
 		setTitle("Registro Atleta");
 		setResizable(false);
 		ac = new AtletaController();
-		ic = new InscripcionController();
 		
 		
 		getContentPane().add(getPanel(), BorderLayout.CENTER);
@@ -144,11 +138,7 @@ public class RegistroAtletaView extends JFrame {
 			btnAceptar.setForeground(Color.WHITE);
 			btnAceptar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					ic.setEmailProvisionalParaPago(txNombre.getText());
-					ic.setIdProvisionalParaPago(Integer.parseInt(txDni.getText()));
-
-					metododepagoview = new MetodoDePagoView(ic, ac);
-					metododepagoview.setVisible(true);
+					
 				}
 			});
 			btnAceptar.setBounds(364, 282, 85, 21);
@@ -175,6 +165,8 @@ public class RegistroAtletaView extends JFrame {
 	public void reset() {
 		this.txDni.setText("");
 		this.txNombre.setText("");
+		this.txEdad.setText("");
+		this.txEmail.setText("");
 		setVisible(false);
 	}
 	
