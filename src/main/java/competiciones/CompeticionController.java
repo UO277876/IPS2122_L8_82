@@ -36,10 +36,13 @@ public class CompeticionController {
 	 * la asignacion se produce tras el cierre de inscripciones
 	 */
 	private void asignarDorsales() {
+		// 1. Se obtienen todas las competiciones
 		List<CompeticionDTO> competiciones = cm.getCompeticiones();
 		for(CompeticionDTO competicion : competiciones) {
+			// 2. Se mira si los plazos de inscripción estan terminados
 			Date actual = new Date();
 			if(Util.isoStringToDate(competicion.getFin()).before(actual)){
+				// 3. Se obtienen todas las inscripciones de la competicion y se asignan los dorsales
 				List<InscripcionDTO> atletas = im.getAtletasCompeticion(competicion.getId());
 				for(InscripcionDTO atleta : atletas) {
 					im.asignarDorsal(atleta.getEmail_atleta(),competicion.getId());
