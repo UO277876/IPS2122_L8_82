@@ -1,11 +1,13 @@
 package inscripcion;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
 import atleta.AtletaDTO;
 import atleta.AtletaModel;
+import giis.demo.util.Util;
 
 public class InscripcionDTO {
 	
@@ -43,7 +45,7 @@ public class InscripcionDTO {
 		this.email_atleta = email_atleta;
 		this.metodoPago = metodoPago;
 		this.id_competicion = id_competicion;
-		this.calculateCategoria();
+		this.calculaCategoria();
 	}
 
 	public String getDorsal() { return dorsal; }
@@ -117,16 +119,35 @@ public class InscripcionDTO {
 	
 	public void setUltFechaModif(String ultFechaModif) { this.ultFechaModif = ultFechaModif; }
 	
-	public String calculateCategoria() {
+	public String calculaCategoria() {
 		//obtiene el atleta
 		AtletaModel amodel = new AtletaModel();
 		List<AtletaDTO> atleta = amodel.getAtletaEmail(email_atleta);
-		
-		if (atleta.get(0).getGenero().equalsIgnoreCase(AtletaDTO.fem))
-			categoria += "F";
-		else
-			categoria += "M";
+		calculaCategoriaEdad(atleta.get(0));
+		calculaCategoriaGenero(atleta.get(0));
 		return categoria;
 	}
 	
+	private void calculaCategoriaEdad(AtletaDTO atleta) {
+		int edad = LocalDate.now().getYear() - Util.isoStringToDate(atleta.getFechaNacimiento()).getYear();
+		if(edad < 35) 
+			categoria = "SENIOR";
+		else {
+			char cat = 'A';
+			for(int i = 40; i < 90; i += 5) {
+				if(edad < i) {
+					categoria += "VET" + cat;
+					break;
+				}
+				cat++;
+			}
+		}
+	}
+	
+	private void calculaCategoriaGenero(AtletaDTO atleta) {
+		if (atleta.getGenero().equalsIgnoreCase(AtletaDTO.fem))
+			categoria += "F";
+		else
+			categoria += "M";
+	}
 }
