@@ -20,7 +20,6 @@ import javax.swing.JTextField;
 public class RegistroAtletaView extends JFrame {
 	
 	private AtletaController ac;
-	private boolean añadido;
 
 	private JPanel panel;
 	private JLabel lbNombre;
@@ -28,7 +27,7 @@ public class RegistroAtletaView extends JFrame {
 	private JTextField txNombre;
 	private JLabel lbDni;
 	private JTextField txDni;
-	private JButton btnAceptar;
+	private JButton btnContinuar;
 	private JButton btnCancelar;
 	private JLabel lbEmail;
 	private JTextField txEmail;
@@ -38,12 +37,13 @@ public class RegistroAtletaView extends JFrame {
 	private JLabel lbIncidencias;
 	private JScrollPane scrollPane;
 	private JTextArea txProblemas;
+	private JButton btnRegistrar;
+	private JLabel lbCorrecto;
 	
 	public RegistroAtletaView() {
 		setTitle("Registro Atleta");
 		setResizable(false);
 		ac = new AtletaController();
-		this.añadido = false;
 		
 		
 		getContentPane().add(getPanel(), BorderLayout.CENTER);
@@ -59,7 +59,7 @@ public class RegistroAtletaView extends JFrame {
 			panel.add(getTxNombre());
 			panel.add(getLbDni());
 			panel.add(getTxDni());
-			panel.add(getBtnAceptar());
+			panel.add(getBtnContinuar());
 			panel.add(getBtnCancelar());
 			panel.add(getLbEmail());
 			panel.add(getTxEmail());
@@ -69,6 +69,8 @@ public class RegistroAtletaView extends JFrame {
 			panel.add(getTxEdad());
 			panel.add(getLbIncidencias());
 			panel.add(getScrollPane());
+			panel.add(getBtnRegistrar());
+			panel.add(getLbCorrecto());
 		}
 		return panel;
 	}
@@ -156,22 +158,23 @@ public class RegistroAtletaView extends JFrame {
 		return txDni;
 	}
 	
-	private JButton getBtnAceptar() {
-		if (btnAceptar == null) {
-			btnAceptar = new JButton("Aceptar");
-			btnAceptar.setMnemonic('A');
-			btnAceptar.setFont(new Font("Tahoma", Font.BOLD, 11));
-			btnAceptar.setBackground(new Color(51, 204, 0));
-			btnAceptar.setForeground(Color.WHITE);
-			btnAceptar.addActionListener(new ActionListener() {
+	private JButton getBtnContinuar() {
+		if (btnContinuar == null) {
+			btnContinuar = new JButton("Continuar");
+			btnContinuar.setEnabled(false);
+			btnContinuar.setMnemonic('n');
+			btnContinuar.setFont(new Font("Tahoma", Font.BOLD, 11));
+			btnContinuar.setBackground(new Color(51, 204, 0));
+			btnContinuar.setForeground(Color.WHITE);
+			btnContinuar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					crearAtleta();
+					reset();
 					
 				}
 			});
-			btnAceptar.setBounds(522, 282, 85, 21);
+			btnContinuar.setBounds(509, 282, 98, 21);
 		}
-		return btnAceptar;
+		return btnContinuar;
 	}
 	private JButton getBtnCancelar() {
 		if (btnCancelar == null) {
@@ -185,9 +188,28 @@ public class RegistroAtletaView extends JFrame {
 					reset();
 				}
 			});
-			btnCancelar.setBounds(427, 282, 85, 21);
+			btnCancelar.setBounds(414, 282, 85, 21);
 		}
 		return btnCancelar;
+	}
+	
+	private JButton getBtnRegistrar() {
+		if(btnRegistrar == null){
+			btnRegistrar = new JButton("Registrar");
+			btnRegistrar.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					crearAtleta();
+					
+				}
+			});
+			btnRegistrar.setMnemonic('R');
+			btnRegistrar.setForeground(Color.WHITE);
+			btnRegistrar.setFont(new Font("Tahoma", Font.BOLD, 11));
+			btnRegistrar.setBackground(Color.BLUE);
+			btnRegistrar.setBounds(195, 245, 85, 21);
+		}
+		
+		return btnRegistrar;
 	}
 	
 	public void reset() {
@@ -195,6 +217,9 @@ public class RegistroAtletaView extends JFrame {
 		this.txNombre.setText("");
 		this.txEdad.setText("");
 		this.txEmail.setText("");
+		getBtnContinuar().setEnabled(false);
+		getBtnRegistrar().setEnabled(true);
+		getLbCorrecto().setVisible(false);
 		setVisible(false);
 	}
 	
@@ -236,7 +261,9 @@ public class RegistroAtletaView extends JFrame {
 		String edad = getTxEdad().getText();
 		
 		if(control()) {
-			setAñadido(ac.crearAtleta(email,nombre,dni,genero,edad));
+			boolean añadido = ac.crearAtleta(email,nombre,dni,genero,edad);
+			setTexto(añadido);
+			
 		}
 	}
 	
@@ -258,8 +285,45 @@ public class RegistroAtletaView extends JFrame {
 			correcto = false;
 		}
 		
+		listado += ">" + controlarFecha();
+		
 		txProblemas.setText(listado);
 		return correcto;
+	}
+	
+	private String controlarFecha() {
+		try {
+			String edad = getTxEdad().getText();
+			String[] parts = edad.split("-");
+			int año = Integer.valueOf(parts[0]);
+			int mes = Integer.valueOf(parts[1]);
+			int dia = Integer.valueOf(parts[2]);
+			
+			if(año >= 1920 && mes <= 12 && mes > 0 && dia <= 31 && dia > 0 ) {
+				return "Formato fecha correcto";
+			} else {
+				return "Parámetro fecha incorrecto";
+			}
+		
+		} catch(NumberFormatException e ) {
+			return "Formato fecha incorrecto";
+		}
+		
+		
+	}
+	
+	private void setTexto(boolean añadido) {
+		if(añadido) {
+			getLbCorrecto().setText("Registro completado correctamente");
+			getBtnRegistrar().setEnabled(false);
+			getBtnContinuar().setEnabled(true);
+		} else {
+			getLbCorrecto().setText("Ha habido un problema");
+			getBtnRegistrar().setEnabled(true);
+			getBtnContinuar().setEnabled(false);
+		}
+		
+		lbCorrecto.setVisible(true);
 	}
 	
 	private JLabel getLbIncidencias() {
@@ -270,12 +334,14 @@ public class RegistroAtletaView extends JFrame {
 		}
 		return lbIncidencias;
 	}
-	
-	public boolean isAñadido() {
-		return añadido;
-	}
 
-	private void setAñadido(boolean añadido) {
-		this.añadido = añadido;
+	private JLabel getLbCorrecto() {
+		if (lbCorrecto == null) {
+			lbCorrecto = new JLabel("");
+			lbCorrecto.setFont(new Font("Tahoma", Font.PLAIN, 12));
+			lbCorrecto.setBounds(398, 241, 209, 26);
+			lbCorrecto.setVisible(false);
+		}
+		return lbCorrecto;
 	}
 }
