@@ -23,15 +23,6 @@ public class CompeticionController {
 	}
 	
 	/**
-	 * Constructor con un parámetro de la clase CompeticionController
-	 * 
-	 * @param cm, una CompeticionModel
-	 */
-	public CompeticionController(CompeticionModel cm) {
-		this.cm = cm;
-	};
-	
-	/**
 	 * Asigna los dorsales de las competiciones que ya estan iniciadas solo si 
 	 * la asignacion se produce tras el cierre de inscripciones
 	 */

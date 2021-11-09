@@ -45,21 +45,6 @@ public class InscripcionController {
 		this.idto = new ArrayList<InscripcionDTO>();
 	}
 	
-	/**
-	 * Constructor con un parámetro de la clase InscripcionController
-	 * 
-	 * @param im, una inscripcionModel
-	 */
-	public InscripcionController(InscripcionModel im) {
-		this.im = im;
-		this.ac = new AtletaController();
-		this.cm = new CompeticionController();
-		
-		this.idto = new ArrayList<InscripcionDTO>();
-	}
-	
-	
-	
 	public void setEmailProvisionalParaPago(String email) {
 		this.emailProvisionalParaPago = email;
 	}
