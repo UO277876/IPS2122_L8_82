@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -33,6 +34,7 @@ public class CompeticionView extends JFrame {
 	
 
 	private InscripcionAtletaView iav;
+	private CompeticionController compContr;
 	
 
 	/**
@@ -55,8 +57,6 @@ public class CompeticionView extends JFrame {
 	 * Create the frame.
 	 */
 	public CompeticionView() {
-
-		iav = new InscripcionAtletaView();
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 656, 475);
@@ -100,7 +100,14 @@ public class CompeticionView extends JFrame {
 			btnTablaCarreras = new JButton("APUNTARME");
 			btnTablaCarreras.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					iav.setVisible(true);
+					CompeticionDTO competicion = getCompeticion();
+					if(competicion == null) {
+						JOptionPane.showMessageDialog(null, "No se ha podido encontrar la competición deseada, vuelva a intentarlo.");
+					}
+					else {
+						iav = new InscripcionAtletaView(competicion);
+						iav.setVisible(true);
+					}
 				}
 			});
 			btnTablaCarreras.setBackground(new Color(34, 139, 34));
@@ -116,7 +123,7 @@ public class CompeticionView extends JFrame {
 	public void setFechaHoy(String fecha) {
 		this.fechaHoy = fecha;
 	}
-
+	
 	public String getFechaHoy() {
 		return this.fechaHoy;
 	}
@@ -128,5 +135,22 @@ public class CompeticionView extends JFrame {
 	public JButton getBtnTablaCarreras() {
 		return this.btnTablaCarreras;
 	}
+	
+	public void setCompeticionController(CompeticionController cc) {
+		this.compContr = cc;
+	}
 
+	
+	private CompeticionDTO getCompeticion(){
+		String nombre = (String) getTabCompeticionesForContentPane().getValueAt(getTabCompeticionesForContentPane().getSelectedRow(), 0);
+		String fecha = (String) getTabCompeticionesForContentPane().getValueAt(getTabCompeticionesForContentPane().getSelectedRow(), 1);
+		String tipo = (String) getTabCompeticionesForContentPane().getValueAt(getTabCompeticionesForContentPane().getSelectedRow(), 2);
+		int distancia = (Integer) getTabCompeticionesForContentPane().getValueAt(getTabCompeticionesForContentPane().getSelectedRow(), 3);
+		String fechaFin = (String) getTabCompeticionesForContentPane().getValueAt(getTabCompeticionesForContentPane().getSelectedRow(), 4);
+		int numPlazas = (Integer) getTabCompeticionesForContentPane().getValueAt(getTabCompeticionesForContentPane().getSelectedRow(), 5);
+		CompeticionDTO competicion = compContr.getCompeticion(nombre, fecha, tipo, distancia, fechaFin);
+		return competicion;
+		
+	}
+	
 }

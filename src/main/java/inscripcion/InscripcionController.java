@@ -231,7 +231,7 @@ public class InscripcionController {
 	 * @return un AtletaDTO
 	 */
 	private AtletaDTO obtenerAtleta(String email_atleta) {
-		AtletaDTO result = ac.obtenerAtletaEmail(email_atleta);
+		AtletaDTO result = ac.obtenerAtletaByEmail(email_atleta);
 		return result;
 	}
 
@@ -280,6 +280,19 @@ public class InscripcionController {
 	
 	public void inscribirAtleta(AtletaDTO atleta, int id_competicion, String dorsal, int precio, String metodoPago) {
 		im.inscribirse(atleta, id_competicion, dorsal, precio, getActualDate(), metodoPago);
+	}
+	
+	public boolean checkAtletaInscrito(AtletaDTO atleta, int id_competicion) {
+		boolean isAtletaInscrito = false;
+		List<InscripcionDTO> inscripciones = im.getInscripcionesPorCompeticion(id_competicion);
+		for(InscripcionDTO inscripcion : inscripciones) {
+			if(inscripcion.getEmail_atleta().equals(atleta.getEmail())) {
+				isAtletaInscrito = true;
+			}
+		}
+		
+		
+		return isAtletaInscrito;
 	}
 	
 	

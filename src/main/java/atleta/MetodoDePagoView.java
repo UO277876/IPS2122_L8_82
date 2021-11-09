@@ -57,7 +57,7 @@ public class MetodoDePagoView extends JFrame{
 		if (cbMetodoDePago == null) {
 			cbMetodoDePago = new JComboBox<String>();
 			cbMetodoDePago.setFont(new Font("Calibri", Font.PLAIN, 16));
-			cbMetodoDePago.setModel(new DefaultComboBoxModel<String>(new String[] {"metalico", "tarjeta"}));
+			cbMetodoDePago.setModel(new DefaultComboBoxModel(new String[] {"Tarjeta", "Por Transferencia"}));
 			cbMetodoDePago.setBounds(30, 81, 201, 34);
 		}
 		return cbMetodoDePago;
@@ -71,9 +71,9 @@ public class MetodoDePagoView extends JFrame{
 			btnAceptar = new JButton("Aceptar");
 			btnAceptar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					if(ac.obtenerAtletaEmail(ic.getEmailProvisionalParaPago()) != null) {
-						ic.inscribirAtleta(ac.obtenerAtletaEmail(ic.getEmailProvisionalParaPago()), ic.getIdProvisionalParaPago(), ic.getNewDorsal(), 13, cbMetodoDePago.getSelectedItem().toString());
-						System.out.println("Inscripcion Correcta, tenga una buena tarde");
+					if(ac.obtenerAtletaByEmail(ic.getEmailProvisionalParaPago()) != null) {
+						
+						
 						reset();
 					}		
 					else {
