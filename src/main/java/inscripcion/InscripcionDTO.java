@@ -1,15 +1,11 @@
 package inscripcion;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
 import atleta.AtletaDTO;
 import atleta.AtletaModel;
-import competicion.CompeticionDTO;
-import competicion.CompeticionModel;
-import giis.demo.util.Util;
 
 public class InscripcionDTO {
 	

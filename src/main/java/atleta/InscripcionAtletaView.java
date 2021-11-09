@@ -4,7 +4,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 
 import java.awt.Font;
 import javax.swing.JTextField;
@@ -19,6 +18,8 @@ import java.awt.event.ActionEvent;
 public class InscripcionAtletaView extends JFrame {
 	
 	private AtletaController ac;
+	private InscripcionController ic;
+	private MetodoDePagoView metododepagoview;
 	
 	private JPanel panel;
 	private JLabel lblIndiqueEmail;
@@ -31,6 +32,9 @@ public class InscripcionAtletaView extends JFrame {
 	public InscripcionAtletaView() {
 		setResizable(false);
 		ac = new AtletaController();
+		ic = new InscripcionController();
+		
+		
 		getContentPane().add(getPanel(), BorderLayout.CENTER);
 		setBounds(100, 100, 500, 350);
 	}
@@ -85,8 +89,11 @@ public class InscripcionAtletaView extends JFrame {
 			btnAceptar = new JButton("Aceptar");
 			btnAceptar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					ac.CheckAllGood(txtIndiqueEmail.getText(), txtIndiqueCompeticion.getText());
-					JOptionPane.showMessageDialog(panel, "Enhorabuena, su solicitud se ha tramitado con exito");
+					ic.setEmailProvisionalParaPago(txtIndiqueEmail.getText());
+					ic.setIdProvisionalParaPago(Integer.parseInt(txtIndiqueCompeticion.getText()));
+
+					metododepagoview = new MetodoDePagoView(ic, ac);
+					metododepagoview.setVisible(true);
 				}
 			});
 			btnAceptar.setBounds(345, 262, 85, 21);
@@ -96,11 +103,21 @@ public class InscripcionAtletaView extends JFrame {
 	private JButton getBtnCancelar() {
 		if (btnCancelar == null) {
 			btnCancelar = new JButton("Cancelar");
+			btnCancelar.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					reset();
+				}
+			});
 			btnCancelar.setBounds(250, 262, 85, 21);
 		}
 		return btnCancelar;
 	}
 	
+	public void reset() {
+		this.txtIndiqueCompeticion.setText("");
+		this.txtIndiqueEmail.setText("");
+		setVisible(false);
+	}
 	
 
 }

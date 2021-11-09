@@ -1,10 +1,8 @@
 package competicion;
 
 import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.List;
 
-import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
 import giis.demo.util.SwingUtil;
@@ -22,7 +20,9 @@ public class CompeticionController {
 	}
 
 	public void initView() {
-		view.setFechaHoy("2021-07-11");
+		/*SimpleDateFormat dateFormat = new SimpleDateFormat ("yyyy-MM-dd");
+		Date dateAct = new Date();*/
+		view.setFechaHoy("2021-10-21");
 		this.getListaCompeticiones();
 
 		view.setVisible(true);

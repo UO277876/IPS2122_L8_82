@@ -9,6 +9,9 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 
 import atleta.InscripcionAtletaView;
+import competicion.CompeticionController;
+import competicion.CompeticionView;
+import competicion.CompeticionModel;
 import giis.demo.tkrun.CarrerasController;
 import giis.demo.tkrun.CarrerasModel;
 import giis.demo.tkrun.CarrerasView;
@@ -28,6 +31,7 @@ public class SwingMain {
 	private InscripcionView iiv;
 	private JFrame frame;
 	private ClasificacionesView cv;
+	private CompeticionController cc;
 
 	/**
 	 * Launch the application.
@@ -62,7 +66,7 @@ public class SwingMain {
 		
 		frame = new JFrame();
 		frame.setTitle("Main");
-		frame.setBounds(0, 0, 287, 185);
+		frame.setBounds(0, 0, 287, 303);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JButton btnEjecutarTkrun = new JButton("Ejecutar giis.demo.tkrun");
@@ -103,13 +107,13 @@ public class SwingMain {
 		});
 		frame.getContentPane().add(btnClasificaciones);
 		
-		JButton btnInscribirse = new JButton("Inscripcion para atletas");
+		/*JButton btnInscribirse = new JButton("Inscripcion para atletas");
 		btnInscribirse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				iav.setVisible(true);
 			}
 		});
-		frame.getContentPane().add(btnInscribirse);
+		frame.getContentPane().add(btnInscribirse);*/
 		
 		JButton btnListadoIns = new JButton("Listado de inscripciones");
 		btnListadoIns.addActionListener(new ActionListener() {
@@ -118,6 +122,16 @@ public class SwingMain {
 			}
 		});
 		frame.getContentPane().add(btnListadoIns);
+		
+		JButton btnListaDeCompeticiones = new JButton("Lista de Competiciones");
+		btnListaDeCompeticiones.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new CompeticionController(new CompeticionModel(), new CompeticionView());
+			}
+		});
+		frame.getContentPane().add(btnListaDeCompeticiones);
+		
+		
 	}
 
 	public JFrame getFrame() { return this.frame; }

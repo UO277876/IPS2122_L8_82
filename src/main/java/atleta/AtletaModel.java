@@ -12,9 +12,6 @@ public class AtletaModel {
 	private static final String MSG_EMAIL_NO_NULO = "El email no puede ser nulo";
 	
 	
-	
-	
-	
 	private String obtener_atleta_email = 
 			"SELECT * from Atleta where email = ?";
 

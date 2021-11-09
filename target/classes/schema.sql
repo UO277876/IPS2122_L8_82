@@ -47,3 +47,15 @@ create table Inscripcion(
 	primary key (id_competicion, email_atleta)
 
 );
+
+drop table if exists MetodoDePago;
+
+create table MetodoDePago(
+	id_metodopago varchar(32) NOT NULL,
+	tipo varchar(32) NOT NULL,
+	estado boolean,
+	email_atleta varchar(32) not null,
+	foreign key (email_atleta) references Atleta (email),
+	primary key (id_metodopago)
+
+);

@@ -1,7 +1,6 @@
 package inscripcion;
 
 import java.util.List;
-import java.util.Random;
 
 import atleta.AtletaDTO;
 import giis.demo.util.ApplicationException;
@@ -22,12 +21,18 @@ public class InscripcionModel {
 	private String listado_inscr_id_absoluta = "SELECT * FROM Inscripcion WHERE id_competicion = ? ORDER BY tiempo";
 	private String listado_inscripciones = "SELECT * FROM Inscripcion WHERE email_atleta = ? ORDER BY ultFechaModif";
 	
-	private static final String SQL_OBTENER_DORSALES = "SELECT * FROM Inscripcion WHERE id_competicion = ?";
+	
+	/*private static final String SQL_GET_INSCRIPCION = 
+			"SELECT * FROM Inscripcion WHERE email_atleta = ? AND id_competicion = ?";*/
+	
+	private static final String SQL_OBTENER_DORSALES = 
+			"SELECT * FROM Inscripcion WHERE competicion_id = ?";
 	
 	public static final String SQL_INSCRIBIRSE = 
 			"INSERT into Inscripcion (email_atleta, id_competicion, dorsal, tiempo, precio, ultFechaModif, categoriaSexo, metodoPago) VALUES (?,?,?,?,?,?,?,?)";
 	
-	
+	public static final String SQL_BORRAR_INSCRIPCION = 
+			"DELETE from Inscripcion (email_atleta, id_competicion) VALUES (?,?)";
 	
 	/**
 	 * Obtiene todas las inscripciones de un atleta mediante el id de una carrera, ordenadas por categoria sexo
@@ -87,4 +92,23 @@ public class InscripcionModel {
 			throw new ApplicationException(message);
 	}
 
+	
+	
+	
+	//METODOS PARA CAMBIAR LA FORMA DE PAGO DE UNA COMPETICION YA INSCRITA HECHOS SIN QUERER (OSCAR)
+	/*
+	public InscripcionDTO getInscripcion(String email, String id) {
+		String sql = SQL_GET_INSCRIPCION;
+		List<InscripcionDTO> result = db.executeQueryPojo(InscripcionDTO.class, sql, email, id);
+		return result.get(0);
+	}
+	
+	public void changePaidMethodForInscripcion(String email, String id, String paidMethod) {
+		String borrarInscripcion = SQL_BORRAR_INSCRIPCION;
+		String inscribirse = SQL_INSCRIBIRSE;
+		InscripcionDTO inscripcion = getInscripcion(email, id);
+		db.executeUpdate(borrarInscripcion, email, id);
+		db.executeUpdate(inscribirse,email, id, inscripcion.getDorsal(), inscripcion.getTiempo() , inscripcion.getPrecio(), inscripcion.getUltFechaModif(), inscripcion.getCategoriaSexo(), paidMethod);
+	}*/
+	
 }

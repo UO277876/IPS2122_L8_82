@@ -1,23 +1,21 @@
 package competicion;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
+import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-import javax.swing.JComboBox;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
-import java.awt.Font;
-import java.awt.Window;
-import javax.swing.JButton;
-import java.awt.Color;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+
+import atleta.InscripcionAtletaView;
 
 public class CompeticionView extends JFrame {
 
@@ -32,6 +30,9 @@ public class CompeticionView extends JFrame {
 	private JButton btnTablaCarreras;
 	
 	private String fechaHoy;
+	
+
+	private InscripcionAtletaView iav;
 	
 
 	/**
@@ -54,6 +55,9 @@ public class CompeticionView extends JFrame {
 	 * Create the frame.
 	 */
 	public CompeticionView() {
+
+		iav = new InscripcionAtletaView();
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 656, 475);
 		contentPane = new JPanel();
@@ -96,6 +100,7 @@ public class CompeticionView extends JFrame {
 			btnTablaCarreras = new JButton("APUNTARME");
 			btnTablaCarreras.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					iav.setVisible(true);
 				}
 			});
 			btnTablaCarreras.setBackground(new Color(34, 139, 34));
