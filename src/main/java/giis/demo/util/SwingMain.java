@@ -28,7 +28,6 @@ import inscripcion.InscripcionView;
  */
 public class SwingMain {
 
-	private InscripcionAtletaView iav;
 	private InscripcionView iiv;
 	private CompeticionCreacionView ccv;
 	private JFrame frame;
@@ -63,7 +62,6 @@ public class SwingMain {
 	 */
 	private void initialize() {
 		cv = new ClasificacionesView();
-		iav = new InscripcionAtletaView();
 		iiv = new InscripcionView();
 		ccv = new CompeticionCreacionView();
 		
@@ -129,7 +127,7 @@ public class SwingMain {
 		JButton btnListaDeCompeticiones = new JButton("Lista de Competiciones");
 		btnListaDeCompeticiones.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new CompeticionController(new CompeticionModel(), new CompeticionView());
+				new CompeticionController(new CompeticionView());
 			}
 		});
 		frame.getContentPane().add(btnListaDeCompeticiones);
