@@ -31,6 +31,8 @@ public class InscripcionAtletaView extends JFrame {
 	private JButton btnAceptar;
 	private JButton btnCancelar;
 	
+	private String email;
+	
 	public InscripcionAtletaView(CompeticionDTO competicion) {
 		setResizable(false);
 		

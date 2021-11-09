@@ -53,7 +53,7 @@ public class AtletaController {
 		atleta.setNombre(nombre);
 		am.añadirAtleta(atleta);
 		
-		if(am.getAtletaEmail(email).size() > 0) {
+		if(am.getAtletaByEmail(email).size() > 0) {
 			return true;
 		}
 		

@@ -19,7 +19,7 @@ public class AtletaModel {
 	private static final String añadir_atleta = "INSERT INTO Atleta(email,genero,nombre,fechaDeNacimiento,dni) VALUES(?,?,?,?,?)";
 	
 	private String obtener_todos_los_atletas = 
-			"SELECT * from Atleta"
+			"SELECT * from Atleta";
 
 	
 	public List<AtletaDTO> getAtletaByEmail(String email_atleta) {
@@ -38,6 +38,7 @@ public class AtletaModel {
 		
 		db.executeUpdate(añadir_atleta, atleta.getEmail(), atleta.getGenero(), atleta.getNombre(), atleta.getFechaNacimiento(),
 				atleta.getDni());
+	}
 	
 	public List<AtletaDTO> getAtletas(){
 		List<AtletaDTO> result = db.executeQueryPojo(AtletaDTO.class, obtener_todos_los_atletas);
