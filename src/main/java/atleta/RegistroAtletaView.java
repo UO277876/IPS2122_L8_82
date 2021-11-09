@@ -5,13 +5,17 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 
 @SuppressWarnings("serial")
 public class RegistroAtletaView extends JFrame {
@@ -31,6 +35,9 @@ public class RegistroAtletaView extends JFrame {
 	private JLabel lbGenero;
 	private JTextField txEdad;
 	private JComboBox<String> cbGenero;
+	private JLabel lbIncidencias;
+	private JScrollPane scrollPane;
+	private JTextArea txProblemas;
 	
 	public RegistroAtletaView() {
 		setTitle("Registro Atleta");
@@ -39,7 +46,7 @@ public class RegistroAtletaView extends JFrame {
 		
 		
 		getContentPane().add(getPanel(), BorderLayout.CENTER);
-		setBounds(100, 100, 472, 350);
+		setBounds(100, 100, 631, 350);
 	}
 
 	private JPanel getPanel() {
@@ -59,6 +66,8 @@ public class RegistroAtletaView extends JFrame {
 			panel.add(getLbEdad());
 			panel.add(getCbGenero());
 			panel.add(getTxEdad());
+			panel.add(getLbIncidencias());
+			panel.add(getScrollPane());
 		}
 		return panel;
 	}
@@ -71,6 +80,20 @@ public class RegistroAtletaView extends JFrame {
 			lbNombre.setBounds(34, 25, 106, 43);
 		}
 		return lbNombre;
+	}
+	
+	private JScrollPane getScrollPane() {
+		if (scrollPane == null) {
+			scrollPane = new JScrollPane();
+			scrollPane.setBounds(414, 59, 177, 160);
+			
+			txProblemas = new JTextArea();
+			getLbIncidencias().setLabelFor(txProblemas);
+			txProblemas.setEditable(false);
+			txProblemas.setFont(new Font("Tahoma", Font.PLAIN, 13));
+			scrollPane.setViewportView(txProblemas);
+		}
+		return scrollPane;
 	}
 	
 	private JComboBox<String> getCbGenero() {
@@ -138,10 +161,11 @@ public class RegistroAtletaView extends JFrame {
 			btnAceptar.setForeground(Color.WHITE);
 			btnAceptar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
+					crearAtleta();
 					
 				}
 			});
-			btnAceptar.setBounds(364, 282, 85, 21);
+			btnAceptar.setBounds(522, 282, 85, 21);
 		}
 		return btnAceptar;
 	}
@@ -157,7 +181,7 @@ public class RegistroAtletaView extends JFrame {
 					reset();
 				}
 			});
-			btnCancelar.setBounds(267, 282, 85, 21);
+			btnCancelar.setBounds(427, 282, 85, 21);
 		}
 		return btnCancelar;
 	}
@@ -197,5 +221,26 @@ public class RegistroAtletaView extends JFrame {
 			lbGenero.setLabelFor(getCbGenero());
 		}
 		return lbGenero;
+	}
+	
+	private void crearAtleta() throws ParseException {
+		try {
+		String email = getTxEmail().getText();
+		String nombre = getTxNombre().getText();
+		String dni = getTxDni().getText();
+		String genero = (String) getCbGenero().getSelectedItem();
+		int edad = Integer.valueOf(getTxEdad().getText());
+		
+		} catch(NumberFormatException e) {
+			JOptionPane.showMessageDialog(null,"No puede introducir caracteres en edad");
+		} 
+	}
+	private JLabel getLbIncidencias() {
+		if (lbIncidencias == null) {
+			lbIncidencias = new JLabel("Incidencias:");
+			lbIncidencias.setFont(new Font("Calibri", Font.PLAIN, 17));
+			lbIncidencias.setBounds(414, 25, 106, 43);
+		}
+		return lbIncidencias;
 	}
 }

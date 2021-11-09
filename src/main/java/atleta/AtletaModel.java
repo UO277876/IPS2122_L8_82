@@ -12,8 +12,10 @@ public class AtletaModel {
 	private static final String MSG_EMAIL_NO_NULO = "El email no puede ser nulo";
 	
 	
-	private String obtener_atleta_email = 
+	private static final String obtener_atleta_email = 
 			"SELECT * from Atleta where email = ?";
+	
+	private static final String añadir_atleta = "INSERT INTO Atleta(";
 
 	
 	public List<AtletaDTO> getAtletaEmail(String email_atleta) {
