@@ -15,7 +15,7 @@ public class AtletaModel {
 	private static final String obtener_atleta_email = 
 			"SELECT * from Atleta where email = ?";
 	
-	private static final String añadir_atleta = "INSERT INTO Atleta(";
+	private static final String añadir_atleta = "INSERT INTO Atleta(email,genero,nombre,fechaDeNacimiento,dni) VALUES(?,?,?,?,?)";
 
 	
 	public List<AtletaDTO> getAtletaEmail(String email_atleta) {
@@ -23,6 +23,16 @@ public class AtletaModel {
 		
 		List<AtletaDTO> result = db.executeQueryPojo(AtletaDTO.class, obtener_atleta_email, email_atleta);
 		return result;
+	}
+	
+	/**
+	 * Añadir atleta
+	 */
+	public void añadirAtleta(AtletaDTO atleta) {
+		validateNotNull(atleta,"El atleta no puede ser null");
+		
+		db.executeUpdate(añadir_atleta, atleta.getEmail(), atleta.getGenero(), atleta.getNombre(), atleta.getFechaNacimiento(),
+				atleta.getDni());
 	}
 	
 	/* De uso general para validacion de objetos */

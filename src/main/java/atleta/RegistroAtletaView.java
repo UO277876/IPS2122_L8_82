@@ -5,26 +5,26 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.ParseException;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 @SuppressWarnings("serial")
 public class RegistroAtletaView extends JFrame {
 	
 	private AtletaController ac;
-	
+	private boolean añadido;
+
 	private JPanel panel;
 	private JLabel lbNombre;
-	private JLabel lbEdad;
+	private JLabel lbFechaNacimiento;
 	private JTextField txNombre;
 	private JLabel lbDni;
 	private JTextField txDni;
@@ -43,6 +43,7 @@ public class RegistroAtletaView extends JFrame {
 		setTitle("Registro Atleta");
 		setResizable(false);
 		ac = new AtletaController();
+		this.añadido = false;
 		
 		
 		getContentPane().add(getPanel(), BorderLayout.CENTER);
@@ -63,7 +64,7 @@ public class RegistroAtletaView extends JFrame {
 			panel.add(getLbEmail());
 			panel.add(getTxEmail());
 			panel.add(getLbGenero());
-			panel.add(getLbEdad());
+			panel.add(getLbFechaNacimiento());
 			panel.add(getCbGenero());
 			panel.add(getTxEdad());
 			panel.add(getLbIncidencias());
@@ -77,7 +78,7 @@ public class RegistroAtletaView extends JFrame {
 			lbNombre = new JLabel("Nombre:");
 			lbNombre.setLabelFor(getTxNombre());
 			lbNombre.setFont(new Font("Calibri", Font.PLAIN, 17));
-			lbNombre.setBounds(34, 25, 106, 43);
+			lbNombre.setBounds(20, 25, 106, 43);
 		}
 		return lbNombre;
 	}
@@ -100,26 +101,29 @@ public class RegistroAtletaView extends JFrame {
 		if (cbGenero == null) {
 			cbGenero = new JComboBox<String>();
 			getLbGenero().setLabelFor(cbGenero);
-			cbGenero.setBounds(115, 154, 99, 21);
+			cbGenero.setModel(new DefaultComboBoxModel<String>(new String[] { "Masculino", "Femenino" }));
+			cbGenero.setBounds(195, 154, 99, 21);
 		}
 		return cbGenero;
 	}
 	
-	private JLabel getLbEdad() {
-		if (lbEdad == null) {
-			lbEdad = new JLabel("Edad:");
-			lbEdad.setFont(new Font("Calibri", Font.PLAIN, 17));
-			lbEdad.setBounds(34, 193, 64, 26);
-			lbEdad.setLabelFor(txEdad);
+	private JLabel getLbFechaNacimiento() {
+		if (lbFechaNacimiento == null) {
+			lbFechaNacimiento = new JLabel("Fecha de nacimiento:");
+			lbFechaNacimiento.setFont(new Font("Calibri", Font.PLAIN, 17));
+			lbFechaNacimiento.setBounds(20, 193, 154, 26);
+			lbFechaNacimiento.setLabelFor(txEdad);
 		}
-		return lbEdad;
+		return lbFechaNacimiento;
 	}
 	
 	private JTextField getTxEdad() {
 		if (txEdad == null) {
 			txEdad = new JTextField();
+			txEdad.setText("YYYY-MM-DD");
+			txEdad.setForeground(Color.GRAY);
 			txEdad.setColumns(10);
-			txEdad.setBounds(115, 193, 85, 26);
+			txEdad.setBounds(195, 193, 139, 26);
 		}
 		return txEdad;
 	}
@@ -127,7 +131,7 @@ public class RegistroAtletaView extends JFrame {
 	private JTextField getTxNombre() {
 		if (txNombre == null) {
 			txNombre = new JTextField();
-			txNombre.setBounds(115, 33, 198, 26);
+			txNombre.setBounds(195, 33, 166, 26);
 			txNombre.setColumns(10);
 		}
 		return txNombre;
@@ -138,7 +142,7 @@ public class RegistroAtletaView extends JFrame {
 			lbDni = new JLabel("DNI:");
 			lbDni.setLabelFor(getTxDni());
 			lbDni.setFont(new Font("Calibri", Font.PLAIN, 17));
-			lbDni.setBounds(34, 78, 38, 26);
+			lbDni.setBounds(20, 78, 38, 26);
 		}
 		return lbDni;
 	}
@@ -147,7 +151,7 @@ public class RegistroAtletaView extends JFrame {
 		if (txDni == null) {
 			txDni = new JTextField();
 			txDni.setColumns(10);
-			txDni.setBounds(115, 78, 166, 26);
+			txDni.setBounds(195, 78, 166, 26);
 		}
 		return txDni;
 	}
@@ -199,7 +203,7 @@ public class RegistroAtletaView extends JFrame {
 			lbEmail = new JLabel("Email:");
 			lbEmail.setLabelFor(getTxEmail());
 			lbEmail.setFont(new Font("Calibri", Font.PLAIN, 17));
-			lbEmail.setBounds(34, 116, 64, 26);
+			lbEmail.setBounds(20, 114, 64, 26);
 		}
 		return lbEmail;
 	}
@@ -208,7 +212,7 @@ public class RegistroAtletaView extends JFrame {
 		if (txEmail == null) {
 			txEmail = new JTextField();
 			txEmail.setColumns(10);
-			txEmail.setBounds(115, 114, 260, 26);
+			txEmail.setBounds(195, 114, 209, 26);
 		}
 		return txEmail;
 	}
@@ -217,24 +221,47 @@ public class RegistroAtletaView extends JFrame {
 		if (lbGenero == null) {
 			lbGenero = new JLabel("Género:");
 			lbGenero.setFont(new Font("Calibri", Font.PLAIN, 17));
-			lbGenero.setBounds(34, 152, 64, 26);
+			lbGenero.setBounds(20, 152, 64, 26);
 			lbGenero.setLabelFor(getCbGenero());
 		}
 		return lbGenero;
 	}
 	
-	private void crearAtleta() throws ParseException {
-		try {
+	private void crearAtleta() {
 		String email = getTxEmail().getText();
 		String nombre = getTxNombre().getText();
 		String dni = getTxDni().getText();
 		String genero = (String) getCbGenero().getSelectedItem();
-		int edad = Integer.valueOf(getTxEdad().getText());
+		genero = genero.toLowerCase();
+		String edad = getTxEdad().getText();
 		
-		} catch(NumberFormatException e) {
-			JOptionPane.showMessageDialog(null,"No puede introducir caracteres en edad");
-		} 
+		if(control()) {
+			setAñadido(ac.crearAtleta(email,nombre,dni,genero,edad));
+		}
 	}
+	
+	private boolean control() {
+		String listado = "";
+		boolean correcto = true;
+		if(getTxNombre().getText().equals("")) {
+			listado += ">" + "El campo nombre no puede estar vacío" + "\n";
+			correcto = false;
+		}
+		
+		if(getTxDni().getText().equals("")) {
+			listado += ">" + "El campo dni no puede estar vacío" + "\n";
+			correcto = false;
+		}
+		
+		if(getTxEmail().getText().equals("")) {
+			listado += ">" + "El campo email no puede estar vacío" + "\n";
+			correcto = false;
+		}
+		
+		txProblemas.setText(listado);
+		return correcto;
+	}
+	
 	private JLabel getLbIncidencias() {
 		if (lbIncidencias == null) {
 			lbIncidencias = new JLabel("Incidencias:");
@@ -242,5 +269,13 @@ public class RegistroAtletaView extends JFrame {
 			lbIncidencias.setBounds(414, 25, 106, 43);
 		}
 		return lbIncidencias;
+	}
+	
+	public boolean isAñadido() {
+		return añadido;
+	}
+
+	private void setAñadido(boolean añadido) {
+		this.añadido = añadido;
 	}
 }

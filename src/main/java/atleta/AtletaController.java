@@ -30,7 +30,21 @@ public class AtletaController {
 		return am.getAtletaEmail(email).get(0);
 	}
 	
-	
+	public boolean crearAtleta(String email, String nombre, String dni, String genero, String edad) {
+		AtletaDTO atleta = new AtletaDTO();
+		atleta.setEmail(email);
+		atleta.setDni(dni);
+		atleta.setFechaNacimiento(edad);
+		atleta.setGenero(genero);
+		atleta.setNombre(nombre);
+		am.añadirAtleta(atleta);
+		
+		if(am.getAtletaEmail(email).size() > 0) {
+			return true;
+		}
+		
+		return false;
+	}
 	
 	
 
