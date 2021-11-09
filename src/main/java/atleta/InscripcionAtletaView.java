@@ -118,6 +118,4 @@ public class InscripcionAtletaView extends JFrame {
 		this.txtIndiqueEmail.setText("");
 		setVisible(false);
 	}
-	
-
 }
