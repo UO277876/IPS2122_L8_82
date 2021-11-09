@@ -32,7 +32,7 @@ public class InscripcionAtletaView extends JFrame {
 	private JButton btnCancelar;
 	
 	private String email;
-	
+
 	public InscripcionAtletaView(CompeticionDTO competicion) {
 		setResizable(false);
 		
@@ -40,7 +40,7 @@ public class InscripcionAtletaView extends JFrame {
 		
 		ac = new AtletaController();
 		ic = new InscripcionController();
-		
+		this.email = "";
 		
 		getContentPane().add(getPanel(), BorderLayout.CENTER);
 		setBounds(100, 100, 500, 350);
@@ -82,7 +82,8 @@ public class InscripcionAtletaView extends JFrame {
 					ic.setIdProvisionalParaPago(competicion.getId());
 
 					if(ac.obtenerAtletaByEmail(ic.getEmailProvisionalParaPago()) == null) {
-						JOptionPane.showMessageDialog(null, "El email introducido no se encuentra registrado, intentelo de nuevo.");
+						setEmail(txtIndiqueEmail.getText());
+						crearRegistroVentana();
 					}
 					else if(ic.checkAtletaInscrito(ac.obtenerAtletaByEmail(ic.getEmailProvisionalParaPago()), ic.getIdProvisionalParaPago())) {
 						JOptionPane.showMessageDialog(null, "El email introducido ya esta registrado para esa competicion. No se puede registrar dos veces, intentelo de nuevo.");
@@ -100,6 +101,14 @@ public class InscripcionAtletaView extends JFrame {
 		}
 		return btnAceptar;
 	}
+	
+	private void crearRegistroVentana() {
+		RegistroAtletaView vc = new RegistroAtletaView(this);
+		// Centra la ventana registro respecto a la principal
+		vc.setLocationRelativeTo(this);
+		vc.setVisible(true);
+	}
+	
 	private JButton getBtnCancelar() {
 		if (btnCancelar == null) {
 			btnCancelar = new JButton("Cancelar");
@@ -116,5 +125,13 @@ public class InscripcionAtletaView extends JFrame {
 	public void reset() {
 		this.txtIndiqueEmail.setText("");
 		setVisible(false);
+	}
+	
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 }

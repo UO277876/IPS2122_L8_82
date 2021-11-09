@@ -39,15 +39,19 @@ public class RegistroAtletaView extends JFrame {
 	private JTextArea txProblemas;
 	private JButton btnRegistrar;
 	private JLabel lbCorrecto;
+	private InscripcionAtletaView iav;
+	private JTextField txApellidos;
+	private JLabel lbApellido;
 	
-	public RegistroAtletaView() {
+	public RegistroAtletaView(InscripcionAtletaView iav) {
+		this.iav = iav;
 		setTitle("Registro Atleta");
 		setResizable(false);
 		ac = new AtletaController();
 		
 		
 		getContentPane().add(getPanel(), BorderLayout.CENTER);
-		setBounds(100, 100, 631, 350);
+		setBounds(100, 100, 631, 397);
 	}
 
 	private JPanel getPanel() {
@@ -71,6 +75,8 @@ public class RegistroAtletaView extends JFrame {
 			panel.add(getScrollPane());
 			panel.add(getBtnRegistrar());
 			panel.add(getLbCorrecto());
+			panel.add(getTxApellidos());
+			panel.add(getLbApellido());
 		}
 		return panel;
 	}
@@ -104,7 +110,7 @@ public class RegistroAtletaView extends JFrame {
 			cbGenero = new JComboBox<String>();
 			getLbGenero().setLabelFor(cbGenero);
 			cbGenero.setModel(new DefaultComboBoxModel<String>(new String[] { "Masculino", "Femenino" }));
-			cbGenero.setBounds(195, 154, 99, 21);
+			cbGenero.setBounds(195, 197, 99, 21);
 		}
 		return cbGenero;
 	}
@@ -113,7 +119,7 @@ public class RegistroAtletaView extends JFrame {
 		if (lbFechaNacimiento == null) {
 			lbFechaNacimiento = new JLabel("Fecha de nacimiento:");
 			lbFechaNacimiento.setFont(new Font("Calibri", Font.PLAIN, 17));
-			lbFechaNacimiento.setBounds(20, 193, 154, 26);
+			lbFechaNacimiento.setBounds(20, 228, 154, 26);
 			lbFechaNacimiento.setLabelFor(txEdad);
 		}
 		return lbFechaNacimiento;
@@ -125,7 +131,7 @@ public class RegistroAtletaView extends JFrame {
 			txEdad.setText("YYYY-MM-DD");
 			txEdad.setForeground(Color.GRAY);
 			txEdad.setColumns(10);
-			txEdad.setBounds(195, 193, 139, 26);
+			txEdad.setBounds(195, 228, 139, 26);
 		}
 		return txEdad;
 	}
@@ -144,7 +150,7 @@ public class RegistroAtletaView extends JFrame {
 			lbDni = new JLabel("DNI:");
 			lbDni.setLabelFor(getTxDni());
 			lbDni.setFont(new Font("Calibri", Font.PLAIN, 17));
-			lbDni.setBounds(20, 78, 38, 26);
+			lbDni.setBounds(20, 101, 38, 26);
 		}
 		return lbDni;
 	}
@@ -153,7 +159,7 @@ public class RegistroAtletaView extends JFrame {
 		if (txDni == null) {
 			txDni = new JTextField();
 			txDni.setColumns(10);
-			txDni.setBounds(195, 78, 166, 26);
+			txDni.setBounds(195, 101, 166, 26);
 		}
 		return txDni;
 	}
@@ -172,7 +178,7 @@ public class RegistroAtletaView extends JFrame {
 					
 				}
 			});
-			btnContinuar.setBounds(509, 282, 98, 21);
+			btnContinuar.setBounds(509, 315, 98, 21);
 		}
 		return btnContinuar;
 	}
@@ -188,7 +194,7 @@ public class RegistroAtletaView extends JFrame {
 					reset();
 				}
 			});
-			btnCancelar.setBounds(414, 282, 85, 21);
+			btnCancelar.setBounds(414, 315, 85, 21);
 		}
 		return btnCancelar;
 	}
@@ -206,7 +212,7 @@ public class RegistroAtletaView extends JFrame {
 			btnRegistrar.setForeground(Color.WHITE);
 			btnRegistrar.setFont(new Font("Tahoma", Font.BOLD, 11));
 			btnRegistrar.setBackground(Color.BLUE);
-			btnRegistrar.setBounds(195, 245, 85, 21);
+			btnRegistrar.setBounds(195, 279, 85, 21);
 		}
 		
 		return btnRegistrar;
@@ -217,6 +223,7 @@ public class RegistroAtletaView extends JFrame {
 		this.txNombre.setText("");
 		this.txEdad.setText("");
 		this.txEmail.setText("");
+		this.txApellidos.setText("");
 		getBtnContinuar().setEnabled(false);
 		getBtnRegistrar().setEnabled(true);
 		getLbCorrecto().setVisible(false);
@@ -228,7 +235,7 @@ public class RegistroAtletaView extends JFrame {
 			lbEmail = new JLabel("Email:");
 			lbEmail.setLabelFor(getTxEmail());
 			lbEmail.setFont(new Font("Calibri", Font.PLAIN, 17));
-			lbEmail.setBounds(20, 114, 64, 26);
+			lbEmail.setBounds(20, 150, 64, 26);
 		}
 		return lbEmail;
 	}
@@ -237,7 +244,8 @@ public class RegistroAtletaView extends JFrame {
 		if (txEmail == null) {
 			txEmail = new JTextField();
 			txEmail.setColumns(10);
-			txEmail.setBounds(195, 114, 209, 26);
+			txEmail.setBounds(195, 150, 209, 26);
+			txEmail.setText(iav.getEmail());
 		}
 		return txEmail;
 	}
@@ -246,7 +254,7 @@ public class RegistroAtletaView extends JFrame {
 		if (lbGenero == null) {
 			lbGenero = new JLabel("Género:");
 			lbGenero.setFont(new Font("Calibri", Font.PLAIN, 17));
-			lbGenero.setBounds(20, 152, 64, 26);
+			lbGenero.setBounds(20, 192, 64, 26);
 			lbGenero.setLabelFor(getCbGenero());
 		}
 		return lbGenero;
@@ -259,9 +267,10 @@ public class RegistroAtletaView extends JFrame {
 		String genero = (String) getCbGenero().getSelectedItem();
 		genero = genero.toLowerCase();
 		String edad = getTxEdad().getText();
+		String apellidos = getTxApellidos().getText();
 		
 		if(control()) {
-			boolean añadido = ac.crearAtleta(email,nombre,dni,genero,edad);
+			boolean añadido = ac.crearAtleta(email,nombre,apellidos,dni,genero,edad);
 			setTexto(añadido);
 			
 		}
@@ -270,8 +279,13 @@ public class RegistroAtletaView extends JFrame {
 	private boolean control() {
 		String listado = "";
 		boolean correcto = true;
-		if(getTxNombre().getText().equals("")) {
+		if(getTxNombre().getText().equals("") ) {
 			listado += ">" + "El campo nombre no puede estar vacío" + "\n";
+			correcto = false;
+		}
+		
+		if(getTxApellidos().getText().equals("") ) {
+			listado += ">" + "El campo apellidos no puede estar vacío" + "\n";
 			correcto = false;
 		}
 		
@@ -343,5 +357,22 @@ public class RegistroAtletaView extends JFrame {
 			lbCorrecto.setVisible(false);
 		}
 		return lbCorrecto;
+	}
+	private JTextField getTxApellidos() {
+		if (txApellidos == null) {
+			txApellidos = new JTextField();
+			txApellidos.setColumns(10);
+			txApellidos.setBounds(195, 69, 209, 26);
+		}
+		return txApellidos;
+	}
+	private JLabel getLbApellido() {
+		if (lbApellido == null) {
+			lbApellido = new JLabel("Apellidos:");
+			lbApellido.setLabelFor(getTxApellidos());
+			lbApellido.setFont(new Font("Calibri", Font.PLAIN, 17));
+			lbApellido.setBounds(20, 59, 106, 43);
+		}
+		return lbApellido;
 	}
 }

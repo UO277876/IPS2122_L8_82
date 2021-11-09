@@ -4,6 +4,7 @@ import java.util.List;
 
 import giis.demo.util.ApplicationException;
 import giis.demo.util.Database;
+import giis.demo.util.Util;
 
 public class AtletaModel {
 	
@@ -16,7 +17,7 @@ public class AtletaModel {
 	private static final String obtener_atleta_email = 
 			"SELECT * from Atleta where email = ?";
 	
-	private static final String añadir_atleta = "INSERT INTO Atleta(email,genero,nombre,fechaDeNacimiento,dni) VALUES(?,?,?,?,?)";
+	private static final String añadir_atleta = "INSERT INTO Atleta(email,genero,nombre,apellidos,fechaNacimiento,dni) VALUES(?,?,?,?,?,?)";
 	
 	private String obtener_todos_los_atletas = 
 			"SELECT * from Atleta";
@@ -36,8 +37,8 @@ public class AtletaModel {
 	public void añadirAtleta(AtletaDTO atleta) {
 		validateNotNull(atleta,"El atleta no puede ser null");
 		
-		db.executeUpdate(añadir_atleta, atleta.getEmail(), atleta.getGenero(), atleta.getNombre(), atleta.getFechaNacimiento(),
-				atleta.getDni());
+		db.executeUpdate(añadir_atleta, atleta.getEmail(), atleta.getGenero(), atleta.getNombre(), atleta.getApellidos(),
+				Util.isoStringToDate(atleta.getFechaNacimiento()), atleta.getDni());
 	}
 	
 	public List<AtletaDTO> getAtletas(){

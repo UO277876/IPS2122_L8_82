@@ -44,13 +44,14 @@ public class AtletaController {
 		return atleta;
 	}
 	
-	public boolean crearAtleta(String email, String nombre, String dni, String genero, String edad) {
+	public boolean crearAtleta(String email, String nombre, String apellidos, String dni, String genero, String edad) {
 		AtletaDTO atleta = new AtletaDTO();
 		atleta.setEmail(email);
 		atleta.setDni(dni);
 		atleta.setFechaNacimiento(edad);
 		atleta.setGenero(genero);
 		atleta.setNombre(nombre);
+		atleta.setApellidos(apellidos);
 		am.añadirAtleta(atleta);
 		
 		if(am.getAtletaByEmail(email).size() > 0) {
