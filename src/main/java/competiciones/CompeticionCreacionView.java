@@ -39,6 +39,7 @@ public class CompeticionCreacionView extends JFrame {
 	private JScrollPane scrollPane_1;
 	private JTextArea txProblemas;
 	private JButton btInscripcion;
+	private JButton btCancelar;
 
 	public CompeticionCreacionView() {
 		setResizable(false);
@@ -62,6 +63,7 @@ public class CompeticionCreacionView extends JFrame {
 		getContentPane().add(getScrollPane_1());
 		getContentPane().add(getLbProblemas());
 		getContentPane().add(getBtInscripcion());
+		getContentPane().add(getBtCancelar());
 
 		// Inicializacion de la clase CompeticionController
 		this.cc = new CompeticionController();
@@ -265,6 +267,34 @@ public class CompeticionCreacionView extends JFrame {
 		}
 		return btInscripcion;
 	}
+	
+	private JButton getBtCancelar() {
+		if (btCancelar == null) {
+			btCancelar = new JButton("Cancelar");
+			btCancelar.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					reset();
+				}
+			});
+			btCancelar.setMnemonic('C');
+			btCancelar.setForeground(Color.WHITE);
+			btCancelar.setFont(new Font("Tahoma", Font.BOLD, 13));
+			btCancelar.setBackground(new Color(153, 0, 0));
+			btCancelar.setBounds(547, 358, 96, 28);
+		}
+		return btCancelar;
+	}
+	
+	private void reset() {
+		this.getTxPlazas().setText("");
+		this.getTxNombre().setText("");
+		this.getTxDescripcion().setText("");
+		this.getTxFecha().setText("YYYY-MM-DD");
+		this.getTxDistancia().setText("");
+		this.txProblemas.setText("");
+		
+		setVisible(false);
+	}
 
 	// ----------------------------- Métodos independientes de la interfaz
 	// ---------------------------------------
@@ -316,13 +346,30 @@ public class CompeticionCreacionView extends JFrame {
 			correcto = false;
 		}
 		
-		if(getTxFecha().getText().equals("YYYY-MM-DD")) {
-			listado += ">" + "Debe introducir la fecha en el formato correcto"+ "\n";
-			correcto = false;
-		}
-		
+		listado += ">" + controlarFecha();
+	
 		txProblemas.setText(listado);
 		return correcto;
+	}
+	
+	private String controlarFecha() {
+		try {
+			String edad = getTxFecha().getText();
+			String[] parts = edad.split("-");
+			int año = Integer.valueOf(parts[0]);
+			int mes = Integer.valueOf(parts[1]);
+			int dia = Integer.valueOf(parts[2]);
+			
+			if(año >= 2021 && mes <= 12 && mes > 0 && dia <= 31 && dia > 0 ) {
+				return "Formato fecha correcto";
+			} else {
+				return "Parámetro fecha incorrecto";
+			}
+		
+		} catch(NumberFormatException e ) {
+			return "Formato fecha incorrecto";
+		}
+		
 	}
 
 	// ----------------------------- Métodos de revision ---------------------------------------
