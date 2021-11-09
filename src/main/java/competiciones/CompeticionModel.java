@@ -12,7 +12,8 @@ public class CompeticionModel {
 	private static final String MSG_NOMBRE = "El nombre no puede ser nulo o vacío";
 	
 	private Database db=new Database();
-	public String listado_competiciones = "SELECT * FROM Competicion c WHERE id = ? ";
+	public static String listado_competiciones = "SELECT * FROM Competicion c WHERE id = ? ";
+	public static String GET_COMPETICIONES = "SELECT * FROM Competicion c ";
 	public static final String SQL_GET_LISTA_NOMBRE = "SELECT * from Competicion where nombre = ?";
 	
 	/**
@@ -22,6 +23,14 @@ public class CompeticionModel {
 		validateNotNull(id,MSG_ID_NO_NULO);
 		
 		List<CompeticionDTO> result = db.executeQueryPojo(CompeticionDTO.class, listado_competiciones, id);
+		return result;
+	}
+	
+	/**
+	 * Obtiene la competición de un solo id
+	 */
+	public List<CompeticionDTO> getCompeticiones() {
+		List<CompeticionDTO> result = db.executeQueryPojo(CompeticionDTO.class, GET_COMPETICIONES);
 		return result;
 	}
 	

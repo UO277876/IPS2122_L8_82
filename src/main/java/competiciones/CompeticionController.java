@@ -1,14 +1,25 @@
 package competiciones;
 
+import java.util.Date;
+import java.util.List;
+
+import giis.demo.util.Util;
+import inscripcion.InscripcionController;
+import inscripcion.InscripcionDTO;
+
 public class CompeticionController {
 	
 	private CompeticionModel cm;
+	private InscripcionController im;
+	
 	
 	/**
 	 * Constructor sin parámetros de la clase CompeticionController
 	 */
 	public CompeticionController() {
 		this.cm = new CompeticionModel();
+		this.im = new InscripcionController();
+		asignarDorsales();
 	}
 	
 	/**
@@ -19,6 +30,24 @@ public class CompeticionController {
 	public CompeticionController(CompeticionModel cm) {
 		this.cm = cm;
 	};
+	
+	/**
+	 * Asigna los dorsales de las competiciones que ya estan iniciadas solo si 
+	 * la asignacion se produce tras el cierre de inscripciones
+	 */
+	private void asignarDorsales() {
+		List<CompeticionDTO> competiciones = cm.getCompeticiones();
+		for(CompeticionDTO competicion : competiciones) {
+			Date actual = new Date();
+			if(Util.isoStringToDate(competicion.getFin()).before(actual)){
+				List<InscripcionDTO> atletas = im.getAtletasCompeticion(competicion.getId());
+				for(InscripcionDTO atleta : atletas) {
+					im.asignarDorsal(atleta.getEmail_atleta(),competicion.getId());
+				}
+			}
+			
+		}
+	}
 	
 	/**
 	 * Devuelve los datos de una inscripcion usando su id para realizar su busqueda

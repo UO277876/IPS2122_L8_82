@@ -28,6 +28,7 @@ public class InscripcionAtletaView extends JFrame {
 	private JTextField txtIndiqueCompeticion;
 	private JButton btnAceptar;
 	private JButton btnCancelar;
+	private JLabel lbDorsal2;
 	
 	public InscripcionAtletaView() {
 		setResizable(false);
@@ -49,6 +50,12 @@ public class InscripcionAtletaView extends JFrame {
 			panel.add(getTxtIndiqueCompeticion());
 			panel.add(getBtnAceptar());
 			panel.add(getBtnCancelar());
+			
+			JLabel lbDorsal1 = new JLabel("NOTA: Los dorsales se asignan");
+			lbDorsal1.setFont(new Font("Tahoma", Font.BOLD, 12));
+			lbDorsal1.setBounds(34, 265, 198, 13);
+			panel.add(lbDorsal1);
+			panel.add(getLbDorsal2());
 		}
 		return panel;
 	}
@@ -118,6 +125,12 @@ public class InscripcionAtletaView extends JFrame {
 		this.txtIndiqueEmail.setText("");
 		setVisible(false);
 	}
-	
-
+	private JLabel getLbDorsal2() {
+		if (lbDorsal2 == null) {
+			lbDorsal2 = new JLabel(" al final del plazo de inscripción");
+			lbDorsal2.setFont(new Font("Tahoma", Font.BOLD, 12));
+			lbDorsal2.setBounds(34, 277, 205, 13);
+		}
+		return lbDorsal2;
+	}
 }

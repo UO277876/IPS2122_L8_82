@@ -16,11 +16,11 @@ public class InscripcionModel {
 	
 	// Sentencias
 	private Database db=new Database();
-	private String listado_inscr_id_genero = "SELECT * FROM Inscripcion WHERE id_competicion = ? and categoriaSexo = ? ORDER BY tiempo";
-	private String listado_inscr_id_absoluta = "SELECT * FROM Inscripcion WHERE id_competicion = ? ORDER BY tiempo";
-	private String listado_inscripciones = "SELECT * FROM Inscripcion WHERE email_atleta = ? ORDER BY ultFechaModif";
-	private String actualizar_dorsal = "UPDATE Inscripcion SET dorsal = ? WHERE email_atleta = ? and id_competicion = ?";
-	private String obtener_por_dorsal = "SELECT * FROM Inscripcion WHERE dorsal = ? and email_atleta = ? and id_competicion = ?";
+	private static final String listado_inscr_id_genero = "SELECT * FROM Inscripcion WHERE id_competicion = ? and categoriaSexo = ? ORDER BY tiempo";
+	private static final String listado_inscr_id_absoluta = "SELECT * FROM Inscripcion WHERE id_competicion = ? ORDER BY tiempo";
+	private static final String listado_inscripciones = "SELECT * FROM Inscripcion WHERE email_atleta = ? ORDER BY ultFechaModif";
+	private static final String actualizar_dorsal = "UPDATE Inscripcion SET dorsal = ? WHERE email_atleta = ? and id_competicion = ?";
+	private static final String obtener_por_dorsal = "SELECT * FROM Inscripcion WHERE dorsal = ? and email_atleta = ? and id_competicion = ?";
 	
 	/*private static final String SQL_GET_INSCRIPCION = 
 			"SELECT * FROM Inscripcion WHERE email_atleta = ? AND id_competicion = ?";*/

@@ -279,14 +279,27 @@ public class InscripcionController {
 	}
 	
 	/**
+	 * Obtiene todas las inscripciones de una competición
+	 * @param id
+	 */
+	public List<InscripcionDTO> getAtletasCompeticion(int id) {
+		return im.getInscripcionesPorDorsal(id);
+	}
+	
+	/**
 	 * Asigna un dorsal a un atleta en concreto, recién inscrito
 	 * 	RESERVADOS: A B C D E F G H I J K L M N
 	 */
 	public void asignarDorsal(String email, int id_competicion) {
 		if(pc.getEstado(email)) {
 			String dorsal = getNewDorsal();
+			int count = 0;
 			while(im.verificarDorsal(dorsal, email, id_competicion)) {
 				dorsal = getNewDorsalDouble(dorsal.charAt(0));
+				if(cm.obtenerCompeticion(id_competicion).getNumPlazas() >= 100 && count >= 100) {
+					dorsal += getNewDorsal();
+				}
+				count++;
 			}
 			
 			im.actualizarDorsal(dorsal, email, id_competicion);
