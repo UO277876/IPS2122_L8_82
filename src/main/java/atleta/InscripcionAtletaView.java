@@ -88,10 +88,10 @@ public class InscripcionAtletaView extends JFrame {
 					else {
 						ic.inscribirAtleta(ac.obtenerAtletaByEmail(ic.getEmailProvisionalParaPago()), ic.getIdProvisionalParaPago(), ic.getNewDorsal(), 13, "Pre-inscrito");
 						System.out.println("Inscripcion Correcta, tenga una buena tarde");
+						metododepagoview = new MetodoDePagoView(ic, ac);
+						metododepagoview.setVisible(true);
 					}
 					
-					metododepagoview = new MetodoDePagoView(ic, ac);
-					metododepagoview.setVisible(true);
 				}
 			});
 			btnAceptar.setBounds(345, 252, 85, 21);

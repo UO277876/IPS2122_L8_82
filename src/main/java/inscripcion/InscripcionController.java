@@ -302,7 +302,19 @@ public class InscripcionController {
 		return dateFormat.format(dateAct);
 	}
 	
+	public float getPrecioInscripcion(int id_competicion) {
+		float cantidad = 0.0f;
+		List<InscripcionDTO> inscripciones = im.getInscripcionesPorCompeticion(id_competicion);
+		if(inscripciones.size() > 0) {
+			cantidad = inscripciones.get(0).getPrecio();
+		}
+		return cantidad;
+	}
 	
+	
+	public void setMetodoDePago() {
+		
+	}
 	
 	/*
 	public void ChangePaidMethod(String email, String id, String newPaidMethod) {
