@@ -21,7 +21,6 @@ public class CompeticionModel {
 	public static final String SQL_GET_LISTA_NOMBRE = "SELECT * from Competicion where nombre = ?";
 
 	private static final String LISTADO_COMPETICIONES = "SELECT * FROM Competicion c WHERE id = ? ";
-	private static final String SQL_GET_LISTA_NOMBRE = "SELECT * from Competicion where nombre = ?";
 	private static final String INTRODUCIR_COMPETICION = "INSERT INTO Competicion(id, inicio, fin, tipo, numPlazas, fecha, nombre, descr, distancia) VALUES (?,?,?,?,?,?,?,?,?)";
 	
 
@@ -42,6 +41,9 @@ public class CompeticionModel {
 	public List<CompeticionDTO> getCompeticiones() {
 		List<CompeticionDTO> result = db.executeQueryPojo(CompeticionDTO.class, GET_COMPETICIONES);
 		return result;
+	}
+	
+	/**
 	 * Añade una competicion
 	 */
 	public void addCompeticion(CompeticionDTO dto) {

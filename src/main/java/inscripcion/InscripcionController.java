@@ -302,6 +302,7 @@ public class InscripcionController {
 			
 			im.actualizarDorsal(dorsal, email, id_competicion);
 		}
+	}
 
 	public float getPrecioInscripcion(int id_competicion) {
 		float cantidad = 0.0f;

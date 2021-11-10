@@ -141,6 +141,7 @@ public class InscripcionAtletaView extends JFrame {
 			lbDorsal2.setBounds(34, 277, 205, 13);
 		}
 		return lbDorsal2;
+	}
 	
 	public String getEmail() {
 		return email;
