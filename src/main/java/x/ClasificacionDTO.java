@@ -1,4 +1,4 @@
-package inscripcion;
+package x;
 
 public class ClasificacionDTO {
 	

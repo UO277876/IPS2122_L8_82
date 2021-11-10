@@ -11,6 +11,8 @@ import atleta.AtletaController;
 import atleta.AtletaDTO;
 import competiciones.CompeticionController;
 import competiciones.CompeticionDTO;
+import x.ClasificacionDTO;
+import x.ListadoDTO;
 
 public class InscripcionController {
 
