@@ -274,7 +274,12 @@ public class InscripcionController {
 		CompeticionDTO competicion = cm.obtenerCompeticion(id_competicion);
 		
 		// Mira si acabo la fecha de finalizar inscripciones y el estado de la inscripcion
-		if(Util.isoStringToDate(competicion.getFin()).before(new Date()) && pc.getEstado(email)) {
+//		if(pc.getEstado(email)) {
+//			String dorsal = obtenerDorsal(competicion);
+//			im.actualizarDorsal(dorsal, email, id_competicion);
+//		}
+		
+		if(pc.getEstado(email)) {
 			String dorsal = obtenerDorsal(competicion);
 			im.actualizarDorsal(dorsal, email, id_competicion);
 		}
