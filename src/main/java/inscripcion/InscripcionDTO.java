@@ -164,9 +164,18 @@ public class InscripcionDTO {
 	public String calculaCategoria() {
 		// obtiene el atleta
 		AtletaModel amodel = new AtletaModel();
+<<<<<<< HEAD
 		List<AtletaDTO> atleta = amodel.getAtletaEmail(email_atleta);
 		//calcula la categoria
 		calculaCategoriaEdad(atleta.get(0));
+=======
+		List<AtletaDTO> atleta = amodel.getAtletaByEmail(email_atleta);
+		
+		if (atleta.get(0).getGenero().equalsIgnoreCase(AtletaDTO.fem))
+			categoria += "F";
+		else
+			categoria += "M";
+>>>>>>> main
 		return categoria;
 	}
 

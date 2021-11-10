@@ -11,14 +11,17 @@ public class AtletaDTO {
 	private String apellidos;
 	private String genero;
 	private String fechaNacimiento;
+	private String dni;
 	
 	
-	public AtletaDTO(String nombre, String apellidos, String email, String genero, String fechaNacimiento) {
+	public AtletaDTO(String nombre, String apellidos, String email, String genero, String fechaNacimiento,
+			String dni) {
 		this.nombre = nombre;
 		this.apellidos = apellidos;
 		this.email = email;
 		this.genero = genero;
 		this.fechaNacimiento = fechaNacimiento;
+		this.dni = dni;
 	}
 	
 	public AtletaDTO() {	}
@@ -65,6 +68,15 @@ public class AtletaDTO {
 		this.fechaNacimiento = fechaNacimiento;
 	}
 
+	public String getDni() {
+		return dni;
+	}
+
+	public void setDni(String dni) {
+		this.dni = dni;
+	}
+
+	
 
 	  
 }

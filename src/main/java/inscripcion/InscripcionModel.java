@@ -26,13 +26,17 @@ public class InscripcionModel {
 			"SELECT * FROM Inscripcion WHERE email_atleta = ? AND id_competicion = ?";*/
 	
 	private static final String SQL_OBTENER_DORSALES = 
-			"SELECT * FROM Inscripcion WHERE competicion_id = ?";
+			"SELECT * FROM Inscripcion WHERE id_competicion = ?";
 	
 	public static final String SQL_INSCRIBIRSE = 
 			"INSERT into Inscripcion (email_atleta, id_competicion, dorsal, tiempo, precio, ultFechaModif, categoriaSexo, metodoPago) VALUES (?,?,?,?,?,?,?,?)";
 	
 	public static final String SQL_BORRAR_INSCRIPCION = 
 			"DELETE from Inscripcion (email_atleta, id_competicion) VALUES (?,?)";
+	
+	public static final String SQL_INSCRIPCIONES_POR_COMPETICION = 
+			"SELECT * FROM Inscripcion WHERE id_competicion = ?";
+	
 	
 	/**
 	 * Obtiene todas las inscripciones de un atleta mediante el id de una carrera, ordenadas por categoria sexo
@@ -82,6 +86,14 @@ public class InscripcionModel {
 	public void inscribirse(AtletaDTO atleta, int id_competicion, String dorsal, int precio, String ultFechaModif, String metodoPago) {
 		String sql = SQL_INSCRIBIRSE;
 		db.executeUpdate(sql, atleta.getEmail(), id_competicion, dorsal, "---" , precio, ultFechaModif, atleta.getGenero(), metodoPago);
+	}
+	
+	
+	public List<InscripcionDTO> getInscripcionesPorCompeticion(int id_competicion){
+		validateNotNull(id_competicion ,MSG_ID_NO_NULO);
+		String sql = SQL_INSCRIPCIONES_POR_COMPETICION;
+		List<InscripcionDTO> result = db.executeQueryPojo(InscripcionDTO.class, sql, id_competicion);
+		return result;
 	}
 	
 	

@@ -13,8 +13,8 @@ public class CompeticionController {
 	private CompeticionModel model;
 	private CompeticionView view;
 
-	public CompeticionController(CompeticionModel m, CompeticionView v) {
-		this.model = m;
+	public CompeticionController(CompeticionView v) {
+		this.model = new CompeticionModel();
 		this.view = v;
 		this.initView();
 	}
@@ -23,6 +23,9 @@ public class CompeticionController {
 		/*SimpleDateFormat dateFormat = new SimpleDateFormat ("yyyy-MM-dd");
 		Date dateAct = new Date();*/
 		view.setFechaHoy("2021-10-21");
+		
+		view.setCompeticionController(this);
+		
 		this.getListaCompeticiones();
 
 		view.setVisible(true);
@@ -60,6 +63,25 @@ public class CompeticionController {
 				new String[] { "nombre", "fecha", "tipo", "distancia", "fin", "numPlazas" });
 		view.getTablaCompeticiones().setModel(tmodel);
 		SwingUtil.autoAdjustColumns(view.getTablaCompeticiones());
+	}
+	
+	
+	public CompeticionDTO getCompeticion(String nombre, String fecha, String tipo, int distancia,String fechaFin) {
+		CompeticionDTO competicion = new CompeticionDTO();
+		List<CompeticionDTO> competiciones =  model.getListaCompeticiones(Util.isoStringToDate(view.getFechaHoy()));
+		for(CompeticionDTO comp : competiciones) {
+			if(comp.getNombre().equals(nombre) && comp.getFecha().equals(fecha) && comp.getTipo().equals(tipo) && comp.getDistancia() == distancia &&
+					comp.getFin().equals(fechaFin)) {
+				competicion = comp;
+			}
+		}
+		
+		if(competicion.getNombre() == null) {
+			System.out.println(competicion.getNombre());
+			return null;
+		}
+		
+		return competicion;
 	}
 
 }
