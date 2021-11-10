@@ -17,8 +17,8 @@ public class CompeticionController {
 	 * Constructor sin parámetros de la clase CompeticionController
 	 */
 	public CompeticionController() {
-		this.cm = new CompeticionModel();
-		this.im = new InscripcionController();
+		cm = new CompeticionModel();
+		im = new InscripcionController();
 		asignarDorsales();
 	}
 	
