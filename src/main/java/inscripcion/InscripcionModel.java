@@ -34,6 +34,10 @@ public class InscripcionModel {
 	public static final String SQL_BORRAR_INSCRIPCION = 
 			"DELETE from Inscripcion (email_atleta, id_competicion) VALUES (?,?)";
 	
+	public static final String SQL_INSCRIPCIONES_POR_COMPETICION = 
+			"SELECT * FROM Inscripcion WHERE id_competicion = ?";
+	
+	
 	/**
 	 * Obtiene todas las inscripciones de un atleta mediante el id de una carrera, ordenadas por categoria sexo
 	 */
@@ -103,6 +107,12 @@ public class InscripcionModel {
 		
 		List<InscripcionDTO> result = db.executeQueryPojo(InscripcionDTO.class, obtener_por_dorsal, dorsal, email, id_competicion);
 		return result.size() > 0;
+	}
+	public List<InscripcionDTO> getInscripcionesPorCompeticion(int id_competicion){
+		validateNotNull(id_competicion ,MSG_ID_NO_NULO);
+		String sql = SQL_INSCRIPCIONES_POR_COMPETICION;
+		List<InscripcionDTO> result = db.executeQueryPojo(InscripcionDTO.class, sql, id_competicion);
+		return result;
 	}
 	
 	/* De uso general para validacion de objetos */

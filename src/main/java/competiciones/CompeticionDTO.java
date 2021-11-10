@@ -9,12 +9,15 @@ public class CompeticionDTO {
 	private int numPlazas;
 	private String nombre;
 	private String descripcion;
+
+	private String fecha;
+
 	private int distancia;
 	
 	public CompeticionDTO(){};
 	
 	public CompeticionDTO(int id, String tipo, String inicio, String fin, int numPlazas, String nombre, String descripcion
-			, int distancia){
+			, int distancia, String fecha){
 		this.id = id;
 		this.inicio = inicio;
 		this.fin = fin;
@@ -22,13 +25,14 @@ public class CompeticionDTO {
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 		this.distancia = distancia;
+		this.fecha = fecha;
 	};
 	
 	public int getId() { return id; }
 	public void setId(int id) { this.id = id; }
 	public String getTipo() { return tipo; }
 	public void setTipo(String tipo) { this.tipo = tipo; }
-	public String getInicion() { return inicio; }
+	public String getInicio() { return inicio; }
 	public void setInicio(String inicio) { this.inicio = inicio; }
 	public String getFin() { return fin; }
 	public void setFin(String fin) { this.fin = fin; }
@@ -40,7 +44,8 @@ public class CompeticionDTO {
 	public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
 	public int getDistancia() { return distancia; }
 	public void setDistancia(int distancia) { this.distancia = distancia; }
-	
+	public void setFecha(String fecha) { this.fecha = fecha; }
+	public String getFecha() { return fecha; }
 	
 	
 

@@ -11,6 +11,7 @@ create table Atleta (
   genero varchar(1) NOT NULL,
   nombre varchar(32) NOT NULL,
   apellidos varchar(32) NOT NULL,
+  dni varchar(32) NOT NULL,
   fechaNacimiento date NOT NULL
 );
 

@@ -196,7 +196,7 @@ public class InscripcionController {
 	 * @return un AtletaDTO
 	 */
 	private AtletaDTO obtenerAtleta(String email_atleta) {
-		AtletaDTO result = ac.obtenerAtletaEmail(email_atleta);
+		AtletaDTO result = ac.obtenerAtletaByEmail(email_atleta);
 		return result;
 	}
 	
@@ -256,13 +256,26 @@ public class InscripcionController {
 		asignarDorsal(atleta.getEmail(), id_competicion);
 	}
 	
+	public boolean checkAtletaInscrito(AtletaDTO atleta, int id_competicion) {
+		boolean isAtletaInscrito = false;
+		List<InscripcionDTO> inscripciones = im.getInscripcionesPorCompeticion(id_competicion);
+		for(InscripcionDTO inscripcion : inscripciones) {
+			if(inscripcion.getEmail_atleta().equals(atleta.getEmail())) {
+				isAtletaInscrito = true;
+			}
+		}
+		
+		
+		return isAtletaInscrito;
+	}
+	
 	
 	public String getActualDate() {
 		SimpleDateFormat dateFormat = new SimpleDateFormat ("yyyy-MM-dd");
 		Date dateAct = new Date();
 		return dateFormat.format(dateAct);
 	}
-	
+
 	/**
 	 * Obtiene todas las inscripciones de una competición
 	 * @param id
@@ -289,6 +302,20 @@ public class InscripcionController {
 			
 			im.actualizarDorsal(dorsal, email, id_competicion);
 		}
+
+	public float getPrecioInscripcion(int id_competicion) {
+		float cantidad = 0.0f;
+		List<InscripcionDTO> inscripciones = im.getInscripcionesPorCompeticion(id_competicion);
+		if(inscripciones.size() > 0) {
+			cantidad = inscripciones.get(0).getPrecio();
+		}
+		return cantidad;
+	}
+	
+	
+	public void setMetodoDePago() {
+		
+
 	}
 	
 	/*
