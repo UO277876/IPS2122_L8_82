@@ -19,7 +19,6 @@ import javax.swing.table.TableModel;
 
 import competiciones.CompeticionController;
 import giis.demo.util.SwingUtil;
-import x.ClasificacionDTO;
 
 @SuppressWarnings("serial")
 public class ClasificacionesView extends JFrame {

@@ -17,7 +17,6 @@ import javax.swing.JTextField;
 import javax.swing.table.TableModel;
 
 import giis.demo.util.SwingUtil;
-import x.ListadoDTO;
 
 @SuppressWarnings("serial")
 public class InscripcionView extends JFrame {
