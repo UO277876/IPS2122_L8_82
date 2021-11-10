@@ -1,6 +1,6 @@
 package competicion;
 
-import atleta.AtletaDTO;
+import Atleta.AtletaDTO;
 
 public class CompeticionDTO {
 	private int id;

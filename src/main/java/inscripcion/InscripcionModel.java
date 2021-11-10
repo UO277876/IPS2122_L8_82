@@ -4,7 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import atleta.AtletaDTO;
+import Atleta.AtletaDTO;
 import giis.demo.util.ApplicationException;
 import giis.demo.util.Database;
 
@@ -34,10 +34,13 @@ public class InscripcionModel {
 			"INSERT into Inscripcion (email_atleta, id_competicion, dorsal, tiempo, precio, ultFechaModif, categoriaSexo, metodoPago, id_metodopago) VALUES (?,?,?,?,?,?,?,?, ?)";
 	
 	public static final String SQL_BORRAR_INSCRIPCION = 
-			"DELETE from Inscripcion (email_atleta, id_competicion) VALUES (?,?)";
+			"DELETE from Inscripcion WHERE email_atleta = ?";//, id_competicion = ?"; //VALUES (?,?)";
 	
 	public static final String SQL_INSCRIPCIONES_POR_COMPETICION = 
 			"SELECT * FROM Inscripcion WHERE id_competicion = ?";
+	
+	public static final String SQL_UPDATE_INSCRIPCION_DATA = 
+			"UPDATE Inscripcion SET ultFechaModif=? ," + "metodoPago=? , " + "id_metodopago=? " + "WHERE  email_atleta=? AND id_competicion=?";
 	
 	
 	/**
@@ -112,7 +115,7 @@ public class InscripcionModel {
 	
 	//METODOS PARA CAMBIAR LA FORMA DE PAGO DE UNA COMPETICION YA INSCRITA
 	
-	public InscripcionDTO getInscripcion(String email, int id_competicion) {
+	/*public InscripcionDTO getInscripcion(String email, int id_competicion) {
 		InscripcionDTO inscripcion = new InscripcionDTO();
 		String sql = SQL_INSCRIPCIONES_POR_COMPETICION;
 		List<InscripcionDTO> result = db.executeQueryPojo(InscripcionDTO.class, sql, id_competicion);
@@ -129,19 +132,25 @@ public class InscripcionModel {
 		
 		return inscripcion;
 	}
+	*/
 	
-	public boolean changePaidMethodForInscripcion(String email, int id_competicion, String paidMethod, int id_metodopago) {
+	public void changePaidMethodForInscripcion(String email, int id_competicion, String paidMethod, int id_metodopago) {
+		String sql = SQL_UPDATE_INSCRIPCION_DATA;
+		db.executeUpdate(sql, getActualDate(), paidMethod, id_metodopago, email, id_competicion);
+		
+		
+		
 		String borrarInscripcion = SQL_BORRAR_INSCRIPCION;
 		String inscribirse = SQL_INSCRIBIRSE;
-		InscripcionDTO inscripcion = getInscripcion(email, id_competicion);
+		/*InscripcionDTO inscripcion = getInscripcion(email, id_competicion);
 		if(inscripcion == null ) {
 			return false;
 		}
-		else {
-			db.executeUpdate(borrarInscripcion, email, id_competicion);
+		else {*/
+			//db.executeUpdate(borrarInscripcion, email); //, id_competicion);
 			//db.executeUpdate(inscribirse, email, id_competicion, inscripcion.getDorsal(), inscripcion.getTiempo() , inscripcion.getPrecio(), getActualDate() , inscripcion.getCategoriaSexo(), paidMethod, id_metodopago);
-			return true;
-		}
+			//return true;
+		//}
 		
 	}
 	

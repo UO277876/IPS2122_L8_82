@@ -16,7 +16,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 
-import atleta.InscripcionAtletaView;
+import Atleta.InscripcionAtletaView;
 
 public class CompeticionView extends JFrame {
 

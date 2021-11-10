@@ -6,9 +6,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
-import atleta.AtletaController;
-import atleta.AtletaDTO;
-
+import Atleta.AtletaController;
+import Atleta.AtletaDTO;
 import competiciones.CompeticionController;
 import competiciones.CompeticionDTO;
 
@@ -312,13 +311,12 @@ public class InscripcionController {
 	}
 	
 	
-	public void setMetodoDePago(String metodoDePago) {
+	public void setMetodoDePago(String email, int id_competicion, String metodoDePago) {
 		if(metodoDePago.equals("Tarjeta")) {
-			System.out.println("Estas tratando de cambiar el metodo de pago a 'tarjeta'");
 			im.changePaidMethodForInscripcion(getEmailProvisionalParaPago(), getIdProvisionalParaPago(), metodoDePago, 1);
 		}
 		else if(metodoDePago.equals("Transferencia")) {
-			System.out.println("Cambiar para transferencia, sin hacer");
+			im.changePaidMethodForInscripcion(getEmailProvisionalParaPago(), getIdProvisionalParaPago(), metodoDePago, 2);
 		}
 		else {
 			System.out.println("Algo ha salido mal");

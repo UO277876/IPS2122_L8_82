@@ -8,7 +8,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
-import atleta.InscripcionAtletaView;
+import Atleta.InscripcionAtletaView;
 import competicion.CompeticionController;
 import competicion.CompeticionView;
 import competicion.CompeticionModel;

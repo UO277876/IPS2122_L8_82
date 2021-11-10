@@ -4,8 +4,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import atleta.AtletaDTO;
-import atleta.AtletaModel;
+import Atleta.AtletaDTO;
+import Atleta.AtletaModel;
 
 public class InscripcionDTO {
 	

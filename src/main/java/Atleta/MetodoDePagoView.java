@@ -1,4 +1,4 @@
-package atleta;
+package Atleta;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -35,13 +35,14 @@ public class MetodoDePagoView extends JFrame{
 	
 	private AtletaDTO atleta;
 	
-	private PagarConTarjetaView pctv;
-	
+	private PagarConTarjetaView pagotarjetaview;
+	private PagarConTransferenciaView pagotransferenciaview;
 	
 	public MetodoDePagoView(InscripcionController ic, AtletaController ac) {
 		this.ic = ic;
 		this.ac = ac;
-		this.pctv = new PagarConTarjetaView();
+		this.pagotarjetaview = new PagarConTarjetaView(ic);
+		pagotransferenciaview = new PagarConTransferenciaView(ic);
 		
 		atleta = ac.obtenerAtletaByEmail(ic.getEmailProvisionalParaPago());
 		
@@ -89,10 +90,10 @@ public class MetodoDePagoView extends JFrame{
 				public void actionPerformed(ActionEvent e) {
 					if(ac.obtenerAtletaByEmail(ic.getEmailProvisionalParaPago()) != null) {
 						if(getCbMetodoDePago().getSelectedIndex() == 0) {
-							pctv.setVisible(true);
+							pagotarjetaview.setVisible(true);
 						}
 						else if(getCbMetodoDePago().getSelectedIndex() == 1) {
-							//TODO hacer la ventana para pagar con transferencia
+							pagotransferenciaview.setVisible(true);
 						}
 					}		
 					else {

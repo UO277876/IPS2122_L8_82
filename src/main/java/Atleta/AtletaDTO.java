@@ -1,4 +1,4 @@
-package atleta;
+package Atleta;
 
 public class AtletaDTO {
 	

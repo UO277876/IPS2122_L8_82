@@ -1,4 +1,4 @@
-package atleta;
+package Atleta;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;

@@ -1,7 +1,9 @@
-package atleta;
+package Atleta;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JTextField;
 
@@ -25,15 +27,18 @@ public class PagarConTarjetaView extends JFrame {
 	private JButton btnAceptar;
 	private JButton btnCancelar;
 	
+	private String email;
+	private int id_competicion;
+	
 	
 	private InscripcionController ic;
 	
 	
-	public PagarConTarjetaView() {
+	public PagarConTarjetaView(InscripcionController ic) {
 		
 		this.setResizable(false);
 		
-		this.ic = new InscripcionController();
+		this.ic = ic;
 		
 		getContentPane().setLayout(null);
 		getContentPane().add(getLblDescripcion());
@@ -111,8 +116,13 @@ public class PagarConTarjetaView extends JFrame {
 			btnAceptar = new JButton("Aceptar");
 			btnAceptar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					ic.setMetodoDePago(METODODEPAGO_TARJETA);
-					reset();
+					if(checkAllGood()) {
+						ic.setMetodoDePago(ic.getEmailProvisionalParaPago(), ic.getIdProvisionalParaPago(), METODODEPAGO_TARJETA);
+						reset();
+					}
+					else {
+						JOptionPane.showMessageDialog(null, "Alguno de los campos está vacío, por favor asegurese de que la información es correcta");
+					}
 				}
 			});
 			btnAceptar.setBounds(288, 320, 89, 23);
@@ -137,6 +147,16 @@ public class PagarConTarjetaView extends JFrame {
 		this.getTxtFechaCaducidad().setText("");
 		this.getTxtNumero().setText("");
 		this.setVisible(false);
+	}
+	
+	public boolean checkAllGood() {
+		if(this.getTxtCVC().getText().isEmpty() || this.getTxtFechaCaducidad().getText().isEmpty() || 
+				this.getTxtNumero().getText().isEmpty()) {
+			return false;
+		}
+		else {
+			return true;
+		}
 	}
 	
 }
