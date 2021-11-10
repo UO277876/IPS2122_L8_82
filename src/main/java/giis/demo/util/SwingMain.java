@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 import atleta.InscripcionAtletaView;
 import competicion.CompeticionController;
 import competicion.CompeticionView;
+import competiciones.CompeticionCreacionView;
 import competicion.CompeticionModel;
 import giis.demo.tkrun.CarrerasController;
 import giis.demo.tkrun.CarrerasModel;
@@ -27,8 +28,8 @@ import inscripcion.InscripcionView;
  */
 public class SwingMain {
 
-	private InscripcionAtletaView iav;
 	private InscripcionView iiv;
+	private CompeticionCreacionView ccv;
 	private JFrame frame;
 	private ClasificacionesView cv;
 	private CompeticionController cc;
@@ -61,8 +62,8 @@ public class SwingMain {
 	 */
 	private void initialize() {
 		cv = new ClasificacionesView();
-		iav = new InscripcionAtletaView();
 		iiv = new InscripcionView();
+		ccv = new CompeticionCreacionView();
 		
 		frame = new JFrame();
 		frame.setTitle("Main");
@@ -126,10 +127,18 @@ public class SwingMain {
 		JButton btnListaDeCompeticiones = new JButton("Lista de Competiciones");
 		btnListaDeCompeticiones.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new CompeticionController(new CompeticionModel(), new CompeticionView());
+				new CompeticionController(new CompeticionView());
 			}
 		});
 		frame.getContentPane().add(btnListaDeCompeticiones);
+		
+		JButton btnCrearCompeticion = new JButton("Crear Competición");
+		btnCrearCompeticion.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ccv.setVisible(true);
+			}
+		});
+		frame.getContentPane().add(btnCrearCompeticion);
 		
 		
 	}
