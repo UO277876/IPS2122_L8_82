@@ -17,6 +17,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.TableModel;
 
+import clasificacion.CategoriasDTO;
 import competiciones.CompeticionController;
 import giis.demo.util.SwingUtil;
 
@@ -99,8 +100,8 @@ public class ClasificacionesView extends JFrame {
 	private JComboBox<String> getCbId() {
 		if (cbId == null) {
 			cbId = new JComboBox<String>();
-			cbId.setModel(new DefaultComboBoxModel<String>(new String[] { "Absoluta", "Genero", InscripcionDTO.SENIOR,
-					InscripcionDTO.VETA, InscripcionDTO.VETB, InscripcionDTO.VETC, InscripcionDTO.VETD, InscripcionDTO.VETE }));
+			cbId.setModel(new DefaultComboBoxModel<String>(new String[] { "Absoluta", "Genero", CategoriasDTO.SENIOR,
+					CategoriasDTO.VETA, CategoriasDTO.VETB, CategoriasDTO.VETC, CategoriasDTO.VETD, CategoriasDTO.VETE }));
 			cbId.setBounds(434, 33, 98, 21);
 		}
 		return cbId;
