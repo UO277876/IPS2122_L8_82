@@ -1,5 +1,6 @@
 package inscripcion;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -8,7 +9,7 @@ import java.util.Random;
 
 import atleta.AtletaController;
 import atleta.AtletaDTO;
-
+import clasificacion.CategoriasDTO;
 import competiciones.CompeticionController;
 import competiciones.CompeticionDTO;
 
@@ -104,9 +105,9 @@ public class InscripcionController {
 	public List<ClasificacionDTO> clasificacion(String tipo, String nombre) {
 		if(tipo.equals("Genero")) {
 			return clasifGenero(nombre);
-		} else if (tipo.equals(InscripcionDTO.SENIOR) || tipo.equals(InscripcionDTO.VETA)
-				|| tipo.equals(InscripcionDTO.VETB) || tipo.equals(InscripcionDTO.VETC)
-				|| tipo.equals(InscripcionDTO.VETD) || tipo.equals(InscripcionDTO.VETE)) 
+		} else if (tipo.equals(CategoriasDTO.SENIOR) || tipo.equals(CategoriasDTO.VETA)
+				|| tipo.equals(CategoriasDTO.VETB) || tipo.equals(CategoriasDTO.VETC)
+				|| tipo.equals(CategoriasDTO.VETD) || tipo.equals(CategoriasDTO.VETE)) 
 			return clasifCategoria(tipo, nombre);
 		else
 			return clasifAbs(nombre);

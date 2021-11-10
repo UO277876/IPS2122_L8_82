@@ -7,16 +7,11 @@ import java.util.List;
 
 import atleta.AtletaDTO;
 import atleta.AtletaModel;
+import competiciones.CompeticionDTO;
+import competiciones.CompeticionModel;
 import giis.demo.util.Util;
 
 public class InscripcionDTO {
-	
-	public final static String SENIOR = "Senior";
-	public final static String VETA = "VetA";
-	public final static String VETB = "VetB";
-	public final static String VETC = "VetC";
-	public final static String VETD = "VetD";
-	public final static String VETE = "VetE";
 	
 	private final String ESTADO1 = "solicitado";
 	private final String ESTADO2 = "inscrito";
@@ -36,7 +31,6 @@ public class InscripcionDTO {
 	String metodoPago;
 	int id_competicion;
 	String estado;
-	private String categoria;
 
 	public InscripcionDTO() {
 		
@@ -52,7 +46,6 @@ public class InscripcionDTO {
 		this.email_atleta = email_atleta;
 		this.metodoPago = metodoPago;
 		this.id_competicion = id_competicion;
-		this.calculaCategoria();
 	}
 
 	public String getDorsal() { return dorsal; }
@@ -134,24 +127,13 @@ public class InscripcionDTO {
 		// obtiene el atleta
 		AtletaModel amodel = new AtletaModel();
 		List<AtletaDTO> atleta = amodel.getAtletaByEmail(email_atleta);
-		//calcula la categoria
-		calculaCategoriaEdad(atleta.get(0));
+		
+		//obtiene la competicion
+		CompeticionModel cmodel = new CompeticionModel();
+		List<CompeticionDTO> competicion = cmodel.getListadoCompeticiones(id_competicion);
+		
+		//obtiene la categoria
+		String categoria = competicion.get(0).getCategorias().calculaCategoria(atleta.get(0)); 
 		return categoria;
-	}
-	
-	private void calculaCategoriaEdad(AtletaDTO atleta) {
-		int edad = LocalDate.now().getYear() - Util.isoStringToDate(atleta.getFechaNacimiento()).getYear() - 1900;
-		if (edad < 35)
-			categoria = InscripcionDTO.SENIOR;
-		else if (edad < 40)
-			categoria = InscripcionDTO.VETA;
-		else if (edad < 45)
-			categoria = InscripcionDTO.VETB;
-		else if (edad < 50)
-			categoria = InscripcionDTO.VETC;
-		else if (edad < 55)
-			categoria = InscripcionDTO.VETD;
-		else
-			categoria = InscripcionDTO.VETE;
 	}
 }
