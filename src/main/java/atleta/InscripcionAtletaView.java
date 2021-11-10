@@ -71,7 +71,7 @@ public class InscripcionAtletaView extends JFrame {
 					crearRegistroVentana();
 				}
 			});
-			btnRegistrarse.setBounds(177, 282, 96, 21);
+			btnRegistrarse.setBounds(136, 282, 137, 21);
 			panel.add(btnRegistrarse);
 		}
 		return panel;
@@ -108,6 +108,7 @@ public class InscripcionAtletaView extends JFrame {
 					}
 					else {
 						ic.inscribirAtleta(ac.obtenerAtletaByEmail(ic.getEmailProvisionalParaPago()), ic.getIdProvisionalParaPago(), ic.getNewDorsal(), 13, "Pre-inscrito");
+						ic.revisarDorsales(competicion.getId());
 						System.out.println("Inscripcion Correcta, tenga una buena tarde");
 						metododepagoview = new MetodoDePagoView(ic, ac);
 						metododepagoview.setVisible(true);

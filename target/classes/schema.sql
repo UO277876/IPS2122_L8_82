@@ -45,6 +45,8 @@ create table Inscripcion(
 	categoriaSexo varchar(32) not null,
 	metodoPago varchar(32) not null,
 	id_competicion int not null,
+	id_metodopago int,
+	foreign key (id_metodopago) references MetodoDePago (id_metodopago),
 	foreign key (email_atleta) references Atleta (email),
 	foreign key (id_competicion) references Competicion (id),
 	primary key (id_competicion, email_atleta)
@@ -57,8 +59,6 @@ create table MetodoDePago(
 	id_metodopago int NOT NULL,
 	tipo varchar(32) NOT NULL,
 	estado boolean,
-	email_atleta varchar(32) not null,
-	foreign key (email_atleta) references Atleta (email),
 	primary key (id_metodopago)
 
 );
