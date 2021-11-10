@@ -1,5 +1,7 @@
 package inscripcion;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import atleta.AtletaDTO;
@@ -22,14 +24,14 @@ public class InscripcionModel {
 	private String listado_inscripciones = "SELECT * FROM Inscripcion WHERE email_atleta = ? ORDER BY ultFechaModif";
 	
 	
-	/*private static final String SQL_GET_INSCRIPCION = 
-			"SELECT * FROM Inscripcion WHERE email_atleta = ? AND id_competicion = ?";*/
+	private static final String SQL_GET_INSCRIPCION = 
+			"SELECT * FROM Inscripcion WHERE email_atleta = ? AND id_competicion = ?";
 	
 	private static final String SQL_OBTENER_DORSALES = 
 			"SELECT * FROM Inscripcion WHERE id_competicion = ?";
 	
 	public static final String SQL_INSCRIBIRSE = 
-			"INSERT into Inscripcion (email_atleta, id_competicion, dorsal, tiempo, precio, ultFechaModif, categoriaSexo, metodoPago) VALUES (?,?,?,?,?,?,?,?)";
+			"INSERT into Inscripcion (email_atleta, id_competicion, dorsal, tiempo, precio, ultFechaModif, categoriaSexo, metodoPago, id_metodopago) VALUES (?,?,?,?,?,?,?,?, ?)";
 	
 	public static final String SQL_BORRAR_INSCRIPCION = 
 			"DELETE from Inscripcion (email_atleta, id_competicion) VALUES (?,?)";
@@ -83,9 +85,9 @@ public class InscripcionModel {
 	 * @param email_atleta
 	 * @param id_competicion
 	 */
-	public void inscribirse(AtletaDTO atleta, int id_competicion, String dorsal, int precio, String ultFechaModif, String metodoPago) {
+	public void inscribirse(AtletaDTO atleta, int id_competicion, String dorsal, int precio, String ultFechaModif, String metodoPago, int id_metodopago) {
 		String sql = SQL_INSCRIBIRSE;
-		db.executeUpdate(sql, atleta.getEmail(), id_competicion, dorsal, "---" , precio, ultFechaModif, atleta.getGenero(), metodoPago);
+		db.executeUpdate(sql, atleta.getEmail(), id_competicion, dorsal, "---" , precio, ultFechaModif, atleta.getGenero(), metodoPago, id_metodopago);
 	}
 	
 	
@@ -98,6 +100,7 @@ public class InscripcionModel {
 	
 	
 	
+	
 	/* De uso general para validacion de objetos */
 	private void validateNotNull(Object obj, String message) {
 		if (obj==null)
@@ -107,20 +110,46 @@ public class InscripcionModel {
 	
 	
 	
-	//METODOS PARA CAMBIAR LA FORMA DE PAGO DE UNA COMPETICION YA INSCRITA HECHOS SIN QUERER (OSCAR)
-	/*
-	public InscripcionDTO getInscripcion(String email, String id) {
-		String sql = SQL_GET_INSCRIPCION;
-		List<InscripcionDTO> result = db.executeQueryPojo(InscripcionDTO.class, sql, email, id);
-		return result.get(0);
+	//METODOS PARA CAMBIAR LA FORMA DE PAGO DE UNA COMPETICION YA INSCRITA
+	
+	public InscripcionDTO getInscripcion(String email, int id_competicion) {
+		InscripcionDTO inscripcion = new InscripcionDTO();
+		String sql = SQL_INSCRIPCIONES_POR_COMPETICION;
+		List<InscripcionDTO> result = db.executeQueryPojo(InscripcionDTO.class, sql, id_competicion);
+		
+		for(InscripcionDTO ins : result) {
+			if(ins.getEmail_atleta().equals(email)) {
+				inscripcion = ins;
+			}
+		}
+		
+		if(inscripcion.getEmail_atleta() == null) {
+			return null;
+		}
+		
+		return inscripcion;
 	}
 	
-	public void changePaidMethodForInscripcion(String email, String id, String paidMethod) {
+	public boolean changePaidMethodForInscripcion(String email, int id_competicion, String paidMethod, int id_metodopago) {
 		String borrarInscripcion = SQL_BORRAR_INSCRIPCION;
 		String inscribirse = SQL_INSCRIBIRSE;
-		InscripcionDTO inscripcion = getInscripcion(email, id);
-		db.executeUpdate(borrarInscripcion, email, id);
-		db.executeUpdate(inscribirse,email, id, inscripcion.getDorsal(), inscripcion.getTiempo() , inscripcion.getPrecio(), inscripcion.getUltFechaModif(), inscripcion.getCategoriaSexo(), paidMethod);
-	}*/
+		InscripcionDTO inscripcion = getInscripcion(email, id_competicion);
+		if(inscripcion == null ) {
+			return false;
+		}
+		else {
+			db.executeUpdate(borrarInscripcion, email, id_competicion);
+			//db.executeUpdate(inscribirse, email, id_competicion, inscripcion.getDorsal(), inscripcion.getTiempo() , inscripcion.getPrecio(), getActualDate() , inscripcion.getCategoriaSexo(), paidMethod, id_metodopago);
+			return true;
+		}
+		
+	}
+	
+	
+	public String getActualDate() {
+		SimpleDateFormat dateFormat = new SimpleDateFormat ("yyyy-MM-dd");
+		Date dateAct = new Date();
+		return dateFormat.format(dateAct);
+	}
 	
 }

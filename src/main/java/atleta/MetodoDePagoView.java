@@ -2,6 +2,7 @@ package atleta;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 import inscripcion.InscripcionController;
 
@@ -87,14 +88,15 @@ public class MetodoDePagoView extends JFrame{
 			btnAceptar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					if(ac.obtenerAtletaByEmail(ic.getEmailProvisionalParaPago()) != null) {
-						System.out.println("Hola");
 						if(getCbMetodoDePago().getSelectedIndex() == 0) {
-							System.out.println("Caracola");
 							pctv.setVisible(true);
+						}
+						else if(getCbMetodoDePago().getSelectedIndex() == 1) {
+							//TODO hacer la ventana para pagar con transferencia
 						}
 					}		
 					else {
-						System.out.println("El atleta no esta registrado, por favor revise si el correo es correcto");
+						JOptionPane.showMessageDialog(null, "El atleta no esta registrado, por favor revise si el correo es correcto");
 					}
 					
 				}

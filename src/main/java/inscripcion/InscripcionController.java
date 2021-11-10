@@ -279,7 +279,7 @@ public class InscripcionController {
 	
 	
 	public void inscribirAtleta(AtletaDTO atleta, int id_competicion, String dorsal, int precio, String metodoPago) {
-		im.inscribirse(atleta, id_competicion, dorsal, precio, getActualDate(), metodoPago);
+		im.inscribirse(atleta, id_competicion, dorsal, precio, getActualDate(), metodoPago, 0);
 	}
 	
 	public boolean checkAtletaInscrito(AtletaDTO atleta, int id_competicion) {
@@ -312,8 +312,17 @@ public class InscripcionController {
 	}
 	
 	
-	public void setMetodoDePago() {
-		
+	public void setMetodoDePago(String metodoDePago) {
+		if(metodoDePago.equals("Tarjeta")) {
+			System.out.println("Estas tratando de cambiar el metodo de pago a 'tarjeta'");
+			im.changePaidMethodForInscripcion(getEmailProvisionalParaPago(), getIdProvisionalParaPago(), metodoDePago, 1);
+		}
+		else if(metodoDePago.equals("Transferencia")) {
+			System.out.println("Cambiar para transferencia, sin hacer");
+		}
+		else {
+			System.out.println("Algo ha salido mal");
+		}
 	}
 	
 	/*

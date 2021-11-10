@@ -8,13 +8,13 @@ insert into Atleta(email,nombre,apellidos,genero,fechaNacimiento) values
 	('laurarl@hotmail.es','Laura','Romano Lopez','femenino','1997-01-20');
 	
 delete from Inscripcion;
-insert into Inscripcion(dorsal,tiempo,precio,email_atleta, ultFechaModif,categoriaSexo, metodoPago, id_competicion) values 
-	('A','---',3,'mariafdz92@hotmail.es','2021-05-05','femenino','tarjeta',3244),
-	('12','12',3,'mariafdz92@hotmail.es','2021-07-22','femenino','tarjeta',56564),
-	('15','---',13,'juangg73@hotmail.es','2021-07-20','masculino','transferencia',56564),
-	('10','50',2,'albertoce11@hotmail.es','2021-05-07','masculino','tarjeta',3244),
-	('11','1',6,'frangg80@hotmail.es','2021-01-22','masculino','transferencia',5332),
-	('B','---',5,'laurarl@hotmail.es','2021-02-12','femenino','tarjeta',5332);
+insert into Inscripcion(dorsal,tiempo,precio,email_atleta, ultFechaModif,categoriaSexo, metodoPago, id_competicion, id_metodopago) values 
+	('A','---',3,'mariafdz92@hotmail.es','2021-05-05','femenino','tarjeta',3244, 1),
+	('12','12',3,'mariafdz92@hotmail.es','2021-07-22','femenino','tarjeta',56564, 1),
+	('15','---',13,'juangg73@hotmail.es','2021-07-20','masculino','transferencia',56564, 2),
+	('10','50',2,'albertoce11@hotmail.es','2021-05-07','masculino','tarjeta',3244, 1),
+	('11','1',6,'frangg80@hotmail.es','2021-01-22','masculino','transferencia',5332, 2),
+	('B','---',5,'laurarl@hotmail.es','2021-02-12','femenino','tarjeta',5332, 1);
 	
 delete from Competicion;
 insert into Competicion(id,inicio,fin,tipo,numPlazas, fecha, nombre, descr, distancia) values 
@@ -24,4 +24,10 @@ insert into Competicion(id,inicio,fin,tipo,numPlazas, fecha, nombre, descr, dist
 	(6712,'2021-12-13','2021-12-14','asfalto',30, '2021-12-28','luarca', 'Luarca Racing',25),
 	(4200,'2021-11-15','2021-11-17','montaña',20, '2021-12-31','gijon', 'San Silvestre',13),	
 	(1221,'2021-12-31','2022-01-20','asfalto',40, '2022-02-17','navia', 'Carrera por el antroxu',8);	
+	
+delete from MetodoDePago;
+insert into MetodoDePago(id_metodopago, tipo, estado) values
+	(0, "No pagado", "Pre_Inscrito"),
+	(1, "tarjeta", "Inscrito"),
+	(2, "transferencia", "Pendiente de pago");
 

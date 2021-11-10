@@ -12,6 +12,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class PagarConTarjetaView extends JFrame {
+	
+	private final static String METODODEPAGO_TARJETA = "Tarjeta";
+	
 	private JLabel lblDescripcion;
 	private JLabel lblNumero;
 	private JTextField txtNumero;
@@ -108,9 +111,7 @@ public class PagarConTarjetaView extends JFrame {
 			btnAceptar = new JButton("Aceptar");
 			btnAceptar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-
-					//ic.setMetodoDePago("tarjeta");
-					
+					ic.setMetodoDePago(METODODEPAGO_TARJETA);
 					reset();
 				}
 			});
