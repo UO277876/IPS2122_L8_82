@@ -54,6 +54,22 @@ public class InscripcionAtletaView extends JFrame {
 			panel.add(getTxtIndiqueEmail());
 			panel.add(getBtnAceptar());
 			panel.add(getBtnCancelar());
+			
+			JLabel lbAviso = new JLabel("Atencion, para continuar debe estar registrado.");
+			lbAviso.setFont(new Font("Tahoma", Font.PLAIN, 13));
+			lbAviso.setBounds(75, 177, 352, 21);
+			panel.add(lbAviso);
+			
+			JButton btnRegistrar = new JButton("Registrar");
+			btnRegistrar.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					setEmail(txtIndiqueEmail.getText());
+					crearRegistroVentana();
+				}
+			});
+			btnRegistrar.setMnemonic('R');
+			btnRegistrar.setBounds(120, 252, 120, 21);
+			panel.add(btnRegistrar);
 		}
 		return panel;
 	}
@@ -82,8 +98,7 @@ public class InscripcionAtletaView extends JFrame {
 					ic.setIdProvisionalParaPago(competicion.getId());
 
 					if(ac.obtenerAtletaByEmail(ic.getEmailProvisionalParaPago()) == null) {
-						setEmail(txtIndiqueEmail.getText());
-						crearRegistroVentana();
+						JOptionPane.showMessageDialog(null, "Debe registrarse, el email no ha sido encontrado.");
 					}
 					else if(ic.checkAtletaInscrito(ac.obtenerAtletaByEmail(ic.getEmailProvisionalParaPago()), ic.getIdProvisionalParaPago())) {
 						JOptionPane.showMessageDialog(null, "El email introducido ya esta registrado para esa competicion. No se puede registrar dos veces, intentelo de nuevo.");

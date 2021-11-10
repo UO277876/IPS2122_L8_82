@@ -456,7 +456,7 @@ public class CompeticionCreacionView extends JFrame {
 			lbInicioIns = new JLabel("Inicio inscripción:");
 			lbInicioIns.setLabelFor(getTxInicio());
 			lbInicioIns.setFont(new Font("Tahoma", Font.PLAIN, 15));
-			lbInicioIns.setDisplayedMnemonic('D');
+			lbInicioIns.setDisplayedMnemonic('I');
 			lbInicioIns.setBounds(494, 207, 117, 19);
 		}
 		return lbInicioIns;
@@ -466,7 +466,7 @@ public class CompeticionCreacionView extends JFrame {
 			lbFinIns = new JLabel("Fin inscripción:");
 			lbFinIns.setLabelFor(getTxFin());
 			lbFinIns.setFont(new Font("Tahoma", Font.PLAIN, 15));
-			lbFinIns.setDisplayedMnemonic('D');
+			lbFinIns.setDisplayedMnemonic('F');
 			lbFinIns.setBounds(494, 244, 117, 19);
 		}
 		return lbFinIns;

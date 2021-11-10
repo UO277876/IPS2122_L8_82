@@ -84,6 +84,7 @@ public class RegistroAtletaView extends JFrame {
 	private JLabel getLbNombre() {
 		if (lbNombre == null) {
 			lbNombre = new JLabel("Nombre:");
+			lbNombre.setDisplayedMnemonic('N');
 			lbNombre.setLabelFor(getTxNombre());
 			lbNombre.setFont(new Font("Calibri", Font.PLAIN, 17));
 			lbNombre.setBounds(20, 25, 106, 43);
@@ -118,6 +119,7 @@ public class RegistroAtletaView extends JFrame {
 	private JLabel getLbFechaNacimiento() {
 		if (lbFechaNacimiento == null) {
 			lbFechaNacimiento = new JLabel("Fecha de nacimiento:");
+			lbFechaNacimiento.setDisplayedMnemonic('F');
 			lbFechaNacimiento.setFont(new Font("Calibri", Font.PLAIN, 17));
 			lbFechaNacimiento.setBounds(20, 228, 154, 26);
 			lbFechaNacimiento.setLabelFor(txEdad);
@@ -148,6 +150,7 @@ public class RegistroAtletaView extends JFrame {
 	private JLabel getLbDni() {
 		if (lbDni == null) {
 			lbDni = new JLabel("DNI:");
+			lbDni.setDisplayedMnemonic('D');
 			lbDni.setLabelFor(getTxDni());
 			lbDni.setFont(new Font("Calibri", Font.PLAIN, 17));
 			lbDni.setBounds(20, 101, 38, 26);
@@ -233,6 +236,7 @@ public class RegistroAtletaView extends JFrame {
 	private JLabel getLbEmail() {
 		if (lbEmail == null) {
 			lbEmail = new JLabel("Email:");
+			lbEmail.setDisplayedMnemonic('E');
 			lbEmail.setLabelFor(getTxEmail());
 			lbEmail.setFont(new Font("Calibri", Font.PLAIN, 17));
 			lbEmail.setBounds(20, 150, 64, 26);
@@ -253,6 +257,7 @@ public class RegistroAtletaView extends JFrame {
 	private JLabel getLbGenero() {
 		if (lbGenero == null) {
 			lbGenero = new JLabel("Género:");
+			lbGenero.setDisplayedMnemonic('G');
 			lbGenero.setFont(new Font("Calibri", Font.PLAIN, 17));
 			lbGenero.setBounds(20, 192, 64, 26);
 			lbGenero.setLabelFor(getCbGenero());
@@ -369,6 +374,7 @@ public class RegistroAtletaView extends JFrame {
 	private JLabel getLbApellido() {
 		if (lbApellido == null) {
 			lbApellido = new JLabel("Apellidos:");
+			lbApellido.setDisplayedMnemonic('A');
 			lbApellido.setLabelFor(getTxApellidos());
 			lbApellido.setFont(new Font("Calibri", Font.PLAIN, 17));
 			lbApellido.setBounds(20, 59, 106, 43);
