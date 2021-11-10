@@ -12,11 +12,19 @@ public class CompeticionController {
 
 	private CompeticionModel model;
 	private CompeticionView view;
+	
+	private CompeticionViewParaOrganizadores cvpo;
 
 	public CompeticionController(CompeticionView v) {
 		this.model = new CompeticionModel();
 		this.view = v;
 		this.initView();
+	}
+	
+	public CompeticionController(CompeticionViewParaOrganizadores cvpo) {
+		this.model = new CompeticionModel();
+		this.cvpo = cvpo;
+		this.initViewParaOrganizadores();
 	}
 
 	public void initView() {
@@ -29,6 +37,19 @@ public class CompeticionController {
 		this.getListaCompeticiones();
 
 		view.setVisible(true);
+	}
+	
+	
+	public void initViewParaOrganizadores() {
+		/*SimpleDateFormat dateFormat = new SimpleDateFormat ("yyyy-MM-dd");
+		Date dateAct = new Date();*/
+		cvpo.setFechaHoy("2021-10-21");
+		
+		cvpo.setCompeticionController(this);
+		
+		this.getListaCompeticionesParaOrganizador();
+
+		cvpo.setVisible(true);
 	}
 
 	/**
@@ -63,6 +84,14 @@ public class CompeticionController {
 				new String[] { "nombre", "fecha", "tipo", "distancia", "fin", "numPlazas" });
 		view.getTablaCompeticiones().setModel(tmodel);
 		SwingUtil.autoAdjustColumns(view.getTablaCompeticiones());
+	}
+	
+	public void getListaCompeticionesParaOrganizador() {
+		List<CompeticionDTO> competiciones = model.getListaCompeticiones(Util.isoStringToDate(cvpo.getFechaHoy()));
+		TableModel tmodel = SwingUtil.getTableModelFromPojos(competiciones,
+				new String[] { "nombre", "fecha", "tipo", "distancia", "fin", "numPlazas" });
+		cvpo.getTablaCompeticiones().setModel(tmodel);
+		SwingUtil.autoAdjustColumns(cvpo.getTablaCompeticiones());
 	}
 	
 	

@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 import Atleta.InscripcionAtletaView;
 import competicion.CompeticionController;
 import competicion.CompeticionView;
+import competicion.CompeticionViewParaOrganizadores;
 import competicion.CompeticionModel;
 import giis.demo.tkrun.CarrerasController;
 import giis.demo.tkrun.CarrerasModel;
@@ -121,13 +122,21 @@ public class SwingMain {
 		});
 		frame.getContentPane().add(btnListadoIns);
 		
-		JButton btnListaDeCompeticiones = new JButton("Lista de Competiciones");
+		JButton btnListaDeCompeticiones = new JButton("Lista de Competiciones para Atletas");
 		btnListaDeCompeticiones.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new CompeticionController(new CompeticionView());
 			}
 		});
 		frame.getContentPane().add(btnListaDeCompeticiones);
+		
+		JButton btnListaDeCompeticionOrganizador = new JButton("Lista de Competiciones para Organizadores");
+		btnListaDeCompeticionOrganizador.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new CompeticionController(new CompeticionViewParaOrganizadores());
+			}
+		});
+		frame.getContentPane().add(btnListaDeCompeticionOrganizador);
 		
 		
 	}

@@ -32,7 +32,7 @@ public class CompeticionViewParaOrganizadores extends JFrame{
 	private String fechaHoy;
 	
 
-	private InscripcionAtletaView iav;
+	private CompeticionOrganizadorView cov;
 	private CompeticionController compContr;
 	
 
@@ -104,8 +104,8 @@ public class CompeticionViewParaOrganizadores extends JFrame{
 						JOptionPane.showMessageDialog(null, "No se ha podido encontrar la competición deseada, vuelva a intentarlo.");
 					}
 					else {
-						//iav = new CompeticionOrganizadorView(competicion);
-						iav.setVisible(true);
+						//cov = new CompeticionOrganizadorView(competicion);
+						//cov.setVisible(true);
 					}
 				}
 			});
