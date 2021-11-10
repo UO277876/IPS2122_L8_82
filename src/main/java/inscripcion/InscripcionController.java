@@ -11,15 +11,13 @@ import atleta.AtletaController;
 import atleta.AtletaDTO;
 import competiciones.CompeticionController;
 import competiciones.CompeticionDTO;
+import giis.demo.util.Util;
 import metododepago.MetodoDePagoController;
 
 public class InscripcionController {
 	
-
 	private static final String characters = "1234567890OPQRSTUVWXYZ";
-	private static final String characters2 = "1234567890";
-	
-	
+		
 	private InscripcionModel im;
 
 	private AtletaController ac;
@@ -236,21 +234,6 @@ public class InscripcionController {
 	    return new String(text);
 	}
 	
-	/**
-	 * Si se ha encontrado un dorsal asignado, este método añade
-	 * otro carácter random al dorsal 
-	 */
-	public String getNewDorsalDouble(char dorsal) {
-		Random rng = new Random();
-		char[] text = new char[1];
-		text[0] = dorsal;
-	    for (int i = 1; i < 2; i++)
-	    {
-	        text[i] = characters2.charAt(rng.nextInt(characters2.length()));
-	    }
-	    return new String(text);
-	}
-	
 	public void inscribirAtleta(AtletaDTO atleta, int id_competicion, String dorsal, int precio, String metodoPago) {
 		im.inscribirse(atleta, id_competicion, dorsal, precio, getActualDate(), metodoPago);
 		asignarDorsal(atleta.getEmail(), id_competicion);
@@ -286,22 +269,49 @@ public class InscripcionController {
 	
 	/**
 	 * Asigna un dorsal a un atleta en concreto, recién inscrito
-	 * 	RESERVADOS: A B C D E F G H I J K L M N
 	 */
 	public void asignarDorsal(String email, int id_competicion) {
-		if(pc.getEstado(email)) {
-			String dorsal = getNewDorsal();
-			int count = 0;
-			while(im.verificarDorsal(dorsal, email, id_competicion)) {
-				dorsal = getNewDorsalDouble(dorsal.charAt(0));
-				if(cm.obtenerCompeticion(id_competicion).getNumPlazas() >= 100 && count >= 100) {
-					dorsal += getNewDorsal();
-				}
-				count++;
-			}
-			
+		CompeticionDTO competicion = cm.obtenerCompeticion(id_competicion);
+		
+		// Mira si acabo la fecha de finalizar inscripciones y el estado de la inscripcion
+		if(Util.isoStringToDate(competicion.getFin()).before(new Date()) && pc.getEstado(email)) {
+			String dorsal = obtenerDorsal(competicion);
 			im.actualizarDorsal(dorsal, email, id_competicion);
 		}
+		
+	}
+	
+	/**
+	 * Crea un número random como dorsal 
+	 * El mínimo es el reservado, y el máximo el número de plazas de la competición
+	 */
+	private String obtenerDorsal(CompeticionDTO competicion) {
+		Random random = new Random();
+		// El número de dorsales va de mínimo los reservados
+		// y por último el maximo de plazas
+		int dorsal = random.nextInt((competicion.getNumPlazas() - competicion.getDorsalesReservados())
+				+ competicion.getDorsalesReservados());
+		while(im.verificarDorsal(String.valueOf(dorsal), competicion.getId())) {
+			dorsal = random.nextInt((competicion.getNumPlazas() - competicion.getDorsalesReservados())
+					+ competicion.getDorsalesReservados());
+		}
+		
+		return String.valueOf(dorsal);
+	}
+	
+	/**
+	 * Se revisan si los dorsales de los demás ya están asignados, si falta alguno se actualiza también
+	 */
+	public void revisarDorsales(int id_competicion) {
+		List<InscripcionDTO> inscripciones = im.getInscripcionesPorCompeticion(id_competicion);
+		
+		for(InscripcionDTO incr : inscripciones) {
+			// Verifica si la inscripcion tiene dorsal asociado
+			if(im.verificarDorsal(incr.getDorsal(), id_competicion)) {
+				asignarDorsal(incr.getEmail_atleta(), id_competicion);
+			}
+		}
+		
 	}
 
 	public float getPrecioInscripcion(int id_competicion) {

@@ -20,7 +20,7 @@ public class InscripcionModel {
 	private static final String listado_inscr_id_absoluta = "SELECT * FROM Inscripcion WHERE id_competicion = ? ORDER BY tiempo";
 	private static final String listado_inscripciones = "SELECT * FROM Inscripcion WHERE email_atleta = ? ORDER BY ultFechaModif";
 	private static final String actualizar_dorsal = "UPDATE Inscripcion SET dorsal = ? WHERE email_atleta = ? and id_competicion = ?";
-	private static final String obtener_por_dorsal = "SELECT * FROM Inscripcion WHERE dorsal = ? and email_atleta = ? and id_competicion = ?";
+	private static final String obtener_por_dorsal = "SELECT * FROM Inscripcion WHERE dorsal = ? and id_competicion = ?";
 	
 	/*private static final String SQL_GET_INSCRIPCION = 
 			"SELECT * FROM Inscripcion WHERE email_atleta = ? AND id_competicion = ?";*/
@@ -102,12 +102,13 @@ public class InscripcionModel {
 	/**
 	 * Verifica si una inscripcion tiene ya dorsal asociado
 	 */
-	public boolean verificarDorsal(String dorsal, String email, int id_competicion) {
-		validateNotNull(email,MSG_EMAIL_NO_NULO);
+	public boolean verificarDorsal(String dorsal, int id_competicion) {
+		validateNotNull(dorsal,MSG_DORSAL_NO_NULO);
 		
-		List<InscripcionDTO> result = db.executeQueryPojo(InscripcionDTO.class, obtener_por_dorsal, dorsal, email, id_competicion);
+		List<InscripcionDTO> result = db.executeQueryPojo(InscripcionDTO.class, obtener_por_dorsal, dorsal, id_competicion);
 		return result.size() > 0;
 	}
+	
 	public List<InscripcionDTO> getInscripcionesPorCompeticion(int id_competicion){
 		validateNotNull(id_competicion ,MSG_ID_NO_NULO);
 		String sql = SQL_INSCRIPCIONES_POR_COMPETICION;
