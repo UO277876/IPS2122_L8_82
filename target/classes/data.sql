@@ -17,11 +17,11 @@ insert into Inscripcion(dorsal,tiempo,precio,email_atleta, ultFechaModif,categor
 	('B','---',5,'laurarl@hotmail.es','2021-02-12','femenino','tarjeta',5332);
 	
 delete from Competicion;
-insert into Competicion(id,inicio,fin,tipo,numPlazas, fecha, nombre, descr, distancia) values 
-	(3244,'2021-05-04','2021-05-12','asfalto',50, '2021-06-12','asfalto por oviedo', 'Carrera que recorre toda la ciudad de Oviedo',25),
-	(56564,'2021-07-10','2021-08-01','montaña',60, '2021-10-15','somiedo', 'Carrera que recorre parte de la fauna de Somiedo',40),
-	(5332,'2021-01-21','2021-02-28','montaña',30, '2021-03-17','lagunas', 'Recorrido por las lagunas',15),
-	(6712,'2021-12-13','2021-12-14','asfalto',30, '2021-12-28','luarca', 'Luarca Racing',25),
-	(4200,'2021-11-15','2021-11-17','montaña',20, '2021-12-31','gijon', 'San Silvestre',13),	
-	(1221,'2021-12-31','2022-01-20','asfalto',40, '2022-02-17','navia', 'Carrera por el antroxu',8);	
+insert into Competicion(id,inicio,fin,tipo,numPlazas, fecha, nombre, descr, distancia, dorsalesReservados) values 
+	(3244,'2021-05-04','2021-05-12','asfalto',50, '2021-06-12','asfalto por oviedo', 'Carrera que recorre toda la ciudad de Oviedo',25,2),
+	(56564,'2021-07-10','2021-08-01','montaña',60, '2021-10-15','somiedo', 'Carrera que recorre parte de la fauna de Somiedo',40,3),
+	(5332,'2021-01-21','2021-02-28','montaña',30, '2021-03-17','lagunas', 'Recorrido por las lagunas',15,5),
+	(6712,'2021-12-13','2021-12-14','asfalto',30, '2021-12-28','luarca', 'Luarca Racing',25,8),
+	(4200,'2021-11-15','2021-11-17','montaña',20, '2021-12-31','gijon', 'San Silvestre',13,1),	
+	(1221,'2021-12-31','2022-01-20','asfalto',40, '2022-02-17','navia', 'Carrera por el antroxu',8,3);	
 

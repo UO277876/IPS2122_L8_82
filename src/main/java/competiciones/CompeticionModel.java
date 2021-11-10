@@ -21,9 +21,7 @@ public class CompeticionModel {
 	public static final String SQL_GET_LISTA_NOMBRE = "SELECT * from Competicion where nombre = ?";
 
 	private static final String LISTADO_COMPETICIONES = "SELECT * FROM Competicion c WHERE id = ? ";
-	private static final String INTRODUCIR_COMPETICION = "INSERT INTO Competicion(id, inicio, fin, tipo, numPlazas, fecha, nombre, descr, distancia) VALUES (?,?,?,?,?,?,?,?,?)";
-	
-
+	private static final String INTRODUCIR_COMPETICION = "INSERT INTO Competicion(id, inicio, fin, tipo, numPlazas, fecha, nombre, descr, distancia,dorsalesReservados) VALUES (?,?,?,?,?,?,?,?,?,?)";
 	
 	/**
 	 * Obtiene la competición de un solo id
@@ -51,7 +49,7 @@ public class CompeticionModel {
 		validateFechasInscripcion(Util.isoStringToDate(dto.getInicio()), Util.isoStringToDate(dto.getFin()), Util.isoStringToDate(dto.getFecha()));
 		
 		db.executeUpdate(INTRODUCIR_COMPETICION, dto.getId(), Util.isoStringToDate(dto.getInicio()), Util.isoStringToDate(dto.getFin()), dto.getTipo(), 
-				dto.getNumPlazas(), Util.isoStringToDate(dto.getFecha()), dto.getNombre(), dto.getDescripcion(),dto.getDistancia());
+				dto.getNumPlazas(), Util.isoStringToDate(dto.getFecha()), dto.getNombre(), dto.getDescripcion(),dto.getDistancia(), dto.getDorsalesReservados());
 	}
 	
 	/**

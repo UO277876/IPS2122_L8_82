@@ -13,11 +13,12 @@ public class CompeticionDTO {
 	private String fecha;
 
 	private int distancia;
+	private int dorsalesReservados;
 	
 	public CompeticionDTO(){};
 	
 	public CompeticionDTO(int id, String tipo, String inicio, String fin, int numPlazas, String nombre, String descripcion
-			, int distancia, String fecha){
+			, int distancia, String fecha, int dorsalesReservados){
 		this.id = id;
 		this.inicio = inicio;
 		this.fin = fin;
@@ -26,8 +27,19 @@ public class CompeticionDTO {
 		this.descripcion = descripcion;
 		this.distancia = distancia;
 		this.fecha = fecha;
+		this.dorsalesReservados = dorsalesReservados;
 	};
 	
+	
+	
+	public int getDorsalesReservados() {
+		return dorsalesReservados;
+	}
+
+	public void setDorsalesReservados(int dorsalesReservados) {
+		this.dorsalesReservados = dorsalesReservados;
+	}
+
 	public int getId() { return id; }
 	public void setId(int id) { this.id = id; }
 	public String getTipo() { return tipo; }

@@ -27,6 +27,8 @@ create table Competicion(
 	nombre varchar(32) not null, 
 	descr varchar(32), 
 	distancia int not null,
+	dorsalesReservados int not null,
+	check(dorsalesReservados>=0),
 	check(numPlazas>=0),	
 	check(inicio<=fin), 
 	check(fin<fecha)  

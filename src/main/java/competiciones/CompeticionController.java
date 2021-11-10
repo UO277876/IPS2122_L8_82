@@ -1,17 +1,10 @@
 package competiciones;
 
-import java.util.Date;
-import java.util.List;
-
-import giis.demo.util.Util;
-import inscripcion.InscripcionController;
-import inscripcion.InscripcionDTO;
 import java.util.Random;
 
 public class CompeticionController {
 	
 	private CompeticionModel cm;
-	private InscripcionController im;
 	
 	
 	/**
@@ -19,29 +12,6 @@ public class CompeticionController {
 	 */
 	public CompeticionController() {
 		cm = new CompeticionModel();
-		im = new InscripcionController();
-		asignarDorsales();
-	}
-	
-	/**
-	 * Asigna los dorsales de las competiciones que ya estan iniciadas solo si 
-	 * la asignacion se produce tras el cierre de inscripciones
-	 */
-	private void asignarDorsales() {
-		// 1. Se obtienen todas las competiciones
-		List<CompeticionDTO> competiciones = cm.getCompeticiones();
-		for(CompeticionDTO competicion : competiciones) {
-			// 2. Se mira si los plazos de inscripción estan terminados
-			Date actual = new Date();
-			if(Util.isoStringToDate(competicion.getFin()).before(actual)){
-				// 3. Se obtienen todas las inscripciones de la competicion y se asignan los dorsales
-				List<InscripcionDTO> atletas = im.getAtletasCompeticion(competicion.getId());
-				for(InscripcionDTO atleta : atletas) {
-					im.asignarDorsal(atleta.getEmail_atleta(),competicion.getId());
-				}
-			}
-			
-		}
 	}
 	
 	/**
@@ -90,7 +60,7 @@ public class CompeticionController {
 	 * @return True si se ha añadido correctamente y False si no
 	 */
 	public boolean addCompeticion(String nombre, String descripcion, String fecha, int numPlazas, int distancia, String tipo,
-			String inicio, String fin) {
+			String inicio, String fin, int dorsalesReservados) {
 		// 1. Crear ID
 		Random random = new Random();
 		int id = random.nextInt(4735);
@@ -110,6 +80,7 @@ public class CompeticionController {
 		competi.setFin(fin);
 		competi.setInicio(inicio);
 		competi.setFecha(fecha);
+		competi.setDorsalesReservados(dorsalesReservados);
 		
 		cm.addCompeticion(competi);
 		
