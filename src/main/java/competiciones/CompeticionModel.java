@@ -35,10 +35,10 @@ public class CompeticionModel {
 	 */
 	public void addCompeticion(CompeticionDTO dto) {
 		validateNotNull(dto,MSG_DTO);
-		//validateFechasInscripcion(Util.isoStringToDate(dto.getInicio()), Util.isoStringToDate(dto.getFin()), Util.isoStringToDate(dto.getFecha()));
+		validateFechasInscripcion(Util.isoStringToDate(dto.getInicio()), Util.isoStringToDate(dto.getFin()), Util.isoStringToDate(dto.getFecha()));
 		
-		db.executeUpdate(INTRODUCIR_COMPETICION, dto.id, dto.inicio, dto.fin, dto.tipo, 
-				dto.numPlazas, Util.isoStringToDate(dto.getFecha()), dto.nombre, dto.descripcion,dto.distancia);
+		db.executeUpdate(INTRODUCIR_COMPETICION, dto.getId(), Util.isoStringToDate(dto.getInicio()), Util.isoStringToDate(dto.getFin()), dto.getTipo(), 
+				dto.getNumPlazas(), Util.isoStringToDate(dto.getFecha()), dto.getNombre(), dto.getDescripcion(),dto.getDistancia());
 	}
 	
 	/**

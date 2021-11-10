@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.ParseException;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -31,7 +30,7 @@ public class CompeticionCreacionView extends JFrame {
 	private JTextField txDistancia;
 	private JScrollPane scrollPane;
 	private JTextArea txDescripcion;
-	private JButton btAceptar;
+	private JButton btContinuar;
 	private JLabel lblFechaCompe;
 	private JTextField txFecha;
 	
@@ -40,6 +39,12 @@ public class CompeticionCreacionView extends JFrame {
 	private JTextArea txProblemas;
 	private JButton btInscripcion;
 	private JButton btCancelar;
+	private JButton btRegistro;
+	private JLabel lbAviso;
+	private JLabel lbInicioIns;
+	private JLabel lbFinIns;
+	private JTextField txInicio;
+	private JTextField txFin;
 
 	public CompeticionCreacionView() {
 		setResizable(false);
@@ -57,13 +62,19 @@ public class CompeticionCreacionView extends JFrame {
 		getContentPane().add(getTxPlazas());
 		getContentPane().add(getLbDistancia());
 		getContentPane().add(getTxDistancia());
-		getContentPane().add(getBtAceptar());
+		getContentPane().add(getBtContinuar());
 		getContentPane().add(getLblFechaCompe());
 		getContentPane().add(getTxFecha());
 		getContentPane().add(getScrollPane_1());
 		getContentPane().add(getLbProblemas());
 		getContentPane().add(getBtInscripcion());
 		getContentPane().add(getBtCancelar());
+		getContentPane().add(getBtRegistro());
+		getContentPane().add(getLbAviso());
+		getContentPane().add(getLbInicioIns());
+		getContentPane().add(getLbFinIns());
+		getContentPane().add(getTxInicio());
+		getContentPane().add(getTxFin());
 
 		// Inicializacion de la clase CompeticionController
 		this.cc = new CompeticionController();
@@ -111,26 +122,22 @@ public class CompeticionCreacionView extends JFrame {
 		return 	scrollPane;
 	}
 	
-	private JButton getBtAceptar() {
-		if(btAceptar == null) {
-			btAceptar = new JButton("Aceptar");
-			btAceptar.addActionListener(new ActionListener() {
+	private JButton getBtContinuar() {
+		if(btContinuar == null) {
+			btContinuar = new JButton("Continuar");
+			btContinuar.setEnabled(false);
+			btContinuar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					try {
-						crearCompeticion();
-					} catch (ParseException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
+					reset();
 				}
 			});
-			btAceptar.setForeground(Color.WHITE);
-			btAceptar.setBackground(new Color(51, 204, 0));
-			btAceptar.setFont(new Font("Tahoma", Font.BOLD, 13));
-			btAceptar.setMnemonic('A');
-			btAceptar.setBounds(666, 358, 96, 28);
+			btContinuar.setForeground(Color.WHITE);
+			btContinuar.setBackground(new Color(51, 204, 0));
+			btContinuar.setFont(new Font("Tahoma", Font.BOLD, 13));
+			btContinuar.setMnemonic('n');
+			btContinuar.setBounds(666, 358, 117, 28);
 		}
-		return btAceptar;
+		return btContinuar;
 	}
 	
 	private JTextArea getTxDescripcion() {
@@ -243,7 +250,7 @@ public class CompeticionCreacionView extends JFrame {
 	private JScrollPane getScrollPane_1() {
 		if (scrollPane_1 == null) {
 			scrollPane_1 = new JScrollPane();
-			scrollPane_1.setBounds(494, 67, 268, 164);
+			scrollPane_1.setBounds(494, 67, 268, 116);
 			
 			txProblemas = new JTextArea();
 			txProblemas.setEditable(false);
@@ -256,6 +263,7 @@ public class CompeticionCreacionView extends JFrame {
 	private JButton getBtInscripcion() {
 		if (btInscripcion == null) {
 			btInscripcion = new JButton("Configurar inscripciones");
+			btInscripcion.setEnabled(false);
 			btInscripcion.setMnemonic('C');
 			btInscripcion.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -263,7 +271,7 @@ public class CompeticionCreacionView extends JFrame {
 				}
 			});
 			btInscripcion.setFont(new Font("Tahoma", Font.PLAIN, 13));
-			btInscripcion.setBounds(494, 266, 176, 21);
+			btInscripcion.setBounds(494, 277, 176, 21);
 		}
 		return btInscripcion;
 	}
@@ -291,33 +299,60 @@ public class CompeticionCreacionView extends JFrame {
 		this.getTxDescripcion().setText("");
 		this.getTxFecha().setText("YYYY-MM-DD");
 		this.getTxDistancia().setText("");
+		this.getBtContinuar().setEnabled(false);
+		this.getBtRegistro().setEnabled(true);
 		this.txProblemas.setText("");
+		getLbAviso().setText("");
+		getLbAviso().setVisible(false);
+		getTxFin().setText("YYYY-MM-DD");
+		getTxInicio().setText("YYYY-MM-DD");
 		
 		setVisible(false);
+	}
+	
+	private JButton getBtRegistro() {
+		if (btRegistro == null) {
+			btRegistro = new JButton("Registro");
+			btRegistro.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					crearCompeticion();
+				}
+			});
+			btRegistro.setMnemonic('R');
+			btRegistro.setForeground(Color.WHITE);
+			btRegistro.setFont(new Font("Tahoma", Font.BOLD, 13));
+			btRegistro.setBackground(Color.BLUE);
+			btRegistro.setBounds(245, 364, 96, 28);
+		}
+		return btRegistro;
 	}
 
 	// ----------------------------- Métodos independientes de la interfaz
 	// ---------------------------------------
-	private void crearCompeticion() throws ParseException {
+	private void crearCompeticion() {
 		try{
 		String nombre = getTxNombre().getText();
 		String descripcion = getTxDescripcion().getText();
 		String tipo = (String) getCbTipo().getSelectedItem();
 		int numPlazas = Integer.valueOf(getTxPlazas().getText());
 		int distancia = Integer.valueOf(getTxDistancia().getText());
-		
-		// No se si esta muy bien
 		String fecha = getTxFecha().getText();
+		String inicio = getTxInicio().getText();
+		String fin = getTxFin().getText();
 		
 		if(comprobacion(numPlazas,distancia)) {
-			// FALTA INICIO Y FIN DE INSCRIPCIONES
-			boolean correcto = cc.addCompeticion(nombre, descripcion, fecha, numPlazas, distancia, tipo);
+			boolean correcto = cc.addCompeticion(nombre, descripcion, fecha, numPlazas, distancia, tipo, inicio, fin);
 			
 			if(correcto) {
-				JOptionPane.showMessageDialog(null,"Competición añadida correctamente");
-				this.dispose();
+				getBtContinuar().setEnabled(true);
+				getBtRegistro().setEnabled(false);
+				getLbAviso().setVisible(true);
+				getLbAviso().setText("Se ha añadido correctamente");
 			} else {
-				JOptionPane.showMessageDialog(null,"Ha habido algñun error en la creación");
+				getBtContinuar().setEnabled(false);
+				getBtRegistro().setEnabled(true);
+				getLbAviso().setVisible(true);
+				getLbAviso().setText("No se pudo añadir correctamente");
 			}
 			
 		}
@@ -331,43 +366,69 @@ public class CompeticionCreacionView extends JFrame {
 	private boolean comprobacion(int numPlazas, int distancia) {
 		String listado = "";
 		boolean correcto = true;
+		
 		if(isVacio()) {
 			listado += ">" + "El campo nombre o fecha no puede estar vacío" + "\n";
 			correcto = false;
 		}
 		
 		if(numPlazas < 0) {
-			listado += ">" + "El número de plazas debe ser mayor o igual a 0" + "\n";
+			listado += ">" + "El número de plazas debe ser mayor que 0" + "\n";
 			correcto = false;
 		}
 		
 		if(distancia < 0) {
-			listado += ">" + "La distancia debe ser mayor o igual a 0" + "\n";
+			listado += ">" + "La distancia debe ser mayor que 0" + "\n";
 			correcto = false;
 		}
 		
-		listado += ">" + controlarFecha();
+		if(!controlarFecha(getTxFecha().getText()) || !controlarFecha(getTxInicio().getText()) 
+				|| !controlarFecha(getTxFin().getText())) {
+			correcto = false;
+		}
+		
+		listado += ">" + controlarFecha(getTxFecha().getText(), "fecha");
+		listado += ">" + controlarFecha(getTxInicio().getText(), "fecha de inicio de inscripción");
+		listado += ">" + controlarFecha(getTxFin().getText(), "fecha de fin de inscripción");
 	
 		txProblemas.setText(listado);
 		return correcto;
 	}
 	
-	private String controlarFecha() {
+	private boolean controlarFecha(String fecha) {
 		try {
-			String edad = getTxFecha().getText();
-			String[] parts = edad.split("-");
+			String[] parts = fecha.split("-");
 			int año = Integer.valueOf(parts[0]);
 			int mes = Integer.valueOf(parts[1]);
 			int dia = Integer.valueOf(parts[2]);
 			
 			if(año >= 2021 && mes <= 12 && mes > 0 && dia <= 31 && dia > 0 ) {
-				return "Formato fecha correcto";
+				return true;
 			} else {
-				return "Parámetro fecha incorrecto";
+				return false;
 			}
 		
 		} catch(NumberFormatException e ) {
-			return "Formato fecha incorrecto";
+			return false;
+		}
+		
+	}
+	
+	private String controlarFecha(String fecha, String tipo) {
+		try {
+			String[] parts = fecha.split("-");
+			int año = Integer.valueOf(parts[0]);
+			int mes = Integer.valueOf(parts[1]);
+			int dia = Integer.valueOf(parts[2]);
+			
+			if(año >= 2021 && mes <= 12 && mes > 0 && dia <= 31 && dia > 0 ) {
+				return "Formato " + tipo +" correcto"+ "\n";
+			} else {
+				return "Parámetro " + tipo +" incorrecto"+ "\n";
+			}
+		
+		} catch(NumberFormatException e ) {
+			return "Formato " + tipo +" incorrecto"+ "\n";
 		}
 		
 	}
@@ -381,5 +442,55 @@ public class CompeticionCreacionView extends JFrame {
 	private boolean isVacio() {
 		return txNombre.getText().contentEquals("") || txFecha.getText().contentEquals("");
 	}
-
+	private JLabel getLbAviso() {
+		if (lbAviso == null) {
+			lbAviso = new JLabel("");
+			lbAviso.setFont(new Font("Tahoma", Font.PLAIN, 12));
+			lbAviso.setBounds(494, 308, 268, 28);
+			lbAviso.setVisible(false);
+		}
+		return lbAviso;
+	}
+	private JLabel getLbInicioIns() {
+		if (lbInicioIns == null) {
+			lbInicioIns = new JLabel("Inicio inscripción:");
+			lbInicioIns.setLabelFor(getTxInicio());
+			lbInicioIns.setFont(new Font("Tahoma", Font.PLAIN, 15));
+			lbInicioIns.setDisplayedMnemonic('D');
+			lbInicioIns.setBounds(494, 207, 117, 19);
+		}
+		return lbInicioIns;
+	}
+	private JLabel getLbFinIns() {
+		if (lbFinIns == null) {
+			lbFinIns = new JLabel("Fin inscripción:");
+			lbFinIns.setLabelFor(getTxFin());
+			lbFinIns.setFont(new Font("Tahoma", Font.PLAIN, 15));
+			lbFinIns.setDisplayedMnemonic('D');
+			lbFinIns.setBounds(494, 244, 117, 19);
+		}
+		return lbFinIns;
+	}
+	private JTextField getTxInicio() {
+		if (txInicio == null) {
+			txInicio = new JTextField();
+			txInicio.setText("YYYY-MM-DD");
+			txInicio.setForeground(Color.GRAY);
+			txInicio.setFont(new Font("Tahoma", Font.PLAIN, 13));
+			txInicio.setColumns(10);
+			txInicio.setBounds(628, 203, 155, 28);
+		}
+		return txInicio;
+	}
+	private JTextField getTxFin() {
+		if (txFin == null) {
+			txFin = new JTextField();
+			txFin.setText("YYYY-MM-DD");
+			txFin.setForeground(Color.GRAY);
+			txFin.setFont(new Font("Tahoma", Font.PLAIN, 13));
+			txFin.setColumns(10);
+			txFin.setBounds(628, 240, 155, 28);
+		}
+		return txFin;
+	}
 }

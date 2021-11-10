@@ -39,7 +39,7 @@ public class CompeticionController {
 	 * @return Los datos de la competicion
 	 */
 	public boolean existeCompeticion(int id) {
-		return cm.getListadoCompeticiones(id).size() < 0;
+		return cm.getListadoCompeticiones(id).size() > 0;
 	}
 	
 	/**
@@ -67,7 +67,8 @@ public class CompeticionController {
 	 * 
 	 * @return True si se ha añadido correctamente y False si no
 	 */
-	public boolean addCompeticion(String nombre, String descripcion, String fecha, int numPlazas, int distancia, String tipo) {
+	public boolean addCompeticion(String nombre, String descripcion, String fecha, int numPlazas, int distancia, String tipo,
+			String inicio, String fin) {
 		// 1. Crear ID
 		Random random = new Random();
 		int id = random.nextInt(4735);
@@ -84,8 +85,10 @@ public class CompeticionController {
 		competi.setNumPlazas(numPlazas);
 		competi.setTipo(tipo);
 		competi.setDistancia(distancia);
+		competi.setFin(fin);
+		competi.setInicio(inicio);
+		competi.setFecha(fecha);
 		
-		// Falta inicio y fin
 		cm.addCompeticion(competi);
 		
 		// Para comprobar que ha sido creada correctamente

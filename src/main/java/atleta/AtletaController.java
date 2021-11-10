@@ -44,6 +44,13 @@ public class AtletaController {
 		return atleta;
 	}
 	
+	/**
+	 * Encuentra un atleta y devuleve true y está, false si no
+	 */
+	public boolean encontrarAtleta(String email) {
+		return am.getAtletaByEmail(email).size() > 0;
+	}
+	
 	public boolean crearAtleta(String email, String nombre, String apellidos, String dni, String genero, String edad) {
 		AtletaDTO atleta = new AtletaDTO();
 		atleta.setEmail(email);

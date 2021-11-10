@@ -2,15 +2,15 @@ package competiciones;
 
 public class CompeticionDTO {
 	
-	int id;
-	String tipo;
-	String inicio;
-	String fin;
-	int numPlazas;
-	String nombre;
-	String descripcion;
-	String fecha;
-	int distancia;
+	private int id;
+	private String tipo;
+	private String inicio;
+	private String fin;
+	private int numPlazas;
+	private String nombre;
+	private String descripcion;
+	private String fecha;
+	private int distancia;
 	
 	public CompeticionDTO(){};
 	

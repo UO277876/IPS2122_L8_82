@@ -25,7 +25,7 @@ public class AtletaModel {
 	
 	public List<AtletaDTO> getAtletaByEmail(String email_atleta) {
 		validateNotNull(email_atleta,MSG_EMAIL_NO_NULO);
-		validateNotEmpty(email_atleta,MSG_EMAIL_NOT_EMPTY);
+		//validateNotEmpty(email_atleta,MSG_EMAIL_NOT_EMPTY);
 		
 		List<AtletaDTO> result = db.executeQueryPojo(AtletaDTO.class, obtener_atleta_email, email_atleta);
 		return result;
