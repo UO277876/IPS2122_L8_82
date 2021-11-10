@@ -19,7 +19,6 @@ import javax.swing.table.TableModel;
 
 import competiciones.CompeticionController;
 import giis.demo.util.SwingUtil;
-import x.ClasificacionDTO;
 
 @SuppressWarnings("serial")
 public class ClasificacionesView extends JFrame {
@@ -147,7 +146,7 @@ public class ClasificacionesView extends JFrame {
 
 	public void getListaClasificaciones(List<ClasificacionDTO> listadoIns) {
 		TableModel tmodel = SwingUtil.getTableModelFromPojos(listadoIns,
-				new String[] { "numero", "genero", "nombre", "tiempo", "categoria" });
+				new String[] { "numero", "genero", "nombre", "tiempo"});
 		getTbClasificacion().setModel(tmodel);
 		SwingUtil.autoAdjustColumns(getTbClasificacion());
 	}

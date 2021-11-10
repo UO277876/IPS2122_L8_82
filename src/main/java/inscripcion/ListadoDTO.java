@@ -1,4 +1,4 @@
-package x;
+package inscripcion;
 
 public class ListadoDTO {
 	

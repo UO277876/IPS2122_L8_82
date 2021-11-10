@@ -1,13 +1,22 @@
 package inscripcion;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
 import atleta.AtletaDTO;
 import atleta.AtletaModel;
+import giis.demo.util.Util;
 
 public class InscripcionDTO {
+	
+	public final static String SENIOR = "Senior";
+	public final static String VETA = "VetA";
+	public final static String VETB = "VetB";
+	public final static String VETC = "VetC";
+	public final static String VETD = "VetD";
+	public final static String VETE = "VetE";
 	
 	private final String ESTADO1 = "solicitado";
 	private final String ESTADO2 = "inscrito";
@@ -43,7 +52,7 @@ public class InscripcionDTO {
 		this.email_atleta = email_atleta;
 		this.metodoPago = metodoPago;
 		this.id_competicion = id_competicion;
-		this.calculateCategoria();
+		this.calculaCategoria();
 	}
 
 	public String getDorsal() { return dorsal; }
@@ -67,6 +76,10 @@ public class InscripcionDTO {
 	public void setCategoriaSexo(String categoriaSexo) { this.categoriaSexo = categoriaSexo; }
 
 	public String getMetodoPago() { return metodoPago; }
+	
+	public String getCategoria() {
+		return this.calculaCategoria();
+	}
 
 	public void setMetodoPago(String metodoPago) {
 		if(metodoPago.equals(tc) || metodoPago.equals(transf) || metodoPago.equals(metalic)) {
@@ -117,16 +130,28 @@ public class InscripcionDTO {
 	
 	public void setUltFechaModif(String ultFechaModif) { this.ultFechaModif = ultFechaModif; }
 	
-	public String calculateCategoria() {
-		//obtiene el atleta
+	public String calculaCategoria() {
+		// obtiene el atleta
 		AtletaModel amodel = new AtletaModel();
 		List<AtletaDTO> atleta = amodel.getAtletaByEmail(email_atleta);
-		
-		if (atleta.get(0).getGenero().equalsIgnoreCase(AtletaDTO.fem))
-			categoria += "F";
-		else
-			categoria += "M";
+		//calcula la categoria
+		calculaCategoriaEdad(atleta.get(0));
 		return categoria;
 	}
 	
+	private void calculaCategoriaEdad(AtletaDTO atleta) {
+		int edad = LocalDate.now().getYear() - Util.isoStringToDate(atleta.getFechaNacimiento()).getYear() - 1900;
+		if (edad < 35)
+			categoria = InscripcionDTO.SENIOR;
+		else if (edad < 40)
+			categoria = InscripcionDTO.VETA;
+		else if (edad < 45)
+			categoria = InscripcionDTO.VETB;
+		else if (edad < 50)
+			categoria = InscripcionDTO.VETC;
+		else if (edad < 55)
+			categoria = InscripcionDTO.VETD;
+		else
+			categoria = InscripcionDTO.VETE;
+	}
 }
