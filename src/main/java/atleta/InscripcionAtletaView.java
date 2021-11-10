@@ -33,7 +33,6 @@ public class InscripcionAtletaView extends JFrame {
 	private JLabel lbDorsal2;
 	
 	private String email;
-	private JLabel lbRegistro;
 
 	public InscripcionAtletaView(CompeticionDTO competicion) {
 		setResizable(false);
@@ -63,14 +62,10 @@ public class InscripcionAtletaView extends JFrame {
 			lbDorsal1.setBounds(75, 186, 198, 13);
 			panel.add(lbDorsal1);
 			panel.add(getLbDorsal2());
-			panel.add(getLbRegistro());
 			
-			JButton btnRegistrarse = new JButton("Registrarse");
-			btnRegistrarse.addActionListener(new ActionListener() {
-
 			JLabel lbAviso = new JLabel("Atencion, para continuar debe estar registrado.");
 			lbAviso.setFont(new Font("Tahoma", Font.PLAIN, 13));
-			lbAviso.setBounds(75, 177, 352, 21);
+			lbAviso.setBounds(75, 209, 352, 21);
 			panel.add(lbAviso);
 			
 			JButton btnRegistrar = new JButton("Registrar");
@@ -82,11 +77,8 @@ public class InscripcionAtletaView extends JFrame {
 				}
 			});
 
-			btnRegistrarse.setBounds(136, 282, 137, 21);
-			panel.add(btnRegistrarse);
-
 			btnRegistrar.setMnemonic('R');
-			btnRegistrar.setBounds(120, 252, 120, 21);
+			btnRegistrar.setBounds(155, 282, 120, 21);
 			panel.add(btnRegistrar);
 
 		}
@@ -181,13 +173,5 @@ public class InscripcionAtletaView extends JFrame {
 
 	public void setEmail(String email) {
 		this.email = email;
-	}
-	private JLabel getLbRegistro() {
-		if (lbRegistro == null) {
-			lbRegistro = new JLabel("Para continuar debe estar registrado.");
-			lbRegistro.setFont(new Font("Tahoma", Font.PLAIN, 12));
-			lbRegistro.setBounds(75, 209, 242, 13);
-		}
-		return lbRegistro;
 	}
 }
