@@ -27,7 +27,7 @@ insert into Competicion(id,inicio,fin,tipo,numPlazas, fecha, nombre, descr, dist
 	
 delete from MetodoDePago;
 insert into MetodoDePago(id_metodopago, tipo, estado) values
-	(0, "No pagado", "Pre_Inscrito"),
-	(1, "tarjeta", "Inscrito"),
-	(2, "transferencia", "Pendiente de pago");
+	(0, "No pagado", false),
+	(1, "tarjeta", true),
+	(2, "transferencia", false);
 

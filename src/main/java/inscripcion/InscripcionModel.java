@@ -161,4 +161,13 @@ public class InscripcionModel {
 		return dateFormat.format(dateAct);
 	}
 	
+	
+	
+	public float getCantidadAPagar(String email, int id_competicion) {
+		String getInscripcion = SQL_GET_INSCRIPCION;
+		
+		InscripcionDTO inscripcion = db.executeQueryPojo(InscripcionDTO.class, getInscripcion, email, id_competicion).get(0);
+		return inscripcion.precio;
+	}
+	
 }

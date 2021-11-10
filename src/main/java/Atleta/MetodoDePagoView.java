@@ -95,6 +95,7 @@ public class MetodoDePagoView extends JFrame{
 						else if(getCbMetodoDePago().getSelectedIndex() == 1) {
 							pagotransferenciaview.setVisible(true);
 						}
+						setVisible(false);
 					}		
 					else {
 						JOptionPane.showMessageDialog(null, "El atleta no esta registrado, por favor revise si el correo es correcto");

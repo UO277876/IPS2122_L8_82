@@ -27,6 +27,7 @@ public class PagarConTransferenciaView extends JFrame{
 		
 		this.ic = ic;
 		
+		setText();
 		
 		this.setResizable(false);
 		setBounds(100,100,480,299);
@@ -88,10 +89,13 @@ public class PagarConTransferenciaView extends JFrame{
 		return btnAceptar;
 	}
 	
+	
+	public void setText() {
+		this.getLblCantidadAPagar().setText("Debe abonar la cantidad de " + ic.getCantidadAPagar() + " euros antes de 48 horas");
+		this.getLblNumeroDeCuenta().setText(" ES21 1465 0100 72 2030876293");
+	}
+	
 	public void reset() {
-		/*this.getTxtCVC().setText("");
-		this.getTxtFechaCaducidad().setText("");
-		this.getTxtNumero().setText("");*/
 		this.setVisible(false);
 	}
 }

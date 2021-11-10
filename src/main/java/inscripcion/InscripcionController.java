@@ -323,6 +323,12 @@ public class InscripcionController {
 		}
 	}
 	
+	
+	public float getCantidadAPagar() {
+		float precio = im.getCantidadAPagar(emailProvisionalParaPago, idProvisionalParaPago);
+		return precio;
+	}
+	
 	/*
 	public void ChangePaidMethod(String email, String id, String newPaidMethod) {
 		im.changePaidMethodForInscripcion(email, id, newPaidMethod);
