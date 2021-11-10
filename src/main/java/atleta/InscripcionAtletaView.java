@@ -33,6 +33,7 @@ public class InscripcionAtletaView extends JFrame {
 	private JLabel lbDorsal2;
 	
 	private String email;
+	private JLabel lbRegistro;
 
 	public InscripcionAtletaView(CompeticionDTO competicion) {
 		setResizable(false);
@@ -58,9 +59,20 @@ public class InscripcionAtletaView extends JFrame {
 			
 			JLabel lbDorsal1 = new JLabel("NOTA: Los dorsales se asignan");
 			lbDorsal1.setFont(new Font("Tahoma", Font.BOLD, 12));
-			lbDorsal1.setBounds(34, 265, 198, 13);
+			lbDorsal1.setBounds(75, 186, 198, 13);
 			panel.add(lbDorsal1);
 			panel.add(getLbDorsal2());
+			panel.add(getLbRegistro());
+			
+			JButton btnRegistrarse = new JButton("Registrarse");
+			btnRegistrarse.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					setEmail(txtIndiqueEmail.getText());
+					crearRegistroVentana();
+				}
+			});
+			btnRegistrarse.setBounds(177, 282, 96, 21);
+			panel.add(btnRegistrarse);
 		}
 		return panel;
 	}
@@ -89,8 +101,7 @@ public class InscripcionAtletaView extends JFrame {
 					ic.setIdProvisionalParaPago(competicion.getId());
 
 					if(ac.obtenerAtletaByEmail(ic.getEmailProvisionalParaPago()) == null) {
-						setEmail(txtIndiqueEmail.getText());
-						crearRegistroVentana();
+						JOptionPane.showMessageDialog(null, "Debe registrarse para poder continuar.");
 					}
 					else if(ic.checkAtletaInscrito(ac.obtenerAtletaByEmail(ic.getEmailProvisionalParaPago()), ic.getIdProvisionalParaPago())) {
 						JOptionPane.showMessageDialog(null, "El email introducido ya esta registrado para esa competicion. No se puede registrar dos veces, intentelo de nuevo.");
@@ -104,7 +115,7 @@ public class InscripcionAtletaView extends JFrame {
 					
 				}
 			});
-			btnAceptar.setBounds(345, 252, 85, 21);
+			btnAceptar.setBounds(380, 282, 85, 21);
 		}
 		return btnAceptar;
 	}
@@ -124,7 +135,7 @@ public class InscripcionAtletaView extends JFrame {
 					reset();
 				}
 			});
-			btnCancelar.setBounds(250, 252, 85, 21);
+			btnCancelar.setBounds(285, 282, 85, 21);
 		}
 		return btnCancelar;
 	}
@@ -138,7 +149,7 @@ public class InscripcionAtletaView extends JFrame {
 		if (lbDorsal2 == null) {
 			lbDorsal2 = new JLabel(" al final del plazo de inscripción");
 			lbDorsal2.setFont(new Font("Tahoma", Font.BOLD, 12));
-			lbDorsal2.setBounds(34, 277, 205, 13);
+			lbDorsal2.setBounds(260, 186, 205, 13);
 		}
 		return lbDorsal2;
 	}
@@ -149,5 +160,13 @@ public class InscripcionAtletaView extends JFrame {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	private JLabel getLbRegistro() {
+		if (lbRegistro == null) {
+			lbRegistro = new JLabel("Para continuar debe estar registrado.");
+			lbRegistro.setFont(new Font("Tahoma", Font.PLAIN, 12));
+			lbRegistro.setBounds(75, 209, 242, 13);
+		}
+		return lbRegistro;
 	}
 }
