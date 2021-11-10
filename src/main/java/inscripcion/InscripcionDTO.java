@@ -2,6 +2,7 @@ package inscripcion;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -11,12 +12,12 @@ import giis.demo.util.Util;
 
 public class InscripcionDTO {
 
-	public final String SENIOR = "Senior";
-	public final String VETA = "VetA";
-	public final String VETB = "VetB";
-	public final String VETC = "VetC";
-	public final String VETD = "VetD";
-	public final String VETE = "VetE";
+	public final static String SENIOR = "Senior";
+	public final static String VETA = "VetA";
+	public final static String VETB = "VetB";
+	public final static String VETC = "VetC";
+	public final static String VETD = "VetD";
+	public final static String VETE = "VetE";
 
 	private final String ESTADO1 = "solicitado";
 	private final String ESTADO2 = "inscrito";
@@ -98,6 +99,10 @@ public class InscripcionDTO {
 	public String getMetodoPago() {
 		return metodoPago;
 	}
+	
+	public String getCategoria() {
+		return this.calculaCategoria();
+	}
 
 	public void setMetodoPago(String metodoPago) {
 		if (metodoPago.equals(tc) || metodoPago.equals(transf) || metodoPago.equals(metalic)) {
@@ -160,23 +165,24 @@ public class InscripcionDTO {
 		// obtiene el atleta
 		AtletaModel amodel = new AtletaModel();
 		List<AtletaDTO> atleta = amodel.getAtletaEmail(email_atleta);
+		//calcula la categoria
 		calculaCategoriaEdad(atleta.get(0));
 		return categoria;
 	}
 
 	private void calculaCategoriaEdad(AtletaDTO atleta) {
-		int edad = LocalDate.now().getYear() - Util.isoStringToDate(atleta.getFechaNacimiento()).getYear();
+		int edad = LocalDate.now().getYear() - Util.isoStringToDate(atleta.getFechaNacimiento()).getYear() - 1900;
 		if (edad < 35)
-			categoria = this.SENIOR;
+			categoria = InscripcionDTO.SENIOR;
 		else if (edad < 40)
-			categoria = this.VETA;
+			categoria = InscripcionDTO.VETA;
 		else if (edad < 45)
-			categoria = this.VETB;
+			categoria = InscripcionDTO.VETB;
 		else if (edad < 50)
-			categoria = this.VETC;
+			categoria = InscripcionDTO.VETC;
 		else if (edad < 55)
-			categoria = this.VETD;
+			categoria = InscripcionDTO.VETD;
 		else
-			categoria = this.VETE;
+			categoria = InscripcionDTO.VETE;
 	}
 }

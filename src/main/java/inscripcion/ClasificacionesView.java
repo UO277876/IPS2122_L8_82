@@ -96,17 +96,16 @@ public class ClasificacionesView extends JFrame {
 		return scrpClasificacion;
 	}
 
-
-
 	private JComboBox<String> getCbId() {
 		if (cbId == null) {
 			cbId = new JComboBox<String>();
-			cbId.setModel(new DefaultComboBoxModel<String>(new String[] { "Absoluta", "Genero" }));
+			cbId.setModel(new DefaultComboBoxModel<String>(new String[] { "Absoluta", "Genero", InscripcionDTO.SENIOR,
+					InscripcionDTO.VETA, InscripcionDTO.VETB, InscripcionDTO.VETC, InscripcionDTO.VETD, InscripcionDTO.VETE }));
 			cbId.setBounds(434, 33, 98, 21);
 		}
 		return cbId;
 	}
-	
+
 	private JTable getTbClasificacion() {
 		if (tbClasificacion == null) {
 			tbClasificacion = new JTable();
@@ -114,7 +113,8 @@ public class ClasificacionesView extends JFrame {
 		return tbClasificacion;
 	}
 
-	// ----------------------------- Métodos independientes de la interfaz ---------------------------------------
+	// ----------------------------- Métodos independientes de la interfaz
+	// ---------------------------------------
 	/**
 	 * Clasifica a los competidores de la competicion pasada como ID
 	 * 
@@ -126,32 +126,33 @@ public class ClasificacionesView extends JFrame {
 			JOptionPane.showMessageDialog(null, "Error: Campo ID en blanco");
 		} else {
 			// 2. Listo inscripciones por emails
-				String name = getTxID().getText();
-				String tipo = (String) getCbId().getSelectedItem();
+			String name = getTxID().getText();
+			String tipo = (String) getCbId().getSelectedItem();
 
-				// 2.1 Compruebo que el name existe
-				if(!cm.obtenerCompeticionNameBool(name)) {
-					JOptionPane.showMessageDialog(null, "No se han encontrado competiciones con el nombre introducido.");
-				} else  {
-					List<ClasificacionDTO> listadoIns = ic.clasificacion(tipo, name);
+			// 2.1 Compruebo que el name existe
+			if (!cm.obtenerCompeticionNameBool(name)) {
+				JOptionPane.showMessageDialog(null, "No se han encontrado competiciones con el nombre introducido.");
+			} else {
+				List<ClasificacionDTO> listadoIns = ic.clasificacion(tipo, name);
 
-					// 3. Obtengo la cadena
-					//getTxaClasificacion().setText(ic.imprimirListadoClasif(listadoIns));
-					getListaClasificaciones(listadoIns);
-			} 
+				// 3. Obtengo la cadena
+				// getTxaClasificacion().setText(ic.imprimirListadoClasif(listadoIns));
+				getListaClasificaciones(listadoIns);
+			}
 
 		}
 
 	}
-	
+
 	public void getListaClasificaciones(List<ClasificacionDTO> listadoIns) {
 		TableModel tmodel = SwingUtil.getTableModelFromPojos(listadoIns,
-				new String[] { "numero", "genero", "nombre", "tiempo" });
+				new String[] { "numero", "genero", "nombre", "tiempo", "categoria" });
 		getTbClasificacion().setModel(tmodel);
 		SwingUtil.autoAdjustColumns(getTbClasificacion());
 	}
 
-	// ----------------------------- Métodos de revision ---------------------------------------
+	// ----------------------------- Métodos de revision
+	// ---------------------------------------
 	/**
 	 * Comprueba si el campo txNombre esta vacío
 	 * 

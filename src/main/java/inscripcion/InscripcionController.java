@@ -1,5 +1,6 @@
 package inscripcion;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -8,28 +9,23 @@ import java.util.Random;
 
 import atleta.AtletaController;
 import atleta.AtletaDTO;
-
 import competiciones.CompeticionController;
 import competiciones.CompeticionDTO;
 
 public class InscripcionController {
-	
 
 	private static final String characters = "1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-	
-	
+
 	private InscripcionModel im;
 
 	private AtletaController ac;
 	private CompeticionController cm;
 
 	private List<InscripcionDTO> idto;
-	
-	
+
 	private String emailProvisionalParaPago;
 	private int idProvisionalParaPago;
-	
-	
+
 	/**
 	 * Constructor sin parámetros de la clase InscripcionController
 	 */
@@ -37,10 +33,10 @@ public class InscripcionController {
 		this.im = new InscripcionModel();
 		this.ac = new AtletaController();
 		this.cm = new CompeticionController();
-		
+
 		this.idto = new ArrayList<InscripcionDTO>();
 	}
-	
+
 	/**
 	 * Constructor con un parámetro de la clase InscripcionController
 	 * 
@@ -50,33 +46,29 @@ public class InscripcionController {
 		this.im = im;
 		this.ac = new AtletaController();
 		this.cm = new CompeticionController();
-		
+
 		this.idto = new ArrayList<InscripcionDTO>();
 	}
-	
-	
-	
+
 	public void setEmailProvisionalParaPago(String email) {
 		this.emailProvisionalParaPago = email;
 	}
-	
-	
+
 	public String getEmailProvisionalParaPago() {
 		return this.emailProvisionalParaPago;
 	}
-	
+
 	public void setIdProvisionalParaPago(int id) {
 		this.idProvisionalParaPago = id;
 	}
-	
+
 	public int getIdProvisionalParaPago() {
 		return this.idProvisionalParaPago;
 	}
-	
-	
-	
+
 	/**
-	 * Crea la lista de inscripciones usando los id de una carrera ordenando por tiempo y genero
+	 * Crea la lista de inscripciones usando los id de una carrera ordenando por
+	 * tiempo y genero
 	 * 
 	 * @param id, el id de la carrera
 	 */
@@ -84,9 +76,10 @@ public class InscripcionController {
 		int id = this.cm.obtenerCompeticionName(nombre).getId();
 		this.idto = im.getListadoInsIdGen(id, genero);
 	}
-	
+
 	/**
-	 * Crea la lista de inscripciones usando los id de una carrera ordenando por tiempo y clasif abs
+	 * Crea la lista de inscripciones usando los id de una carrera ordenando por
+	 * tiempo y clasif abs
 	 * 
 	 * @param id, el id de la carrera
 	 */
@@ -94,7 +87,7 @@ public class InscripcionController {
 		int id = this.cm.obtenerCompeticionName(nombre).getId();
 		this.idto = im.getListadoInsIdAbs(id);
 	}
-	
+
 	/**
 	 * Devuelve una lista de cadenas de texto con la clasificacion correspondiente
 	 * 
@@ -102,50 +95,54 @@ public class InscripcionController {
 	 * @return una lista de cadenas de texto con toda la información
 	 */
 	public List<ClasificacionDTO> clasificacion(String tipo, String nombre) {
-		if(tipo.equals("Genero")) {
+		if (tipo.equals("Genero")) {
 			return clasifGenero(nombre);
-		} else {
+		} else if (tipo.equals(InscripcionDTO.SENIOR) || tipo.equals(InscripcionDTO.VETA)
+				|| tipo.equals(InscripcionDTO.VETB) || tipo.equals(InscripcionDTO.VETC)
+						|| tipo.equals(InscripcionDTO.VETD) || tipo.equals(InscripcionDTO.VETE)) 
+			return clasifCategoria(tipo, nombre);
+		else
 			return clasifAbs(nombre);
-		}
 	}
-	
+
 	/**
-	 * Imprime la clasificación dependiendo del tipo seleccionado (genero o absoluta)
-	 * Devuelve una lista de cadenas de texto con la información:
-	 * Nombre competicion + estado actual inscripcion + fecha ult. cambio de estado
+	 * Imprime la clasificación dependiendo del tipo seleccionado (genero o
+	 * absoluta) Devuelve una lista de cadenas de texto con la información: Nombre
+	 * competicion + estado actual inscripcion + fecha ult. cambio de estado
 	 * 
 	 * @param email, el email de la persona a buscar las inscripciones
 	 * @return una lista de cadenas de texto con toda la información
-	 * @throws ParseException 
+	 * @throws ParseException
 	 */
 	public List<ListadoDTO> listarPorIds(String email) {
 		setIdto(email);
 		CompeticionDTO lm = new CompeticionDTO();
-		
+
 		List<ListadoDTO> result = new ArrayList<ListadoDTO>();
-		//String linea = "";
-		
-		for(InscripcionDTO ic : this.idto) {
+		// String linea = "";
+
+		for (InscripcionDTO ic : this.idto) {
 			lm = obtenerCompeticion(ic.id_competicion);
 			ListadoDTO list = new ListadoDTO(lm.getNombre(), ic.getIEstado(), ic.getUltFechaModif());
-			//linea = lm.getNombre() + " - " + ic.getIEstado() + " - " + ic.getUltFechaModif();
-			
+			// linea = lm.getNombre() + " - " + ic.getIEstado() + " - " +
+			// ic.getUltFechaModif();
+
 			result.add(list);
 		}
-		
+
 		return result;
 	}
-	
+
 	/**
-	 * Devuelve la competicion de id pasado como parámetro. Para ello,
-	 * llama al CompeticionController
+	 * Devuelve la competicion de id pasado como parámetro. Para ello, llama al
+	 * CompeticionController
 	 * 
 	 * @return la competición
 	 */
 	public CompeticionDTO obtenerCompeticion(int id) {
 		return cm.obtenerCompeticion(id);
 	}
-	
+
 	/**
 	 * Clasifica dependiendo del sexo
 	 * 
@@ -153,20 +150,38 @@ public class InscripcionController {
 	 * @return una lista de String con la clasificación
 	 */
 	private List<ClasificacionDTO> clasifGenero(String nombre) {
-		rellenarNombreGen(nombre,"masculino");
+		rellenarNombreGen(nombre, "masculino");
 		List<ClasificacionDTO> result1 = rellenarConAtletas();
-		//result1.add(0, "MASCULINO");
-		
-		
-		rellenarNombreGen(nombre,"femenino");
+		// result1.add(0, "MASCULINO");
+
+		rellenarNombreGen(nombre, "femenino");
 		List<ClasificacionDTO> result2 = rellenarConAtletas();
-		//result2.add(0, "FEMENINO");
-		
+		// result2.add(0, "FEMENINO");
+
 		result1.addAll(result2);
-		
+
 		return result1;
 	}
-	
+
+	/**
+	 * Clasifica dependiendo de la categoria
+	 * 
+	 * @param id, el id de la carrera
+	 * @return una lista de String con la clasificación
+	 */
+	private List<ClasificacionDTO> clasifCategoria(String tipo, String nombre) {
+		rellenarNombreAbs(nombre);
+		List<ClasificacionDTO> aux = rellenarConAtletas();
+		List<ClasificacionDTO> result = new ArrayList<ClasificacionDTO>();
+		
+		for(ClasificacionDTO clasif : aux) {
+			if(clasif.getCategoria().equals(tipo))
+				result.add(clasif);
+		}
+
+		return result;
+	}
+
 	/**
 	 * Clasifica independientemente del sexo
 	 * 
@@ -176,7 +191,7 @@ public class InscripcionController {
 	private List<ClasificacionDTO> clasifAbs(String nombre) {
 		rellenarNombreAbs(nombre);
 		List<ClasificacionDTO> result = rellenarConAtletas();
-		
+
 		return result;
 	}
 
@@ -201,7 +216,7 @@ public class InscripcionController {
 //		}
 //		return result;
 //	}
-	
+
 	/**
 	 * Relelna la clasificación con atletas
 	 * 
@@ -209,15 +224,15 @@ public class InscripcionController {
 	 */
 	private List<ClasificacionDTO> rellenarConAtletas() {
 		AtletaDTO am = new AtletaDTO();
-		
+
 		List<ClasificacionDTO> result = new ArrayList<ClasificacionDTO>();
 		int index = 1;
-		
-		for(InscripcionDTO ic : this.idto) {
+
+		for (InscripcionDTO ic : this.idto) {
 			am = obtenerAtleta(ic.getEmail_atleta());
 
-			ClasificacionDTO clasif = new ClasificacionDTO(index,am.getNombre(),ic.categoriaSexo,ic.getTiempo());
-			
+			ClasificacionDTO clasif = new ClasificacionDTO(index, am.getNombre(), ic.categoriaSexo, ic.getTiempo(), ic.getCategoria());
+
 			result.add(clasif);
 			index++;
 		}
@@ -237,12 +252,12 @@ public class InscripcionController {
 
 	public String imprimirListado(List<String> listadoIns) {
 		String listado = "";
-		for(int i=0; i < listadoIns.size(); i++) {
+		for (int i = 0; i < listadoIns.size(); i++) {
 			listado += "> " + listadoIns.get(i) + "\n";
 		}
 		return listado;
 	}
-	
+
 	/**
 	 * Almacena la lista de inscripciones según el email de un atleta
 	 * 
@@ -250,12 +265,12 @@ public class InscripcionController {
 	 */
 	private void setIdto(String email) {
 		this.idto = im.getListadoInscripciones(email);
-		
-		for(InscripcionDTO ic : this.idto ) {
+
+		for (InscripcionDTO ic : this.idto) {
 			ic.actualizaEstado();
 		}
 	}
-	
+
 	/**
 	 * Devuelve la lista de inscripciones actual según el email de un atleta
 	 * 
@@ -264,36 +279,28 @@ public class InscripcionController {
 	public List<InscripcionDTO> getIdto() {
 		return idto;
 	}
-	
-	
-	
+
 	public String getNewDorsal() {
 		Random rng = new Random();
 		char[] text = new char[4];
-	    for (int i = 0; i < 4; i++)
-	    {
-	        text[i] = characters.charAt(rng.nextInt(characters.length()));
-	    }
-	    return new String(text);
+		for (int i = 0; i < 4; i++) {
+			text[i] = characters.charAt(rng.nextInt(characters.length()));
+		}
+		return new String(text);
 	}
-	
-	
+
 	public void inscribirAtleta(AtletaDTO atleta, int id_competicion, String dorsal, int precio, String metodoPago) {
 		im.inscribirse(atleta, id_competicion, dorsal, precio, getActualDate(), metodoPago);
 	}
-	
-	
+
 	public String getActualDate() {
-		SimpleDateFormat dateFormat = new SimpleDateFormat ("yyyy-MM-dd");
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date dateAct = new Date();
 		return dateFormat.format(dateAct);
 	}
-	
-	
-	
+
 	/*
-	public void ChangePaidMethod(String email, String id, String newPaidMethod) {
-		im.changePaidMethodForInscripcion(email, id, newPaidMethod);
-	}
-	*/
+	 * public void ChangePaidMethod(String email, String id, String newPaidMethod) {
+	 * im.changePaidMethodForInscripcion(email, id, newPaidMethod); }
+	 */
 }

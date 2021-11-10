@@ -6,12 +6,18 @@ public class ClasificacionDTO {
 	private String genero;
 	private String nombre;
 	private String tiempo;
+	private String categoria;
 	
-	public ClasificacionDTO(int numero, String genero, String nombre, String tiempo) {
+	public ClasificacionDTO(int numero, String genero, String nombre, String tiempo, String categoria) {
 		this.nombre = nombre;
 		this.numero = numero;
 		this.tiempo = tiempo;
 		this.genero = genero;
+		this.categoria = categoria;
+	}
+	
+	public String getCategoria() {
+		return this.categoria;
 	}
 	
 	public int getNumero() {
