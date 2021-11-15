@@ -1,6 +1,6 @@
 package competiciones;
 
-import clasificacion.CategoriasDTO;
+import categorias.CategoriasDTO;
 
 public class CompeticionDTO {
 	

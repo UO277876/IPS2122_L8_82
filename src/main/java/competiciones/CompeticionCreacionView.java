@@ -16,7 +16,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import clasificacion.CategoriasView;
+import categorias.CategoriasView;
 
 @SuppressWarnings("serial")
 public class CompeticionCreacionView extends JFrame {

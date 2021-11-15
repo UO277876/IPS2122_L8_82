@@ -9,7 +9,7 @@ import java.util.Random;
 
 import atleta.AtletaController;
 import atleta.AtletaDTO;
-import clasificacion.CategoriasDTO;
+import categorias.CategoriasDTO;
 import competiciones.CompeticionController;
 import competiciones.CompeticionDTO;
 

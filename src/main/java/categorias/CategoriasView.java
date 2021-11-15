@@ -1,4 +1,4 @@
-package clasificacion;
+package categorias;
 
 import java.awt.Color;
 import java.awt.Font;

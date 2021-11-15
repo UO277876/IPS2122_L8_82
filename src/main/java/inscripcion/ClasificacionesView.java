@@ -17,7 +17,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.TableModel;
 
-import clasificacion.CategoriasDTO;
+import categorias.CategoriasDTO;
 import competiciones.CompeticionController;
 import giis.demo.util.SwingUtil;
 
