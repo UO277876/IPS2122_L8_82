@@ -48,6 +48,8 @@ public class CompeticionCreacionView extends JFrame {
 	private JLabel lbFinIns;
 	private JTextField txInicio;
 	private JTextField txFin;
+	
+	private String nombreCompeticion;
 
 	public CompeticionCreacionView() {
 		setResizable(false);
@@ -132,6 +134,14 @@ public class CompeticionCreacionView extends JFrame {
 			btContinuar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					reset();
+					if (nombreCompeticion != null)
+						try {
+							CategoriasView dialog = new CategoriasView(nombreCompeticion, cc);
+							dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+							dialog.setVisible(true);
+						} catch (Exception ex) {
+							ex.printStackTrace();
+						}
 				}
 			});
 			btContinuar.setForeground(Color.WHITE);
@@ -317,16 +327,7 @@ public class CompeticionCreacionView extends JFrame {
 			btRegistro = new JButton("Registro");
 			btRegistro.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					String nombre = crearCompeticion();
-					if (nombre != null)
-						try {
-							CategoriasView dialog = new CategoriasView(nombre, cc);
-							dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-							dialog.setVisible(true);
-						} catch (Exception ex) {
-							ex.printStackTrace();
-						}
-
+					nombreCompeticion = crearCompeticion();
 				}
 			});
 			btRegistro.setMnemonic('R');
