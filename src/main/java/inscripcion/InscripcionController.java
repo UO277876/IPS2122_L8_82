@@ -240,7 +240,7 @@ public class InscripcionController {
 		for(InscripcionDTO ic : this.idto) {
 			am = obtenerAtleta(ic.getEmail_atleta());
 
-			ClasificacionDTO clasif = new ClasificacionDTO(index,am.getNombre(),ic.categoriaSexo,ic.getTiempo(),ic.getCategoria());
+			ClasificacionDTO clasif = new ClasificacionDTO(index,am.getNombre(),am.getGenero(),ic.getTiempo(),ic.getCategoria());
 			
 			result.add(clasif);
 			index++;

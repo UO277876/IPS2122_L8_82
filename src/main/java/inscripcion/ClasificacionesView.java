@@ -147,7 +147,7 @@ public class ClasificacionesView extends JFrame {
 
 	public void getListaClasificaciones(List<ClasificacionDTO> listadoIns) {
 		TableModel tmodel = SwingUtil.getTableModelFromPojos(listadoIns,
-				new String[] { "numero", "genero", "nombre", "tiempo"});
+				new String[] { "numero", "nombre", "genero", "tiempo"});
 		getTbClasificacion().setModel(tmodel);
 		SwingUtil.autoAdjustColumns(getTbClasificacion());
 	}
