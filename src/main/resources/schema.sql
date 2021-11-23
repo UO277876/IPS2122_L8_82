@@ -60,3 +60,13 @@ create table MetodoDePago(
 	primary key (id_metodopago)
 
 );
+
+drop table if exists resultados;
+
+create table resultados(
+	id_competicion int not null,
+	dorsal_atleta varchar(32) not null,
+	tiempoInicio String not null,
+	tiempoFin String not null,
+	estado varchar(32)
+);

@@ -11,9 +11,9 @@ public class ResultadosDTO {
 	private String estado;
 	private String dorsalAtleta;
 	
-	public ResultadosDTO(int tInicio, int tFin, String dorsalAtleta, int idCompeticion) {
-		this.tInicio = tInicio;
-		this.tFin = tFin;
+	public ResultadosDTO(String tInicio, String tFin, String dorsalAtleta, int idCompeticion) {
+		this.tInicio = Integer.parseInt(tInicio);
+		this.tFin = Integer.parseInt(tFin);
 		this.dorsalAtleta = dorsalAtleta;
 		this.idCompeticion = idCompeticion;
 		asignaEstado();
