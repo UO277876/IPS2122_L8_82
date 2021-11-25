@@ -9,11 +9,9 @@ import java.util.Random;
 
 import atleta.AtletaController;
 import atleta.AtletaDTO;
-
 import clasificacion.CategoriasDTO;
 import competiciones.CompeticionController;
 import competiciones.CompeticionDTO;
-import giis.demo.util.Util;
 import metododepago.MetodoDePagoController;
 
 public class InscripcionController {
@@ -297,12 +295,6 @@ public class InscripcionController {
 	 */
 	public void asignarDorsal(String email, int id_competicion) {
 		CompeticionDTO competicion = cm.obtenerCompeticion(id_competicion);
-		
-		// Mira si acabo la fecha de finalizar inscripciones y el estado de la inscripcion
-//		if(pc.getEstado(email)) {
-//			String dorsal = obtenerDorsal(competicion);
-//			im.actualizarDorsal(dorsal, email, id_competicion);
-//		}
 		
 		if(pc.getEstado(email)) {
 			String dorsal = obtenerDorsal(competicion);

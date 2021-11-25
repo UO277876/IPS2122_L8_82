@@ -380,7 +380,7 @@ public class CompeticionCreacionView extends JFrame {
 			String fin = getTxFin().getText();
 			int dorsalesReservados = Integer.valueOf(getTxDorsales().getText());
 
-			if (comprobacion(numPlazas, distancia)) {
+			if (comprobacion(numPlazas, distancia, dorsalesReservados)) {
 				boolean correcto = cc.addCompeticion(nombre, descripcion, fecha, numPlazas, distancia, tipo, inicio,
 						fin, dorsalesReservados);
 
@@ -398,18 +398,16 @@ public class CompeticionCreacionView extends JFrame {
 				}
 
 			}
-
-		} catch (NumberFormatException e) {
-			JOptionPane.showMessageDialog(null, "No puede introducir caracteres en el número de plazas o distancia");
-		}
 		
 		} catch(NumberFormatException e) {
 			JOptionPane.showMessageDialog(null,"Debe introducir valores numéricos en dorsales/distancia/numéro de plazas");
 		} 
 		
+		return null;
+		
 	}
 
-	private boolean comprobacion(int numPlazas, int distancia) {
+	private boolean comprobacion(int numPlazas, int distancia, int dorsales) {
 		String listado = "";
 		boolean correcto = true;
 
