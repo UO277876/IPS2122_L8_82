@@ -32,6 +32,15 @@ create table Competicion(
 	check(fin<fecha)  
 );
 
+drop table if exists MetodoDePago;
+
+create table MetodoDePago(
+	id int NOT NULL,
+	tipo varchar(32) NOT NULL,
+	estado boolean,
+	primary key (id_metodopago)
+);
+
 drop table if exists Inscripcion;
 
 create table Inscripcion(
@@ -50,11 +59,15 @@ create table Inscripcion(
 
 );
 
-drop table if exists MetodoDePago;
+drop table if exists Resultados;
 
-create table MetodoDePago(
-	id int NOT NULL,
-	tipo varchar(32) NOT NULL,
-	estado boolean,
-	primary key (id_metodopago)
+create table Resultados(
+	id_competicion int not null,
+	dorsal varchar(32) not null,
+	tInicio String not null,
+	tFin String not null,
+	estado String,
+	foreign key(id_competicion) references Competicion(id),
+	foreign key(dorsal) references Inscripcion(dorsal),
+	primary key(id_competicion, dosal)
 );
