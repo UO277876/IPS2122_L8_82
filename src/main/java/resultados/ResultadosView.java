@@ -11,9 +11,11 @@ import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
+import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
+import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
+import javax.swing.border.LineBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class ResultadosView extends JDialog {
@@ -24,11 +26,12 @@ public class ResultadosView extends JDialog {
 	private JPanel panel;
 	private JButton btnAbrirArchivos;
 	private JButton btnProcesar;
-	private JTextArea textArea;
 	
 	private DefaultListModel modelListFiles = null;
 	
 	private JFileChooser selector = null;
+	private JList list;
+	private JScrollPane scrollPane;
 
 	/**
 	 * Launch the application.
@@ -58,7 +61,7 @@ public class ResultadosView extends JDialog {
 			panel.setLayout(null);
 			panel.add(getBtnAbrirArchivos());
 			panel.add(getBtnProcesar());
-			panel.add(getTextArea());
+			panel.add(getScrollPane());
 		}
 		return panel;
 	}
@@ -93,21 +96,33 @@ public class ResultadosView extends JDialog {
 		}
 		return btnProcesar;
 	}
-	private JTextArea getTextArea() {
-		if (textArea == null) {
-			textArea = new JTextArea();
-			textArea.setBounds(32, 29, 368, 174);
-		}
-		return textArea;
-	}
 	
 	private JFileChooser getSelector() {
 		if (selector == null) {
 			selector = new JFileChooser();
 			selector.setMultiSelectionEnabled(true);
-			selector.setFileFilter(new FileNameExtensionFilter("Mp3 Files", "mp3"));
+			selector.setFileFilter(new FileNameExtensionFilter("Txt Files", "txt"));
 			selector.setCurrentDirectory(new File(System.getProperty("user.home") + "/Desktop"));
 		}
 		return selector;
+	}
+	private JList getList() {
+		if (list == null) {
+			list = new JList();
+			modelListFiles = new DefaultListModel();
+			list = new JList(modelListFiles);
+			list.setBorder(new LineBorder(Color.GRAY));
+			list.setForeground(Color.BLACK);
+			list.setBackground(Color.WHITE);
+		}
+		return list;
+	}
+	private JScrollPane getScrollPane() {
+		if (scrollPane == null) {
+			scrollPane = new JScrollPane();
+			scrollPane.setBounds(34, 38, 366, 155);
+			scrollPane.setViewportView(getList());
+		}
+		return scrollPane;
 	}
 }
