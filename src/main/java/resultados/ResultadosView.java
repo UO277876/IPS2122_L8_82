@@ -26,9 +26,9 @@ public class ResultadosView extends JDialog {
 	private JPanel panel;
 	private JButton btnAbrirArchivos;
 	private JButton btnProcesar;
-	
+
 	private DefaultListModel modelListFiles = null;
-	
+
 	private JFileChooser selector = null;
 	private JList list;
 	private JScrollPane scrollPane;
@@ -54,6 +54,7 @@ public class ResultadosView extends JDialog {
 		getContentPane().add(getPanel(), BorderLayout.CENTER);
 		setBounds(100, 100, 450, 300);
 	}
+
 	private JPanel getPanel() {
 		if (panel == null) {
 			panel = new JPanel();
@@ -65,6 +66,7 @@ public class ResultadosView extends JDialog {
 		}
 		return panel;
 	}
+
 	private JButton getBtnAbrirArchivos() {
 		if (btnAbrirArchivos == null) {
 			btnAbrirArchivos = new JButton("Abrir archivos");
@@ -87,6 +89,7 @@ public class ResultadosView extends JDialog {
 		}
 		return btnAbrirArchivos;
 	}
+
 	private JButton getBtnProcesar() {
 		if (btnProcesar == null) {
 			btnProcesar = new JButton("Procesar");
@@ -96,7 +99,7 @@ public class ResultadosView extends JDialog {
 		}
 		return btnProcesar;
 	}
-	
+
 	private JFileChooser getSelector() {
 		if (selector == null) {
 			selector = new JFileChooser();
@@ -106,6 +109,7 @@ public class ResultadosView extends JDialog {
 		}
 		return selector;
 	}
+
 	private JList getList() {
 		if (list == null) {
 			list = new JList();
@@ -117,6 +121,7 @@ public class ResultadosView extends JDialog {
 		}
 		return list;
 	}
+
 	private JScrollPane getScrollPane() {
 		if (scrollPane == null) {
 			scrollPane = new JScrollPane();
