@@ -37,4 +37,12 @@ public class ResultadosDTO {
 	public String getDorsalAtleta() {
 		return dorsalAtleta;
 	}
+	
+	public int getTInicio() {
+		return this.tInicio;
+	}
+	
+	public int getTFin() {
+		return this.tFin;
+	}
 }

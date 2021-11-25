@@ -61,9 +61,9 @@ create table MetodoDePago(
 
 );
 
-drop table if exists resultados;
+drop table if exists Resultados;
 
-create table resultados(
+create table Resultados(
 	id_competicion int not null,
 	dorsal_atleta varchar(32) not null,
 	tiempoInicio String not null,
