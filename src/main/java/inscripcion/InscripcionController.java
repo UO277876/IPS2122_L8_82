@@ -9,6 +9,8 @@ import java.util.Random;
 
 import atleta.AtletaController;
 import atleta.AtletaDTO;
+
+import clasificacion.CategoriasDTO;
 import competiciones.CompeticionController;
 import competiciones.CompeticionDTO;
 import giis.demo.util.Util;
@@ -89,9 +91,12 @@ public class InscripcionController {
 	public List<ClasificacionDTO> clasificacion(String tipo, String nombre) {
 		if(tipo.equals("Genero")) {
 			return clasifGenero(nombre);
-		} else {
+		} else if (tipo.equals(CategoriasDTO.SENIOR) || tipo.equals(CategoriasDTO.VETA)
+				|| tipo.equals(CategoriasDTO.VETB) || tipo.equals(CategoriasDTO.VETC)
+				|| tipo.equals(CategoriasDTO.VETD) || tipo.equals(CategoriasDTO.VETE)) 
+			return clasifCategoria(tipo, nombre);
+		else
 			return clasifAbs(nombre);
-		}
 	}
 	
 	/**
@@ -153,6 +158,26 @@ public class InscripcionController {
 	}
 	
 	/**
+	 * Clasifica dependiendo de la categoria
+	 * 
+	 * @param id, el id de la carrera
+	 * @return una lista de String con la clasificación
+	 */
+	private List<ClasificacionDTO> clasifCategoria(String tipo, String nombre) {
+		rellenarNombreAbs(nombre);
+		List<ClasificacionDTO> aux = rellenarConAtletas();
+		List<ClasificacionDTO> result = new ArrayList<ClasificacionDTO>();
+		
+		for(ClasificacionDTO clasif : aux) {
+			if(clasif.getCategoria().equals(tipo))
+				result.add(clasif);
+		}
+
+		return result;
+	}
+
+	
+	/**
 	 * Clasifica independientemente del sexo
 	 * 
 	 * @param id, el id de la carrera
@@ -179,7 +204,7 @@ public class InscripcionController {
 		for(InscripcionDTO ic : this.idto) {
 			am = obtenerAtleta(ic.getEmail_atleta());
 
-			ClasificacionDTO clasif = new ClasificacionDTO(index,am.getNombre(),ic.categoriaSexo,ic.getTiempo());
+			ClasificacionDTO clasif = new ClasificacionDTO(index,am.getNombre(),ic.categoriaSexo,ic.getTiempo(),ic.getCategoria());
 			
 			result.add(clasif);
 			index++;

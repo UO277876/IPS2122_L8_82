@@ -1,5 +1,7 @@
 package competiciones;
 
+import clasificacion.CategoriasDTO;
+
 public class CompeticionDTO {
 	
 	private int id;
@@ -13,7 +15,9 @@ public class CompeticionDTO {
 	private String fecha;
 
 	private int distancia;
+
 	private int dorsalesReservados;
+	private CategoriasDTO categorias;
 	
 	public CompeticionDTO(){};
 	
@@ -27,7 +31,11 @@ public class CompeticionDTO {
 		this.descripcion = descripcion;
 		this.distancia = distancia;
 		this.fecha = fecha;
+
 		this.dorsalesReservados = dorsalesReservados;
+
+		this.categorias = new CategoriasDTO();
+
 	};
 	
 	
@@ -58,6 +66,12 @@ public class CompeticionDTO {
 	public void setDistancia(int distancia) { this.distancia = distancia; }
 	public void setFecha(String fecha) { this.fecha = fecha; }
 	public String getFecha() { return fecha; }
+	public CategoriasDTO getCategorias() {
+		if(categorias == null) categorias = new CategoriasDTO();
+		return this.categorias;}
+	public void setCategorias(CategoriasDTO categorias) {
+		if(categorias != null) this.categorias = categorias;
+	}
 	
 	
 

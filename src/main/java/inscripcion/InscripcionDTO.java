@@ -1,11 +1,15 @@
 package inscripcion;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
 import atleta.AtletaDTO;
 import atleta.AtletaModel;
+import competiciones.CompeticionDTO;
+import competiciones.CompeticionModel;
+import giis.demo.util.Util;
 
 public class InscripcionDTO {
 	
@@ -27,7 +31,6 @@ public class InscripcionDTO {
 	String metodoPago;
 	int id_competicion;
 	String estado;
-	private String categoria;
 
 	public InscripcionDTO() {
 		
@@ -43,7 +46,6 @@ public class InscripcionDTO {
 		this.email_atleta = email_atleta;
 		this.metodoPago = metodoPago;
 		this.id_competicion = id_competicion;
-		this.calculateCategoria();
 	}
 
 	public String getDorsal() { return dorsal; }
@@ -67,6 +69,10 @@ public class InscripcionDTO {
 	public void setCategoriaSexo(String categoriaSexo) { this.categoriaSexo = categoriaSexo; }
 
 	public String getMetodoPago() { return metodoPago; }
+	
+	public String getCategoria() {
+		return this.calculaCategoria();
+	}
 
 	public void setMetodoPago(String metodoPago) {
 		if(metodoPago.equals(tc) || metodoPago.equals(transf) || metodoPago.equals(metalic)) {
@@ -117,16 +123,17 @@ public class InscripcionDTO {
 	
 	public void setUltFechaModif(String ultFechaModif) { this.ultFechaModif = ultFechaModif; }
 	
-	public String calculateCategoria() {
-		//obtiene el atleta
+	public String calculaCategoria() {
+		// obtiene el atleta
 		AtletaModel amodel = new AtletaModel();
 		List<AtletaDTO> atleta = amodel.getAtletaByEmail(email_atleta);
 		
-		if (atleta.get(0).getGenero().equalsIgnoreCase(AtletaDTO.fem))
-			categoria += "F";
-		else
-			categoria += "M";
+		//obtiene la competicion
+		CompeticionModel cmodel = new CompeticionModel();
+		List<CompeticionDTO> competicion = cmodel.getListadoCompeticiones(id_competicion);
+		
+		//obtiene la categoria
+		String categoria = competicion.get(0).getCategorias().calculaCategoria(atleta.get(0)); 
 		return categoria;
 	}
-	
 }
