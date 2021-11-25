@@ -2,21 +2,27 @@ package resultados;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.List;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
+
+import file.FileUtil;
 
 public class ResultadosView extends JDialog {
 	/**
@@ -32,6 +38,11 @@ public class ResultadosView extends JDialog {
 	private JFileChooser selector = null;
 	private JList list;
 	private JScrollPane scrollPane;
+	
+	private FileUtil fileUtil = new FileUtil();
+	private ResultadosParser parser = new ResultadosParser();
+	private ResultadosModel model = new ResultadosModel();
+	
 
 	/**
 	 * Launch the application.
@@ -93,6 +104,13 @@ public class ResultadosView extends JDialog {
 	private JButton getBtnProcesar() {
 		if (btnProcesar == null) {
 			btnProcesar = new JButton("Procesar");
+			btnProcesar.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					if(procesar()) {
+						JOptionPane.showMessageDialog(null, "Resultados procesados correctamente.");
+					} else JOptionPane.showMessageDialog(null, "Procesamiento interrumpido.");
+				}
+			});
 			btnProcesar.setFont(new Font("Tahoma", Font.PLAIN, 13));
 			btnProcesar.setBackground(new Color(34, 139, 34));
 			btnProcesar.setBounds(315, 233, 85, 21);
@@ -100,6 +118,20 @@ public class ResultadosView extends JDialog {
 		return btnProcesar;
 	}
 
+	private boolean procesar() {
+		for(Component file: list.getComponents()) {
+			try {
+				List<String> lines = fileUtil.readLines(file.getName());
+				List<ResultadosDTO> resultados = parser.parse(lines);
+				model.añadir(resultados);
+			} catch (FileNotFoundException e) {
+				JOptionPane.showMessageDialog(null, "Error al leer el archivo " + file.getName());
+				return false;
+			}
+		}
+		return true;
+	}
+	
 	private JFileChooser getSelector() {
 		if (selector == null) {
 			selector = new JFileChooser();
