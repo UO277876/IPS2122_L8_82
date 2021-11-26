@@ -2,7 +2,6 @@ package resultados;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -23,6 +22,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import file.FileUtil;
+import file.MyFile;
 
 public class ResultadosView extends JDialog {
 	/**
@@ -33,10 +33,10 @@ public class ResultadosView extends JDialog {
 	private JButton btnAbrirArchivos;
 	private JButton btnProcesar;
 
-	private DefaultListModel modelListFiles = null;
+	private DefaultListModel<MyFile> modelListFiles = null;
 
 	private JFileChooser selector = null;
-	private JList list;
+	private JList<MyFile> list;
 	private JScrollPane scrollPane;
 	
 	private FileUtil fileUtil = new FileUtil();
@@ -86,7 +86,7 @@ public class ResultadosView extends JDialog {
 					Integer response = getSelector().showOpenDialog(rootPane);
 					if (response == JFileChooser.APPROVE_OPTION) {
 						for (File f : getSelector().getSelectedFiles()) {
-							modelListFiles.addElement(f);
+							modelListFiles.addElement(new MyFile(f));
 						}
 					}
 				}
@@ -119,13 +119,14 @@ public class ResultadosView extends JDialog {
 	}
 
 	private boolean procesar() {
-		for(Component file: list.getComponents()) {
+		for(Object file: list.getSelectedValues()) {
 			try {
-				List<String> lines = fileUtil.readLines(file.getName());
+				String name = file.toString();
+				List<String> lines = fileUtil.readLines(name);
 				List<ResultadosDTO> resultados = parser.parse(lines);
 				model.añadir(resultados);
 			} catch (FileNotFoundException e) {
-				JOptionPane.showMessageDialog(null, "Error al leer el archivo " + file.getName());
+				JOptionPane.showMessageDialog(null, "Error al leer el archivo " + file.toString());
 				return false;
 			}
 		}
@@ -142,11 +143,11 @@ public class ResultadosView extends JDialog {
 		return selector;
 	}
 
-	private JList getList() {
+	private JList<MyFile> getList() {
 		if (list == null) {
-			list = new JList();
-			modelListFiles = new DefaultListModel();
-			list = new JList(modelListFiles);
+			list = new JList<MyFile>();
+			modelListFiles = new DefaultListModel<MyFile>();
+			list = new JList<MyFile>(modelListFiles);
 			list.setBorder(new LineBorder(Color.GRAY));
 			list.setForeground(Color.BLACK);
 			list.setBackground(Color.WHITE);
