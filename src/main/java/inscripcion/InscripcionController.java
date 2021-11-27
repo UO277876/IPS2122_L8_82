@@ -303,7 +303,9 @@ public class InscripcionController {
 	
 	
 	public void inscribirAtleta(AtletaDTO atleta, int id_competicion, String dorsal, int precio, String metodoPago) {
-		im.inscribirse(atleta, id_competicion, dorsal, precio, getActualDate(), metodoPago);
+		int id_metodoPago = getNewIdMetodoPago();
+		im.setMetodoDePago(id_metodoPago, metodoPago, false);
+		im.inscribirse(atleta, id_competicion, dorsal, precio, getActualDate(), metodoPago, id_metodoPago);
 	}
 	
 	public boolean checkAtletaInscrito(AtletaDTO atleta, int id_competicion) {
@@ -320,6 +322,20 @@ public class InscripcionController {
 	}
 	
 	
+	private int getNewIdMetodoPago(){
+		Random random = new Random();
+		int id = random.nextInt(4735);
+		
+		while(existeMetodoDePago(id)) {
+			id = random.nextInt(4735);
+		}
+		return id;
+	}
+	
+	public boolean existeMetodoDePago(int id) {
+		return im.getListadoMetodosDePago(id).size() > 0;
+	}
+	
 	public String getActualDate() {
 		SimpleDateFormat dateFormat = new SimpleDateFormat ("yyyy-MM-dd");
 		Date dateAct = new Date();
@@ -335,10 +351,6 @@ public class InscripcionController {
 		return cantidad;
 	}
 	
-	
-	public void setMetodoDePago() {
-		
-	}
 	
 	/*
 	public void ChangePaidMethod(String email, String id, String newPaidMethod) {
