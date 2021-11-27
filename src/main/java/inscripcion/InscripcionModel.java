@@ -48,6 +48,9 @@ public class InscripcionModel {
 	public static final String SQL_UPDATE_METODO_DE_PAGO = 
 			"UPDATE MetodoDePago set tipo = ?, estado = ? where id = ?";
 	
+	public static final String SQL_UPDATE_ESTADO_PAGO = 
+			"UPDATE Inscripcion set metodoPago = ? where id_metodoPago = ?";
+	
 	/**
 	 * Obtiene todas las inscripciones de un atleta mediante el id de una carrera, ordenadas por categoria sexo
 	 */
@@ -135,6 +138,12 @@ public class InscripcionModel {
 	public void actualizaMetodoDePago(int id, String tipo, boolean estado) {
 		String sql = SQL_UPDATE_METODO_DE_PAGO;
 		db.executeUpdate(sql, tipo,estado, id);
+	}
+	
+	public void actualizaEstadoPago(int id_metodoPago, String estado) {
+		String sql = SQL_UPDATE_ESTADO_PAGO;
+		db.executeUpdate(sql, estado, id_metodoPago);
+
 	}
 	
 	//METODOS PARA CAMBIAR LA FORMA DE PAGO DE UNA COMPETICION YA INSCRITA HECHOS SIN QUERER (OSCAR)

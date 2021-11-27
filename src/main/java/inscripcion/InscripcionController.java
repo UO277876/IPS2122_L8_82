@@ -366,6 +366,7 @@ public class InscripcionController {
 			estado = true;
 		}
 		System.out.println("El id provisional para el metodo de pago es: " + id);
+		im.actualizaEstadoPago(id, tipo);
 		im.actualizaMetodoDePago(id, tipo, estado);
 	}
 	
