@@ -34,13 +34,15 @@ public class MetodoDePagoView extends JFrame{
 	
 	private AtletaDTO atleta;
 	
-	private PagarConTarjetaView pctv;
+	private PagarConTarjetaView pagarTarjView;
+	private PagarConTransferenciaView pagarTransView;
 	
 	
 	public MetodoDePagoView(InscripcionController ic, AtletaController ac) {
 		this.ic = ic;
 		this.ac = ac;
-		this.pctv = new PagarConTarjetaView(ic);
+		this.pagarTarjView = new PagarConTarjetaView(this, ic);
+		this.pagarTransView = new PagarConTransferenciaView(this, ic);
 		
 		atleta = ac.obtenerAtletaByEmail(ic.getEmailProvisionalParaPago());
 		
@@ -88,7 +90,10 @@ public class MetodoDePagoView extends JFrame{
 				public void actionPerformed(ActionEvent e) {
 					if(ac.obtenerAtletaByEmail(ic.getEmailProvisionalParaPago()) != null) {
 						if(getCbMetodoDePago().getSelectedIndex() == 0) {
-							pctv.setVisible(true);
+							pagarTarjView.setVisible(true);
+						}
+						else {
+							pagarTransView.setVisible(true);
 						}
 					}		
 					else {

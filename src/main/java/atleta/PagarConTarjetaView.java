@@ -26,12 +26,12 @@ public class PagarConTarjetaView extends JFrame {
 	
 	
 	private InscripcionController ic;
+	private MetodoDePagoView mdpv;
 	
-	
-	public PagarConTarjetaView(InscripcionController ic) {
+	public PagarConTarjetaView(MetodoDePagoView mdpv, InscripcionController ic) {
 		
 		this.setResizable(false);
-		
+		this.mdpv = mdpv;
 		this.ic = ic;
 		
 		getContentPane().setLayout(null);
