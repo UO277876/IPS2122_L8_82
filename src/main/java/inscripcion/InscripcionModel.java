@@ -3,8 +3,10 @@ package inscripcion;
 import java.util.List;
 
 import atleta.AtletaDTO;
+import competiciones.CompeticionDTO;
 import giis.demo.util.ApplicationException;
 import giis.demo.util.Database;
+import metododepago.MetodoDePagoDTO;
 
 public class InscripcionModel {
 	
@@ -30,7 +32,7 @@ public class InscripcionModel {
 			"SELECT * FROM Inscripcion WHERE id_competicion = ?";
 	
 	public static final String SQL_INSCRIBIRSE = 
-			"INSERT into Inscripcion (email_atleta, id_competicion, dorsal, tiempo, precio, ultFechaModif, categoriaSexo, metodoPago) VALUES (?,?,?,?,?,?,?,?)";
+			"INSERT into Inscripcion (email_atleta, id_competicion, dorsal, tiempo, precio, ultFechaModif, categoriaSexo, metodoPago, id_metodoPago) VALUES (?,?,?,?,?,?,?,?,?)";
 	
 	public static final String SQL_BORRAR_INSCRIPCION = 
 			"DELETE from Inscripcion (email_atleta, id_competicion) VALUES (?,?)";
@@ -38,6 +40,17 @@ public class InscripcionModel {
 	public static final String SQL_INSCRIPCIONES_POR_COMPETICION = 
 			"SELECT * FROM Inscripcion WHERE id_competicion = ?";
 	
+	public static final String SQL_LISTADO_METODOS_DE_PAGO =
+			"SELECT * FROM Competicion c WHERE id = ? ";
+	
+	public static final String SQL_SET_METODO_DE_PAGO =
+			"INSERT into MetodoDePago (id, tipo, estado) values (?,?,?)";
+	
+	public static final String SQL_UPDATE_METODO_DE_PAGO = 
+			"UPDATE MetodoDePago set tipo = ?, estado = ? where id = ?";
+	
+	public static final String SQL_UPDATE_ESTADO_PAGO = 
+			"UPDATE Inscripcion set metodoPago = ? where id_metodoPago = ?";
 	
 	/**
 	 * Obtiene todas las inscripciones de un atleta mediante el id de una carrera, ordenadas por categoria sexo
@@ -86,15 +99,25 @@ public class InscripcionModel {
 		return result;
 	}
 	
+	
+
+	public List<MetodoDePagoDTO> getListadoMetodosDePago(int id){
+		validateNotNull(id,MSG_ID_NO_NULO);
+		
+		List<MetodoDePagoDTO> result = db.executeQueryPojo(MetodoDePagoDTO.class, SQL_LISTADO_METODOS_DE_PAGO, id);
+		return result;
+	}
+	
+	
 	/**
 	 * Inscribe a un atleta en una competicion, o dicho de otra forma, crea una nueva fila en la tabla inscripcion
 	 * 
 	 * @param email_atleta
 	 * @param id_competicion
 	 */
-	public void inscribirse(AtletaDTO atleta, int id_competicion, String dorsal, int precio, String ultFechaModif, String metodoPago) {
+	public void inscribirse(AtletaDTO atleta, int id_competicion, String dorsal, int precio, String ultFechaModif, String metodoPago, int id_metodoPago) {
 		String sql = SQL_INSCRIBIRSE;
-		db.executeUpdate(sql, atleta.getEmail(), id_competicion, dorsal, "---" , precio, ultFechaModif, atleta.getGenero(), metodoPago);
+		db.executeUpdate(sql, atleta.getEmail(), id_competicion, dorsal, "---" , precio, ultFechaModif, atleta.getGenero(), metodoPago, id_metodoPago);
 	}
 	
 	/**
@@ -135,7 +158,24 @@ public class InscripcionModel {
 		if (obj.equals(""))
 			throw new ApplicationException(message);
 	}
+
+	public void setMetodoDePago(int id, String tipo, boolean estado) {
+		String sql = SQL_SET_METODO_DE_PAGO;
+		db.executeUpdate(sql, id, tipo, estado);
+	}
 	
+	
+	public void actualizaMetodoDePago(int id, String tipo, boolean estado) {
+		String sql = SQL_UPDATE_METODO_DE_PAGO;
+		db.executeUpdate(sql, tipo,estado, id);
+	}
+	
+	public void actualizaEstadoPago(int id_metodoPago, String estado) {
+		String sql = SQL_UPDATE_ESTADO_PAGO;
+		db.executeUpdate(sql, estado, id_metodoPago);
+
+	}
+
 	/**
 	 * Verifica las condiciones de dorsal, email e id_competicion
 	 * - Que no sean null
@@ -148,7 +188,6 @@ public class InscripcionModel {
 		validateNotNull(dorsal, MSG_DORSAL_NO_NULO);
 		validateNotEmpty(dorsal, MSG_DORSAL_NO_NULO);
 	}
-
 	
 	//METODOS PARA CAMBIAR LA FORMA DE PAGO DE UNA COMPETICION YA INSCRITA HECHOS SIN QUERER (OSCAR)
 	/*

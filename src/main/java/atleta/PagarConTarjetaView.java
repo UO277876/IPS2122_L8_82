@@ -2,6 +2,8 @@ package atleta;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JTextField;
 
@@ -24,13 +26,13 @@ public class PagarConTarjetaView extends JFrame {
 	
 	
 	private InscripcionController ic;
+	private MetodoDePagoView mdpv;
 	
-	
-	public PagarConTarjetaView() {
+	public PagarConTarjetaView(MetodoDePagoView mdpv, InscripcionController ic) {
 		
 		this.setResizable(false);
-		
-		this.ic = new InscripcionController();
+		this.mdpv = mdpv;
+		this.ic = ic;
 		
 		getContentPane().setLayout(null);
 		getContentPane().add(getLblDescripcion());
@@ -108,10 +110,22 @@ public class PagarConTarjetaView extends JFrame {
 			btnAceptar = new JButton("Aceptar");
 			btnAceptar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-
-					//ic.setMetodoDePago("tarjeta");
+					if(getTxtNumero().getText().isEmpty()) {
+						JOptionPane.showMessageDialog(null, "No ha rellenado el campo Numero, por favor rellene el campo Numero y vuelva a intentarlo");
+					}
+					else if(getTxtFechaCaducidad().getText().isEmpty()) {
+						JOptionPane.showMessageDialog(null, "No ha rellenado el campo Fecha de Caducidad, por favor rellene el campo Fecha de Caducidad y vuelva a intentarlo");
+					}
+					else if(getTxtCVC().getText().isEmpty()) {
+						JOptionPane.showMessageDialog(null, "No ha rellenado el campo CVC, por favor rellene el campo CVC y vuelva a intentarlo");
+					}
+					else {
+						ic.actualizaMetodoDePago(ic.getIdMetodoDePagoProvisional(), "tc");
+						JOptionPane.showMessageDialog(null, "Se ha completado su registro");
+						reset();
+					}
 					
-					reset();
+					
 				}
 			});
 			btnAceptar.setBounds(288, 320, 89, 23);

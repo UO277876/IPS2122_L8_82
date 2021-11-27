@@ -28,6 +28,7 @@ public class InscripcionController {
 	
 	private String emailProvisionalParaPago;
 	private int idProvisionalParaPago;
+	private int idMetodoDePagoProvisional;
 	
 	
 	/**
@@ -58,6 +59,14 @@ public class InscripcionController {
 	
 	public int getIdProvisionalParaPago() {
 		return this.idProvisionalParaPago;
+	}
+	
+	public void setIdMetodoDePagoProvisional(int id) {
+		this.idMetodoDePagoProvisional = id;
+	}
+	
+	public int getIdMetodoDePagoProvisional() {
+		return this.idMetodoDePagoProvisional;
 	}
 	
 	/**
@@ -257,8 +266,10 @@ public class InscripcionController {
 	    return new String(text);
 	}
 	
-	public void inscribirAtleta(AtletaDTO atleta, int id_competicion, String dorsal, int precio, String metodoPago) {
-		im.inscribirse(atleta, id_competicion, dorsal, precio, getActualDate(), metodoPago);
+	public void inscribirAtleta(AtletaDTO atleta, int id_competicion, String dorsal, int precio, String metodoPago) {	
+		int id_metodoPago = getIdMetodoDePagoProvisional();
+		im.setMetodoDePago(id_metodoPago, metodoPago, false);
+		im.inscribirse(atleta, id_competicion, dorsal, precio, getActualDate(), metodoPago, id_metodoPago);
 		asignarDorsal(atleta.getEmail(), id_competicion);
 	}
 	
@@ -275,6 +286,20 @@ public class InscripcionController {
 		return isAtletaInscrito;
 	}
 	
+	
+	public int getNewIdMetodoPago(){
+		Random random = new Random();
+		int id = random.nextInt(4735);
+		
+		while(existeMetodoDePago(id)) {
+			id = random.nextInt(4735);
+		}
+		return id;
+	}
+	
+	public boolean existeMetodoDePago(int id) {
+		return im.getListadoMetodosDePago(id).size() > 0;
+	}
 	
 	public String getActualDate() {
 		SimpleDateFormat dateFormat = new SimpleDateFormat ("yyyy-MM-dd");
@@ -345,10 +370,14 @@ public class InscripcionController {
 		return cantidad;
 	}
 	
-	
-	public void setMetodoDePago() {
-		
-
+	public void actualizaMetodoDePago(int id, String tipo) {
+		boolean estado = false;
+		if(tipo == "tc") {
+			estado = true;
+		}
+		System.out.println("El id provisional para el metodo de pago es: " + id);
+		im.actualizaEstadoPago(id, tipo);
+		im.actualizaMetodoDePago(id, tipo, estado);
 	}
 	
 	/*

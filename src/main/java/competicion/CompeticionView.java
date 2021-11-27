@@ -17,6 +17,9 @@ import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 
 import atleta.InscripcionAtletaView;
+import detallesCompeticion.DetallesCompeticionView;
+
+import java.awt.GridLayout;
 
 public class CompeticionView extends JFrame {
 
@@ -32,9 +35,11 @@ public class CompeticionView extends JFrame {
 	
 	private String fechaHoy;
 	
-
+	private DetallesCompeticionView dcv;
 	private InscripcionAtletaView iav;
 	private CompeticionController compContr;
+	private JPanel panel;
+	private JButton btnDetallesCompeticion;
 	
 
 	/**
@@ -67,7 +72,8 @@ public class CompeticionView extends JFrame {
 		setContentPane(contentPane);
 		contentPane.add(getScrollPane_1(), BorderLayout.CENTER);
 		contentPane.add(getLblDisponibles(), BorderLayout.NORTH);
-		contentPane.add(getBtnTablaCarrerasForContentPane(), BorderLayout.SOUTH);
+		contentPane.add(getPanel(), BorderLayout.SOUTH);
+		
 	}
 
 	private JScrollPane getScrollPane_1() {
@@ -100,14 +106,21 @@ public class CompeticionView extends JFrame {
 			btnTablaCarreras = new JButton("APUNTARME");
 			btnTablaCarreras.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					CompeticionDTO competicion = getCompeticion();
-					if(competicion == null) {
-						JOptionPane.showMessageDialog(null, "No se ha podido encontrar la competición deseada, vuelva a intentarlo.");
+					
+					if(checkNotSelected()) {
+						JOptionPane.showMessageDialog(null, "No ha seleccionado ninguna competicion, por favor seleccione una competicion");
 					}
 					else {
-						iav = new InscripcionAtletaView(competicion);
-						iav.setVisible(true);
+						CompeticionDTO competicion = getCompeticion();
+						if(competicion == null) {
+							JOptionPane.showMessageDialog(null, "No se ha podido encontrar la competición deseada, vuelva a intentarlo.");
+						}
+						else {
+							iav = new InscripcionAtletaView(competicion);
+							iav.setVisible(true);
+						}
 					}
+					
 				}
 			});
 			btnTablaCarreras.setBackground(new Color(34, 139, 34));
@@ -153,4 +166,47 @@ public class CompeticionView extends JFrame {
 		
 	}
 	
+	private JPanel getPanel() {
+		if (panel == null) {
+			panel = new JPanel();
+			panel.setLayout(new GridLayout(0, 2, 0, 0));
+			panel.add(getBtnDetallesCompeticion());
+			panel.add(getBtnTablaCarrerasForContentPane());
+		}
+		return panel;
+	}
+	private JButton getBtnDetallesCompeticion() {
+		if (btnDetallesCompeticion == null) {
+			btnDetallesCompeticion = new JButton("VER DETALLES");
+			btnDetallesCompeticion.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					if(checkNotSelected()) {
+						JOptionPane.showMessageDialog(null, "No ha seleccionado ninguna competicion, por favor seleccione una competicion");
+					}
+					else {
+						CompeticionDTO competicion = getCompeticion();
+						if(competicion == null) {
+							JOptionPane.showMessageDialog(null, "No se ha podido encontrar la competición deseada, vuelva a intentarlo.");
+						}
+						else {
+							dcv = new DetallesCompeticionView(competicion);
+							dcv.setVisible(true);
+						}
+					}
+				}
+			});
+			btnDetallesCompeticion.setBackground(new Color(30, 144, 255));
+		}
+		return btnDetallesCompeticion;
+	}
+	
+	private boolean checkNotSelected() {
+		for(int i = 0; i < tabCompeticiones.getRowCount(); i++) {
+			if(tabCompeticiones.isRowSelected(i)) {
+				return false;
+			}
+		}
+		
+		return true;
+	}
 }
