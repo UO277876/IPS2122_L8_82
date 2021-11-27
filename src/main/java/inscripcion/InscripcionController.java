@@ -29,6 +29,7 @@ public class InscripcionController {
 	
 	private String emailProvisionalParaPago;
 	private int idProvisionalParaPago;
+	private int idMetodoDePagoProvisional;
 	
 	
 	/**
@@ -72,6 +73,14 @@ public class InscripcionController {
 	
 	public int getIdProvisionalParaPago() {
 		return this.idProvisionalParaPago;
+	}
+	
+	public void setIdMetodoDePagoProvisional(int id) {
+		this.idMetodoDePagoProvisional = id;
+	}
+	
+	public int getIdMetodoDePagoProvisional() {
+		return this.idMetodoDePagoProvisional;
 	}
 	
 	
@@ -303,7 +312,7 @@ public class InscripcionController {
 	
 	
 	public void inscribirAtleta(AtletaDTO atleta, int id_competicion, String dorsal, int precio, String metodoPago) {
-		int id_metodoPago = getNewIdMetodoPago();
+		int id_metodoPago = getIdMetodoDePagoProvisional();
 		im.setMetodoDePago(id_metodoPago, metodoPago, false);
 		im.inscribirse(atleta, id_competicion, dorsal, precio, getActualDate(), metodoPago, id_metodoPago);
 	}
@@ -322,7 +331,7 @@ public class InscripcionController {
 	}
 	
 	
-	private int getNewIdMetodoPago(){
+	public int getNewIdMetodoPago(){
 		Random random = new Random();
 		int id = random.nextInt(4735);
 		
@@ -351,6 +360,14 @@ public class InscripcionController {
 		return cantidad;
 	}
 	
+	public void actualizaMetodoDePago(int id, String tipo) {
+		boolean estado = false;
+		if(tipo == "tc") {
+			estado = true;
+		}
+		System.out.println("El id provisional para el metodo de pago es: " + id);
+		im.actualizaMetodoDePago(id, tipo, estado);
+	}
 	
 	/*
 	public void ChangePaidMethod(String email, String id, String newPaidMethod) {

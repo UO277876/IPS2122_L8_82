@@ -97,6 +97,8 @@ public class InscripcionAtletaView extends JFrame {
 					ic.setEmailProvisionalParaPago(txtIndiqueEmail.getText());
 					ic.setIdProvisionalParaPago(competicion.getId());
 
+					ic.setIdMetodoDePagoProvisional(ic.getNewIdMetodoPago());
+					System.out.println("El id provisional para el metodo de pago es: " + ic.getIdMetodoDePagoProvisional());
 					if(ac.obtenerAtletaByEmail(ic.getEmailProvisionalParaPago()) == null) {
 						JOptionPane.showMessageDialog(null, "Debe registrarse, el email no ha sido encontrado.");
 					}

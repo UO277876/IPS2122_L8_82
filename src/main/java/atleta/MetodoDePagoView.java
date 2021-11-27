@@ -40,7 +40,7 @@ public class MetodoDePagoView extends JFrame{
 	public MetodoDePagoView(InscripcionController ic, AtletaController ac) {
 		this.ic = ic;
 		this.ac = ac;
-		this.pctv = new PagarConTarjetaView();
+		this.pctv = new PagarConTarjetaView(ic);
 		
 		atleta = ac.obtenerAtletaByEmail(ic.getEmailProvisionalParaPago());
 		
@@ -87,9 +87,7 @@ public class MetodoDePagoView extends JFrame{
 			btnAceptar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					if(ac.obtenerAtletaByEmail(ic.getEmailProvisionalParaPago()) != null) {
-						System.out.println("Hola");
 						if(getCbMetodoDePago().getSelectedIndex() == 0) {
-							System.out.println("Caracola");
 							pctv.setVisible(true);
 						}
 					}		
