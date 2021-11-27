@@ -296,7 +296,7 @@ public class InscripcionController {
 	public void asignarDorsal(String email, int id_competicion) {
 		CompeticionDTO competicion = cm.obtenerCompeticion(id_competicion);
 		
-		if(pc.getEstado(email)) {
+		if(pc.getEstado(im.getMetodoPago(email, id_competicion))) {
 			String dorsal = obtenerDorsal(competicion);
 			im.actualizarDorsal(dorsal, email, id_competicion);
 		}

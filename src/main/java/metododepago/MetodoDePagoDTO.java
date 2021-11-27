@@ -6,24 +6,24 @@ public class MetodoDePagoDTO {
 	public final static String tc = "tc";
 	public final static String pre = "preinscrito";
 	
-	private int id_metodopago;
+	private int id;
 	private String tipo;
 	private boolean estado;
 	private String email_atleta;
 	
-	public MetodoDePagoDTO(int id_metodopago, String tipo, boolean estado, String email_atleta) {
-		this.id_metodopago = id_metodopago;
+	public MetodoDePagoDTO(int id, String tipo, boolean estado, String email_atleta) {
+		this.id = id;
 		this.tipo = tipo;
 		this.estado = estado;
 		this.email_atleta = email_atleta;
 	}
 
-	public int getId_metodopago() {
-		return id_metodopago;
+	public int getId() {
+		return id;
 	}
 
-	public void setId_metodopago(int id_metodopago) {
-		this.id_metodopago = id_metodopago;
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getTipo() {

@@ -29,6 +29,7 @@ public class InscripcionDTO {
 	String ultFechaModif;
 	String categoriaSexo;
 	String metodoPago;
+	int id_metodoPago;
 	int id_competicion;
 	String estado;
 
@@ -37,7 +38,8 @@ public class InscripcionDTO {
 	}
 	
 	public InscripcionDTO(String dorsal, String tiempo, int precio, String categoriaSexo, 
-			String ultFechaModif, String email_atleta, String metodoPago, int id_competicion) {
+			String ultFechaModif, String email_atleta, String metodoPago, int id_competicion,
+			int id_metodoPago) {
 		this.dorsal = dorsal;
 		this.tiempo = tiempo;
 		this.precio = precio;
@@ -46,6 +48,7 @@ public class InscripcionDTO {
 		this.email_atleta = email_atleta;
 		this.metodoPago = metodoPago;
 		this.id_competicion = id_competicion;
+		this.id_metodoPago = id_metodoPago;
 	}
 
 	public String getDorsal() { return dorsal; }
@@ -92,6 +95,14 @@ public class InscripcionDTO {
 		} 
 	}
 	
+	public int getId_metodoPago() {
+		return id_metodoPago;
+	}
+
+	public void setId_metodoPago(int id_metodoPago) {
+		this.id_metodoPago = id_metodoPago;
+	}
+
 	/**
 	 * Actualiza el estado de la inscripción según se ha pagado, o ha acabado la carrera,
 	 * incluyendo la fecha de modificación

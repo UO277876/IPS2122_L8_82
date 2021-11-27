@@ -21,6 +21,7 @@ public class InscripcionModel {
 	private static final String listado_inscripciones = "SELECT * FROM Inscripcion WHERE email_atleta = ? ORDER BY ultFechaModif";
 	private static final String actualizar_dorsal = "UPDATE Inscripcion SET dorsal = ? WHERE email_atleta = ? and id_competicion = ?";
 	private static final String obtener_por_dorsal = "SELECT * FROM Inscripcion WHERE dorsal = ? and id_competicion = ?";
+	private static final String obtener_inscripcion = "SELECT * FROM Inscripcion WHERE email_atleta = ? and id_competicion = ?";
 	
 	/*private static final String SQL_GET_INSCRIPCION = 
 			"SELECT * FROM Inscripcion WHERE email_atleta = ? AND id_competicion = ?";*/
@@ -47,6 +48,14 @@ public class InscripcionModel {
 		
 		List<InscripcionDTO> result = db.executeQueryPojo(InscripcionDTO.class, listado_inscr_id_genero, id, genero);
 		return result;
+	}
+	
+	public int getMetodoPago(String email, int id_competicion) {
+		validateNotNull(email,MSG_EMAIL_NO_NULO);
+		validateNotNull(id_competicion,MSG_ID_NO_NULO);
+		
+		List<InscripcionDTO> result = db.executeQueryPojo(InscripcionDTO.class, obtener_inscripcion, email, id_competicion);
+		return result.get(0).getId_metodoPago();
 	}
 	
 	/**
