@@ -33,6 +33,24 @@ public class CompeticionDTO {
 		this.fecha = fecha;
 		this.hayCancelacion = hayCancelacion;
 		this.categorias = new CategoriasDTO();
+		this.porcentaje = 0.0;
+		this.fechaLimite = "";
+	};
+	
+	public CompeticionDTO(int id, String tipo, String inicio, String fin, int numPlazas, String nombre, String descripcion
+			, int distancia, String fecha, boolean hayCancelacion, double porcentaje, String fechaLimite){
+		this.id = id;
+		this.inicio = inicio;
+		this.fin = fin;
+		this.numPlazas = numPlazas;
+		this.nombre = nombre;
+		this.descripcion = descripcion;
+		this.distancia = distancia;
+		this.fecha = fecha;
+		this.hayCancelacion = hayCancelacion;
+		this.categorias = new CategoriasDTO();
+		this.porcentaje = porcentaje;
+		this.fechaLimite = fechaLimite;
 	};
 	
 	public int getId() { return id; }

@@ -127,6 +127,7 @@ public class CompeticionCreacionView extends JFrame {
 			txPorcentaje.setFont(new Font("Tahoma", Font.PLAIN, 13));
 			txPorcentaje.setColumns(10);
 			txPorcentaje.setBounds(173, 87, 155, 19);
+			txPorcentaje.setEnabled(false);
 		}
 		return txPorcentaje;
 	}
@@ -159,6 +160,7 @@ public class CompeticionCreacionView extends JFrame {
 			txFechaLimite.setFont(new Font("Tahoma", Font.PLAIN, 13));
 			txFechaLimite.setColumns(10);
 			txFechaLimite.setBounds(173, 55, 155, 19);
+			txFechaLimite.setEnabled(false);
 		}
 		return txFechaLimite;
 	}
@@ -441,6 +443,7 @@ public class CompeticionCreacionView extends JFrame {
 	}
 
 	private void reset() {
+		allEnabled();
 		this.getTxPlazas().setText("");
 		this.getTxNombre().setText("");
 		this.getTxDescripcion().setText("");
@@ -495,27 +498,20 @@ public class CompeticionCreacionView extends JFrame {
 				
 				if(getCancelacion()) {
 					String fechaLimite = getTxFechaLimite().getText();
-					int porcentaje = Integer.valueOf(getTxDistancia().getText());
+					int porcentaje = Integer.valueOf(getTxPorcentaje().getText());
 					
 					if(comprobacionCancelacion(porcentaje)) {
 						correcto = cc.addCompeticionConCancelacion(nombre, descripcion, fecha, numPlazas, distancia, tipo, inicio,
 								fin,true,porcentaje,fechaLimite);
+						return ifCorrecto(nombre, correcto);
 					}
 					
 				} else {
-					correcto = cc.addCompeticion(nombre, descripcion, fecha, numPlazas, distancia, tipo, inicio,
-							fin,false);
-				}
-
-				if (correcto) {
-					getBtContinuar().setEnabled(true);
-					getBtRegistro().setEnabled(false);
-					txProblemas.setText("Se ha añadido correctamente");
-					return nombre;
-				} else {
-					getBtContinuar().setEnabled(false);
-					getBtRegistro().setEnabled(true);
-					txProblemas.setText("No se pudo añadir correctamente");
+					// NOTA: Cuando no hay cancelación, se pone por defecto a porcentaje 0.0
+					// y a fecha límite 2
+					correcto = cc.addCompeticionConCancelacion(nombre, descripcion, fecha, numPlazas, distancia, tipo, inicio,
+							fin,true,0.0,"2021-12-12");
+					return ifCorrecto(nombre, correcto);
 				}
 
 			}
@@ -525,6 +521,56 @@ public class CompeticionCreacionView extends JFrame {
 		}
 		return null;
 
+	}
+
+	private String ifCorrecto(String nombre, boolean correcto) {
+		if (correcto) {
+			getBtContinuar().setEnabled(true);
+			getBtRegistro().setEnabled(false);
+			txProblemas.setText("Se ha añadido correctamente");
+			allDiasabled();
+			return nombre;
+		} else {
+			getBtContinuar().setEnabled(false);
+			getBtRegistro().setEnabled(true);
+			txProblemas.setText("No se pudo añadir correctamente");
+			return null;
+		}
+	}
+
+	private void allDiasabled() {
+		this.getTxPlazas().setEnabled(false);
+		this.getTxNombre().setEnabled(false);
+		this.getTxDescripcion().setEnabled(false);
+		this.getTxFecha().setEnabled(false);
+		this.getTxDistancia().setEnabled(false);
+		getBtContinuar().setEnabled(true);
+		getBtRegistro().setEnabled(false);
+		getTxFin().setEnabled(false);
+		getTxInicio().setEnabled(false);
+		
+		getTxFechaLimite().setEnabled(false);
+		getTxPorcentaje().setEnabled(false);
+		
+		getRbSi().setEnabled(false);
+		getRbNo().setEnabled(false);
+		
+	}
+
+	private void allEnabled() {
+		this.getTxPlazas().setEnabled(true);
+		this.getTxNombre().setEnabled(true);
+		this.getTxDescripcion().setEnabled(true);
+		this.getTxFecha().setEnabled(true);
+		this.getTxDistancia().setEnabled(true);
+		getBtContinuar().setEnabled(true);
+		getBtRegistro().setEnabled(true);
+		getTxFin().setEnabled(true);
+		getTxInicio().setEnabled(true);
+		
+		getRbSi().setEnabled(true);
+		getRbNo().setEnabled(true);
+		
 	}
 
 	private boolean comprobacion(int numPlazas, int distancia) {
@@ -559,7 +605,7 @@ public class CompeticionCreacionView extends JFrame {
 		return correcto;
 	}
 	
-	private boolean comprobacionCancelacion(int porcentaje) {
+	private boolean comprobacionCancelacion(double porcentaje) {
 		boolean correcto = true;
 		String listado = "";
 		
@@ -570,7 +616,7 @@ public class CompeticionCreacionView extends JFrame {
 		listado += controlarFecha(getTxFechaLimite().getText(), "fecha de límite de cancelación");
 		
 		if (porcentaje < 0 && porcentaje > 100) {
-			listado += ">" + "El porcentaje debe ser mayor que 0 y menor que 100" + "\n";
+			listado += "> " + "El porcentaje debe ser mayor que 0 y menor que 100" + "\n";
 			correcto = false;
 		}
 		

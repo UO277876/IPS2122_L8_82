@@ -21,7 +21,7 @@ public class CompeticionModel {
 			+ "VALUES (?,?,?,?,?,?,?,?,?,?)";
 
 	private static final String INTRODUCIR_COMPETICION_CON_CANCELACION = "INSERT INTO Competicion(id, inicio, fin, tipo, numPlazas, fecha, nombre, descr, distancia, hayCancelacion, porcentajeDevuelto, fechaLimite) "
-			+ "VALUES (?,?,?,?,?,?,?,?,?,?)";
+			+ "VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
 
 	/**
 	 * Obtiene la competición de un solo id
