@@ -268,7 +268,7 @@ public class InscripcionController {
 	
 	public void inscribirAtleta(AtletaDTO atleta, int id_competicion, String dorsal, int precio, String metodoPago) {	
 		int id_metodoPago = getIdMetodoDePagoProvisional();
-		im.setMetodoDePago(id_metodoPago, metodoPago, false);
+		pc.setMetodoDePago(id_metodoPago, metodoPago);
 		im.inscribirse(atleta, id_competicion, dorsal, precio, getActualDate(), metodoPago, id_metodoPago);
 		asignarDorsal(atleta.getEmail(), id_competicion);
 	}
@@ -321,10 +321,8 @@ public class InscripcionController {
 	public void asignarDorsal(String email, int id_competicion) {
 		CompeticionDTO competicion = cm.obtenerCompeticion(id_competicion);
 		
-		if(pc.getEstado(im.getMetodoPago(email, id_competicion))) {
-			String dorsal = obtenerDorsal(competicion);
-			im.actualizarDorsal(dorsal, email, id_competicion);
-		}
+		String dorsal = obtenerDorsal(competicion);
+		im.actualizarDorsal(dorsal, email, id_competicion);
 		
 	}
 	

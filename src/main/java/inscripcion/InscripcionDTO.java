@@ -1,7 +1,6 @@
 package inscripcion;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -9,7 +8,6 @@ import atleta.AtletaDTO;
 import atleta.AtletaModel;
 import competiciones.CompeticionDTO;
 import competiciones.CompeticionModel;
-import giis.demo.util.Util;
 
 public class InscripcionDTO {
 	

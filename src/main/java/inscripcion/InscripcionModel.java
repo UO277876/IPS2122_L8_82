@@ -3,7 +3,6 @@ package inscripcion;
 import java.util.List;
 
 import atleta.AtletaDTO;
-import competiciones.CompeticionDTO;
 import giis.demo.util.ApplicationException;
 import giis.demo.util.Database;
 import metododepago.MetodoDePagoDTO;
@@ -114,6 +113,7 @@ public class InscripcionModel {
 	 * 
 	 * @param email_atleta
 	 * @param id_competicion
+	 * @return 
 	 */
 	public void inscribirse(AtletaDTO atleta, int id_competicion, String dorsal, int precio, String ultFechaModif, String metodoPago, int id_metodoPago) {
 		String sql = SQL_INSCRIBIRSE;
@@ -158,12 +158,6 @@ public class InscripcionModel {
 		if (obj.equals(""))
 			throw new ApplicationException(message);
 	}
-
-	public void setMetodoDePago(int id, String tipo, boolean estado) {
-		String sql = SQL_SET_METODO_DE_PAGO;
-		db.executeUpdate(sql, id, tipo, estado);
-	}
-	
 	
 	public void actualizaMetodoDePago(int id, String tipo, boolean estado) {
 		String sql = SQL_UPDATE_METODO_DE_PAGO;
