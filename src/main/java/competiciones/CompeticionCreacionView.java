@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Date;
 
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
@@ -21,6 +22,7 @@ import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
 import clasificacion.CategoriasView;
+import giis.demo.util.Util;
 
 @SuppressWarnings("serial")
 public class CompeticionCreacionView extends JFrame {
@@ -522,6 +524,29 @@ public class CompeticionCreacionView extends JFrame {
 		return null;
 
 	}
+	
+	private boolean fechasLimite(String fecha, String inicio, String fin) {
+		Date fecha1 = Util.isoStringToDate(fecha);
+		Date inicio2 = Util.isoStringToDate(inicio);
+		Date fin2 = Util.isoStringToDate(fin);
+
+		if (fecha1.after(inicio2) && fecha1.after(fin2) && fin2.after(inicio2)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	private boolean fechasLimiteCancelacion(String fecha, String cancelacion) {
+		Date fecha1 = Util.isoStringToDate(fecha);
+		Date cancelacion2 = Util.isoStringToDate(cancelacion);
+
+		if (fecha1.after(cancelacion2)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 
 	private String ifCorrecto(String nombre, boolean correcto) {
 		if (correcto) {
@@ -578,23 +603,29 @@ public class CompeticionCreacionView extends JFrame {
 		boolean correcto = true;
 
 		if (isVacio()) {
-			listado += ">" + "El campo nombre o fecha no puede estar vacío" + "\n";
+			listado += "> " + "El campo nombre o fecha no puede estar vacío" + "\n";
 			correcto = false;
 		}
 
 		if (numPlazas < 0) {
-			listado += ">" + "El número de plazas debe ser mayor que 0" + "\n";
+			listado += "> " + "El número de plazas debe ser mayor que 0" + "\n";
 			correcto = false;
 		}
 
 		if (distancia < 0) {
-			listado += ">" + "La distancia debe ser mayor que 0" + "\n";
+			listado += "> " + "La distancia debe ser mayor que 0" + "\n";
 			correcto = false;
 		}
 
 		if (!controlarFecha(getTxFecha().getText()) || !controlarFecha(getTxInicio().getText())
 				|| !controlarFecha(getTxFin().getText())) {
 			correcto = false;
+		} else {
+			if(!fechasLimite(getTxFecha().getText(), getTxInicio().getText(), getTxFin().getText())) {
+				listado += "> " + "Las fechas de inicio y fin de inscripciones deben ser menores\n a la "
+						+ "de la competición" + "\n";
+				correcto = false;
+			}
 		}
 
 		listado += controlarFecha(getTxFecha().getText(), "fecha");
@@ -611,6 +642,12 @@ public class CompeticionCreacionView extends JFrame {
 		
 		if (!controlarFecha(getTxFechaLimite().getText())) {
 			correcto = false;
+		} else {
+			if(!fechasLimiteCancelacion(getTxFecha().getText(), getTxFechaLimite().getText())) {
+				listado += "> " + "La fecha de cancelación\n" + "debe ser menor a la "
+						+ "de la competición" + "\n";
+				correcto = false;
+			}
 		}
 		
 		listado += controlarFecha(getTxFechaLimite().getText(), "fecha de límite de cancelación");
