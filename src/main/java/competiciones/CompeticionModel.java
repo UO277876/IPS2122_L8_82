@@ -16,6 +16,7 @@ public class CompeticionModel {
 	private Database db = new Database();
 	private static final String LISTADO_COMPETICIONES = "SELECT * FROM Competicion c WHERE id = ? ";
 	private static final String SQL_GET_LISTA_NOMBRE = "SELECT * from Competicion where nombre = ?";
+	private static final String GET_COMPETICIONES = "SELECT * from Competicion";
 	private static final String INTRODUCIR_COMPETICION_SIN_CANCELACION = "INSERT INTO Competicion(id, inicio, fin, tipo, numPlazas, fecha, nombre, descr, distancia, hayCancelacion, dorsalesReservados) "
 			+ "VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 

@@ -449,7 +449,7 @@ public class CompeticionCreacionView extends JFrame {
 				}
 			});
 			btInscripcion.setFont(new Font("Tahoma", Font.PLAIN, 13));
-			btInscripcion.setBounds(494, 319, 176, 21);
+			btInscripcion.setBounds(494, 302, 176, 21);
 		}
 		return btInscripcion;
 	}
@@ -505,8 +505,7 @@ public class CompeticionCreacionView extends JFrame {
 			btRegistro.setFont(new Font("Tahoma", Font.BOLD, 13));
 			btRegistro.setBackground(Color.BLUE);
 
-			btRegistro.setBounds(245, 392, 96, 28);
-			btRegistro.setBounds(494, 308, 96, 28);
+			btRegistro.setBounds(496, 341, 96, 28);
 
 		}
 		return btRegistro;

@@ -7,15 +7,6 @@ insert into Atleta(email,nombre,apellidos,genero,fechaNacimiento,dni) values
 	('frangg80@hotmail.es','Fran','Gomez Garcia','masculino','1980-08-12','5454'),
 	('laurarl@hotmail.es','Laura','Romano Lopez','femenino','1997-01-20','8764');
 	
-delete from Inscripcion;
-insert into Inscripcion(dorsal,tiempo,precio,email_atleta, ultFechaModif,categoriaSexo, metodoPago, id_metodoPago, id_competicion) values 
-	('A','---',3,'mariafdz92@hotmail.es','2021-05-05','femenino','tarjeta', 2555, 3244),
-	('12','12',3,'mariafdz92@hotmail.es','2021-07-22','femenino','tarjeta', 0105, 56564),
-	('15','---',13,'juangg73@hotmail.es','2021-07-20','masculino','transferencia', 6789, 56564),
-	('10','50',2,'albertoce11@hotmail.es','2021-05-07','masculino','tarjeta', 1256, 3244),
-	('11','1',6,'frangg80@hotmail.es','2021-01-22','masculino','transferencia', 9090, 5332),
-	('B','---',5,'laurarl@hotmail.es','2021-02-12','femenino','tarjeta', 11888, 5332);
-	
 delete from Competicion;
 insert into Competicion(id,inicio,fin,tipo,numPlazas, fecha, nombre, descr, distancia, hayCancelacion, dorsalesReservados) values 
 	(3244,'2021-05-04','2021-05-12','asfalto',50, '2021-06-12','asfalto por oviedo', 'Carrera que recorre toda la ciudad de Oviedo',25, false,2),
@@ -33,4 +24,13 @@ insert into MetodoDePago(id, tipo, estado) values
 	(1256, "transferencia", true),
 	(9090, "tc", true),
 	(11888, "tc", true);	
+	
+delete from Inscripcion;
+insert into Inscripcion(dorsal,tiempo,precio,email_atleta, ultFechaModif,categoriaSexo, metodoPago, id_metodoPago, id_competicion) values 
+	('A','---',3,'mariafdz92@hotmail.es','2021-05-05','femenino','tarjeta', 2555, 3244),
+	('12','12',3,'mariafdz92@hotmail.es','2021-07-22','femenino','tarjeta', 0105, 56564),
+	('15','---',13,'juangg73@hotmail.es','2021-07-20','masculino','transferencia', 6789, 56564),
+	('10','50',2,'albertoce11@hotmail.es','2021-05-07','masculino','tarjeta', 1256, 3244),
+	('11','1',6,'frangg80@hotmail.es','2021-01-22','masculino','transferencia', 9090, 5332),
+	('B','---',5,'laurarl@hotmail.es','2021-02-12','femenino','tarjeta', 11888, 5332);
 

@@ -83,7 +83,7 @@ public class CompeticionController {
 		competi.setDorsalesReservados(dorsalesReservados);
 		competi.setHayCancelacion(hayCancelacion);
 		
-		cm.addCompeticion(competi);
+		cm.addCompeticionConCancelacion(competi);
 		
 		// Para comprobar que ha sido creada correctamente
 		if(existeCompeticion(id)) {

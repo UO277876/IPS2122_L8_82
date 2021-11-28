@@ -62,3 +62,4 @@ create table Inscripcion(
 	foreign key (id_metodoPago) references MetodoDePago (id),
 	foreign key (id_competicion) references Competicion (id),
 	primary key (id_competicion, email_atleta)
+);
