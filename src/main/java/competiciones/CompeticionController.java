@@ -68,7 +68,7 @@ public class CompeticionController {
 	 * @return True si se ha añadido correctamente y False si no
 	 */
 	public boolean addCompeticion(String nombre, String descripcion, String fecha, int numPlazas, int distancia, String tipo,
-			String inicio, String fin) {
+			String inicio, String fin, boolean hayCancelacion) {
 		// 1. Crear ID
 		Random random = new Random();
 		int id = random.nextInt(4735);
@@ -88,8 +88,49 @@ public class CompeticionController {
 		competi.setFin(fin);
 		competi.setInicio(inicio);
 		competi.setFecha(fecha);
+		competi.setHayCancelacion(hayCancelacion);
 		
 		cm.addCompeticion(competi);
+		
+		// Para comprobar que ha sido creada correctamente
+		if(existeCompeticion(id)) {
+			return true;
+		}
+		
+		return false;
+	}
+	
+	/**
+	 * Añade una competición nueva 
+	 * 
+	 * @return True si se ha añadido correctamente y False si no
+	 */
+	public boolean addCompeticionConCancelacion(String nombre, String descripcion, String fecha, int numPlazas, int distancia, String tipo,
+			String inicio, String fin, boolean hayCancelacion, double porcentaje, String fechaLimite) {
+		// 1. Crear ID
+		Random random = new Random();
+		int id = random.nextInt(4735);
+		
+		while(existeCompeticion(id)) {
+			id = random.nextInt(4735);
+		}
+		
+		// 2. Crear datos de la competición
+		CompeticionDTO competi = new CompeticionDTO();
+		competi.setId(id);
+		competi.setNombre(nombre);
+		competi.setDescripcion(descripcion);
+		competi.setNumPlazas(numPlazas);
+		competi.setTipo(tipo);
+		competi.setDistancia(distancia);
+		competi.setFin(fin);
+		competi.setInicio(inicio);
+		competi.setFecha(fecha);
+		competi.setHayCancelacion(hayCancelacion);
+		competi.setPorcentaje(porcentaje);
+		competi.setFechaLimite(fechaLimite);
+		
+		cm.addCompeticionConCancelacion(competi);
 		
 		// Para comprobar que ha sido creada correctamente
 		if(existeCompeticion(id)) {
