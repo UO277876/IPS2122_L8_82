@@ -348,6 +348,7 @@ public class RegistroAtletaView extends JFrame {
 	private JLabel getLbIncidencias() {
 		if (lbIncidencias == null) {
 			lbIncidencias = new JLabel("Incidencias:");
+			lbIncidencias.setDisplayedMnemonic('I');
 			lbIncidencias.setFont(new Font("Calibri", Font.PLAIN, 17));
 			lbIncidencias.setBounds(414, 25, 106, 43);
 		}

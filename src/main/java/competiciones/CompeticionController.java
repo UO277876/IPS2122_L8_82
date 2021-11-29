@@ -6,21 +6,13 @@ public class CompeticionController {
 	
 	private CompeticionModel cm;
 	
+	
 	/**
 	 * Constructor sin parámetros de la clase CompeticionController
 	 */
 	public CompeticionController() {
-		this.cm = new CompeticionModel();
+		cm = new CompeticionModel();
 	}
-	
-	/**
-	 * Constructor con un parámetro de la clase CompeticionController
-	 * 
-	 * @param cm, una CompeticionModel
-	 */
-	public CompeticionController(CompeticionModel cm) {
-		this.cm = cm;
-	};
 	
 	/**
 	 * Devuelve los datos de una inscripcion usando su id para realizar su busqueda
@@ -68,7 +60,7 @@ public class CompeticionController {
 	 * @return True si se ha añadido correctamente y False si no
 	 */
 	public boolean addCompeticion(String nombre, String descripcion, String fecha, int numPlazas, int distancia, String tipo,
-			String inicio, String fin) {
+			String inicio, String fin, boolean hayCancelacion, int dorsalesReservados) {
 		// 1. Crear ID
 		Random random = new Random();
 		int id = random.nextInt(4735);
@@ -88,8 +80,51 @@ public class CompeticionController {
 		competi.setFin(fin);
 		competi.setInicio(inicio);
 		competi.setFecha(fecha);
+		competi.setDorsalesReservados(dorsalesReservados);
+		competi.setHayCancelacion(hayCancelacion);
 		
-		cm.addCompeticion(competi);
+		cm.addCompeticionConCancelacion(competi);
+		
+		// Para comprobar que ha sido creada correctamente
+		if(existeCompeticion(id)) {
+			return true;
+		}
+		
+		return false;
+	}
+	
+	/**
+	 * Añade una competición nueva 
+	 * 
+	 * @return True si se ha añadido correctamente y False si no
+	 */
+	public boolean addCompeticionConCancelacion(String nombre, String descripcion, String fecha, int numPlazas, int distancia, String tipo,
+			String inicio, String fin, boolean hayCancelacion, double porcentaje, String fechaLimite, int dorsalesReservados) {
+		// 1. Crear ID
+		Random random = new Random();
+		int id = random.nextInt(4735);
+		
+		while(existeCompeticion(id)) {
+			id = random.nextInt(4735);
+		}
+		
+		// 2. Crear datos de la competición
+		CompeticionDTO competi = new CompeticionDTO();
+		competi.setId(id);
+		competi.setNombre(nombre);
+		competi.setDescripcion(descripcion);
+		competi.setNumPlazas(numPlazas);
+		competi.setTipo(tipo);
+		competi.setDistancia(distancia);
+		competi.setFin(fin);
+		competi.setInicio(inicio);
+		competi.setFecha(fecha);
+		competi.setHayCancelacion(hayCancelacion);
+		competi.setPorcentaje(porcentaje);
+		competi.setFechaLimite(fechaLimite);
+		competi.setDorsalesReservados(dorsalesReservados);
+		
+		cm.addCompeticionConCancelacion(competi);
 		
 		// Para comprobar que ha sido creada correctamente
 		if(existeCompeticion(id)) {

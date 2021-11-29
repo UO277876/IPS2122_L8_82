@@ -11,14 +11,22 @@ public class CompeticionDTO {
 	private int numPlazas;
 	private String nombre;
 	private String descripcion;
+
 	private String fecha;
+
 	private int distancia;
+
+	private int dorsalesReservados;
 	private CategoriasDTO categorias;
+	
+	private boolean hayCancelacion;
+	private double porcentaje;
+	private String fechaLimite;
 	
 	public CompeticionDTO(){};
 	
 	public CompeticionDTO(int id, String tipo, String inicio, String fin, int numPlazas, String nombre, String descripcion
-			, int distancia, String fecha){
+			, int distancia, String fecha, boolean hayCancelacion, double porcentaje, String fechaLimite, int dorsalesReservados){
 		this.id = id;
 		this.inicio = inicio;
 		this.fin = fin;
@@ -27,9 +35,22 @@ public class CompeticionDTO {
 		this.descripcion = descripcion;
 		this.distancia = distancia;
 		this.fecha = fecha;
+		this.dorsalesReservados = dorsalesReservados;
+		this.hayCancelacion = hayCancelacion;
 		this.categorias = new CategoriasDTO();
+		this.porcentaje = porcentaje;
+		this.fechaLimite = fechaLimite;
+
 	};
 	
+	public int getDorsalesReservados() {
+		return dorsalesReservados;
+	}
+
+	public void setDorsalesReservados(int dorsalesReservados) {
+		this.dorsalesReservados = dorsalesReservados;
+	}
+
 	public int getId() { return id; }
 	public void setId(int id) { this.id = id; }
 	public String getTipo() { return tipo; }
@@ -48,6 +69,13 @@ public class CompeticionDTO {
 	public void setDistancia(int distancia) { this.distancia = distancia; }
 	public void setFecha(String fecha) { this.fecha = fecha; }
 	public String getFecha() { return fecha; }
+	public boolean isHayCancelacion() { return hayCancelacion; }
+	public void setHayCancelacion(boolean hayCancelacion) { this.hayCancelacion = hayCancelacion; }
+	public double getPorcentaje() { return porcentaje; }
+	public void setPorcentaje(double porcentaje) { this.porcentaje = porcentaje; }
+	public String getFechaLimite() { return fechaLimite; }
+	public void setFechaLimite(String fechaLimite) { this.fechaLimite = fechaLimite; }
+
 	public CategoriasDTO getCategorias() {
 		if(categorias == null) categorias = new CategoriasDTO();
 		return this.categorias;}
