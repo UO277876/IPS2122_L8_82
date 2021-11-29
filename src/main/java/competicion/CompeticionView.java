@@ -18,7 +18,7 @@ import javax.swing.border.EmptyBorder;
 
 import atleta.InscripcionAtletaView;
 import detallesCompeticion.DetallesCompeticionView;
-import formularioclubs.FormularioParaClubsView;
+import formularioclubs.PreFormularioView;
 
 import java.awt.GridLayout;
 
@@ -38,7 +38,7 @@ public class CompeticionView extends JFrame {
 	
 	private DetallesCompeticionView dcv;
 	private InscripcionAtletaView iav;
-	private FormularioParaClubsView fpcv;
+	private PreFormularioView pfv;
 	
 	private CompeticionController compContr;
 	private JPanel panel;
@@ -180,6 +180,7 @@ public class CompeticionView extends JFrame {
 		}
 		return panel;
 	}
+	
 	private JButton getBtnDetallesCompeticion() {
 		if (btnDetallesCompeticion == null) {
 			btnDetallesCompeticion = new JButton("VER DETALLES");
@@ -228,8 +229,8 @@ public class CompeticionView extends JFrame {
 							JOptionPane.showMessageDialog(null, "No se ha podido encontrar la competición deseada, vuelva a intentarlo.");
 						}
 						else {
-							fpcv = new FormularioParaClubsView(competicion.getId(), 2);
-							fpcv.setVisible(true);
+							pfv = new PreFormularioView(competicion.getId());
+							pfv.setVisible(true);
 						}
 					}
 					

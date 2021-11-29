@@ -10,6 +10,7 @@ public class MetodoDePagoDTO {
 	private String tipo;
 	private boolean estado;
 	
+	
 	public MetodoDePagoDTO() {
 		
 	}
