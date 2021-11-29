@@ -1,4 +1,4 @@
-package giis.demo.util;d
+package giis.demo.util;
 
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;

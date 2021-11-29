@@ -23,9 +23,9 @@ public class DetallesCompeticionView extends JFrame{
 		this.competicion = competicion;
 		this.detallesController = new DetallesCompeticionController(competicion.getId());
 		
-		getContentPane().add(getSpDetalles(), BorderLayout.WEST);
+		getContentPane().add(getSpDetalles(), BorderLayout.CENTER);
 		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 656, 475);
 	}
 

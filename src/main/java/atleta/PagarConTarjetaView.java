@@ -120,7 +120,7 @@ public class PagarConTarjetaView extends JFrame {
 						JOptionPane.showMessageDialog(null, "No ha rellenado el campo CVC, por favor rellene el campo CVC y vuelva a intentarlo");
 					}
 					else {
-						ic.actualizaMetodoDePago(ic.getIdMetodoDePagoProvisional(), "tc");
+						ic.actualizaMetodoDePago(ic.getIdMetodoDePagoProvisional(), "tc", "inscrito");
 						JOptionPane.showMessageDialog(null, "Se ha completado su registro");
 						reset();
 					}
@@ -149,6 +149,7 @@ public class PagarConTarjetaView extends JFrame {
 		this.getTxtCVC().setText("");
 		this.getTxtFechaCaducidad().setText("");
 		this.getTxtNumero().setText("");
+		this.mdpv.setVisible(false);
 		this.setVisible(false);
 	}
 	

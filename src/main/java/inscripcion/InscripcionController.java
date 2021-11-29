@@ -311,10 +311,10 @@ public class InscripcionController {
 	}
 	
 	
-	public void inscribirAtleta(AtletaDTO atleta, int id_competicion, String dorsal, int precio, String metodoPago) {
+	public void inscribirAtleta(AtletaDTO atleta, int id_competicion, String dorsal, int precio, String metodoPago, String estadoInscripcion) {
 		int id_metodoPago = getIdMetodoDePagoProvisional();
 		im.setMetodoDePago(id_metodoPago, metodoPago, false);
-		im.inscribirse(atleta, id_competicion, dorsal, precio, getActualDate(), metodoPago, id_metodoPago);
+		im.inscribirse(atleta, id_competicion, dorsal, precio, getActualDate(), estadoInscripcion, id_metodoPago);
 	}
 	
 	public boolean checkAtletaInscrito(AtletaDTO atleta, int id_competicion) {
@@ -360,13 +360,13 @@ public class InscripcionController {
 		return cantidad;
 	}
 	
-	public void actualizaMetodoDePago(int id, String tipo) {
+	public void actualizaMetodoDePago(int id, String tipo, String estadoInscripcion) {
 		boolean estado = false;
 		if(tipo == "tc") {
 			estado = true;
 		}
 		System.out.println("El id provisional para el metodo de pago es: " + id);
-		im.actualizaEstadoPago(id, tipo);
+		im.actualizaEstadoPago(id, estadoInscripcion);
 		im.actualizaMetodoDePago(id, tipo, estado);
 	}
 	

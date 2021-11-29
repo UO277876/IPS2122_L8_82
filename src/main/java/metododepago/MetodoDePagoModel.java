@@ -18,10 +18,13 @@ public class MetodoDePagoModel {
 	 * Obtiene la competición de un solo id
 	 */
 	public MetodoDePagoDTO getPago(int id) {
-		validateNotNull(id, MSG_ID);		
-		List<MetodoDePagoDTO> result = db.executeQueryPojo(MetodoDePagoDTO.class, SQL_GET_PAGO, id);
-		return result.get(0);
+		validateNotNull(id, MSG_ID);	
+		String sql = SQL_GET_PAGO;
+		List<MetodoDePagoDTO> result = db.executeQueryPojo(MetodoDePagoDTO.class, sql, id);
+		MetodoDePagoDTO pago = result.get(0);
+		return pago;
 	}
+
 	
 	private void validateNotNull(Object obj, String message) {
 		if (obj==null)
