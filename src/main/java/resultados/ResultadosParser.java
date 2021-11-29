@@ -25,8 +25,12 @@ public class ResultadosParser {
 				String[] partes = line.split("-");
 				String dorsal = partes[0];
 				String tInicio = partes[1];
+				String[] cortes = new String[partes.length];
+				for(int i = 2; i < partes.length - 1; i++) {
+					cortes[i-2] = partes[i];
+				}
 				String tFin = partes[2];
-				return new ResultadosDTO(tInicio, tFin, dorsal, idNC);
+				return new ResultadosDTO(tInicio, cortes, tFin, dorsal, idNC);
 			} else
 				return null;
 		} catch (Exception e) {
