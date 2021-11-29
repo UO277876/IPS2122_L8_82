@@ -43,11 +43,7 @@ create table MetodoDePago(
 	id int NOT NULL,
 	tipo varchar(32) NOT NULL,
 	estado boolean,
-<<<<<<< HEAD
-	primary key (id_metodopago)
-=======
 	primary key (id)
->>>>>>> main
 );
 
 drop table if exists Inscripcion;
@@ -66,8 +62,6 @@ create table Inscripcion(
 	foreign key (id_metodoPago) references MetodoDePago (id),
 	foreign key (id_competicion) references Competicion (id),
 	primary key (id_competicion, email_atleta)
-<<<<<<< HEAD
-
 );
 
 drop table if exists Resultados;
@@ -77,10 +71,9 @@ create table Resultados(
 	dorsal varchar(32) not null,
 	tInicio String not null,
 	tFin String not null,
+	cortes String not null,
 	estado String,
 	foreign key(id_competicion) references Competicion(id),
 	foreign key(dorsal) references Inscripcion(dorsal),
 	primary key(id_competicion, dosal)
-=======
->>>>>>> main
 );

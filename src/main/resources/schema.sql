@@ -63,3 +63,17 @@ create table Inscripcion(
 	foreign key (id_competicion) references Competicion (id),
 	primary key (id_competicion, email_atleta)
 );
+
+drop table if exists Resultados;
+
+create table Resultados(
+	id_competicion int not null,
+	dorsal varchar(32) not null,
+	tInicio String not null,
+	tFin String not null,
+	cortes String not null,
+	estado String,
+	foreign key(id_competicion) references Competicion(id),
+	foreign key(dorsal) references Inscripcion(dorsal),
+	primary key(id_competicion, dosal)
+);
