@@ -120,7 +120,7 @@ public class PagarConTarjetaView extends JFrame {
 						JOptionPane.showMessageDialog(null, "No ha rellenado el campo CVC, por favor rellene el campo CVC y vuelva a intentarlo");
 					}
 					else {
-						ic.actualizaMetodoDePago(ic.getIdMetodoDePagoProvisional(), "tc", "inscrito");
+						ic.actualizaMetodoDePago(ic.getIdMetodoDePagoProvisional(), "tc");
 						JOptionPane.showMessageDialog(null, "Se ha completado su registro");
 						reset();
 					}

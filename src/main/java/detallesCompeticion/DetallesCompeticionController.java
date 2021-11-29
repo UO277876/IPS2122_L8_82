@@ -83,12 +83,19 @@ public class DetallesCompeticionController {
 	}
 	
 	public void fillDetalles() {
+		String estado = "Pre-inscrito";
 		getInscripciones();
 		fillAtletasList();
 		for(InscripcionDTO ins : inscripciones) {
 			AtletaDTO atleta = getAtleta(ins.getEmail_atleta());
 			MetodoDePagoDTO mp = mm.getPago(ins.getId_metodoPago());
-			detalles.add(new DetallesCompeticionDTO(atleta.getDni(), atleta.getNombre(), ins.getCategoria(), ins.getUltFechaModif(), mp.getTipo()));
+			if(mp.isEstado()) {
+				estado = "Pagado";
+			}
+			else {
+				estado = "Pendiente de Pago";
+			}
+			detalles.add(new DetallesCompeticionDTO(atleta.getDni(), atleta.getNombre(), ins.getCategoria(), ins.getUltFechaModif(), estado));
 		}
 	}
 	

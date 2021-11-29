@@ -18,7 +18,7 @@ public class MetodoDePagoController {
 	 */
 	public boolean getEstado(int id_metodopago) {
 		MetodoDePagoDTO metodoPago = pm.getPago(id_metodopago);
-		return metodoPago.getEstado();
+		return metodoPago.isEstado();
 	}
 	
 	/**

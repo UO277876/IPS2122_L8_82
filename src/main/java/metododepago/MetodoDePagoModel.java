@@ -14,6 +14,8 @@ public class MetodoDePagoModel {
 	
 	public static final String SQL_GET_PAGO = "SELECT * from MetodoDePago where id = ?";
 	
+	public static final String SQL_SET_METODO_DE_PAGO = "INSERT into MetodoDePago (id, tipo, estado) VALUES (?,?,?)";
+	
 	/**
 	 * Obtiene la competición de un solo id
 	 */
@@ -29,5 +31,12 @@ public class MetodoDePagoModel {
 	private void validateNotNull(Object obj, String message) {
 		if (obj==null)
 			throw new ApplicationException(message);
+	}
+
+
+	public void setMetodoDePago(int id_metodopago, String metodoPago, boolean b) {
+		String sql = SQL_SET_METODO_DE_PAGO;
+		db.executeUpdate(sql, id_metodopago, metodoPago, b);
+		
 	}
 }
