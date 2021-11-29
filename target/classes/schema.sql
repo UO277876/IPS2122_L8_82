@@ -27,11 +27,15 @@ create table Competicion(
 	nombre varchar(32) not null, 
 	descr varchar(32), 
 	distancia int not null,
+	hayCancelacion boolean not null,
+	porcentajeDevuelto double,
+	fechaLimite date,
+	dorsalesReservados int not null,
+	check(dorsalesReservados>=0),
 	check(numPlazas>=0),	
 	check(inicio<=fin), 
 	check(fin<fecha)  
 );
-
 
 drop table if exists MetodoDePago;
 
@@ -41,7 +45,6 @@ create table MetodoDePago(
 	estado boolean,
 	primary key (id)
 );
-
 
 drop table if exists Inscripcion;
 
@@ -59,6 +62,4 @@ create table Inscripcion(
 	foreign key (id_metodoPago) references MetodoDePago (id),
 	foreign key (id_competicion) references Competicion (id),
 	primary key (id_competicion, email_atleta)
-
 );
-

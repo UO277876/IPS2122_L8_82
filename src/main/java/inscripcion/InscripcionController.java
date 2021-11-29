@@ -12,20 +12,19 @@ import atleta.AtletaDTO;
 import clasificacion.CategoriasDTO;
 import competiciones.CompeticionController;
 import competiciones.CompeticionDTO;
+import metododepago.MetodoDePagoController;
 
 public class InscripcionController {
 	
-
-	private static final String characters = "1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-	
-	
+	private static final String characters = "1234567890OPQRSTUVWXYZ";
+		
 	private InscripcionModel im;
 
 	private AtletaController ac;
 	private CompeticionController cm;
+	private MetodoDePagoController pc;
 
 	private List<InscripcionDTO> idto;
-	
 	
 	private String emailProvisionalParaPago;
 	private int idProvisionalParaPago;
@@ -37,26 +36,13 @@ public class InscripcionController {
 	 */
 	public InscripcionController() {
 		this.im = new InscripcionModel();
+		
 		this.ac = new AtletaController();
 		this.cm = new CompeticionController();
+		this.pc = new MetodoDePagoController();
 		
 		this.idto = new ArrayList<InscripcionDTO>();
 	}
-	
-	/**
-	 * Constructor con un parámetro de la clase InscripcionController
-	 * 
-	 * @param im, una inscripcionModel
-	 */
-	public InscripcionController(InscripcionModel im) {
-		this.im = im;
-		this.ac = new AtletaController();
-		this.cm = new CompeticionController();
-		
-		this.idto = new ArrayList<InscripcionDTO>();
-	}
-	
-	
 	
 	public void setEmailProvisionalParaPago(String email) {
 		this.emailProvisionalParaPago = email;
@@ -82,8 +68,6 @@ public class InscripcionController {
 	public int getIdMetodoDePagoProvisional() {
 		return this.idMetodoDePagoProvisional;
 	}
-	
-	
 	
 	/**
 	 * Crea la lista de inscripciones usando los id de una carrera ordenando por tiempo y genero
@@ -212,31 +196,9 @@ public class InscripcionController {
 		
 		return result;
 	}
-
-//	/**
-//	 * Relelna la clasificación con atletas
-//	 * 
-//	 * @return una lista de ClasificacionDTO
-//	 */
-//	private List<ClasificacionDTO> rellenarConAtletas() {
-//		AtletaDTO am = new AtletaDTO();
-//		
-//		List<String> result = new ArrayList<String>();
-//		String linea = "";
-//		int index = 1;
-//		
-//		for(InscripcionDTO ic : this.idto) {
-//			am = obtenerAtleta(ic.getEmail_atleta());
-//			linea = index + ", " + ic.categoriaSexo + ", " + am.getNombre() + ", " + ic.getTiempo();
-//			
-//			result.add(linea);
-//			index++;
-//		}
-//		return result;
-//	}
 	
 	/**
-	 * Relelna la clasificación con atletas
+	 * Rellena la clasificación con atletas
 	 * 
 	 * @return una lista de ClasificacionDTO
 	 */
@@ -267,14 +229,6 @@ public class InscripcionController {
 		AtletaDTO result = ac.obtenerAtletaByEmail(email_atleta);
 		return result;
 	}
-
-	public String imprimirListado(List<String> listadoIns) {
-		String listado = "";
-		for(int i=0; i < listadoIns.size(); i++) {
-			listado += "> " + listadoIns.get(i) + "\n";
-		}
-		return listado;
-	}
 	
 	/**
 	 * Almacena la lista de inscripciones según el email de un atleta
@@ -298,23 +252,25 @@ public class InscripcionController {
 		return idto;
 	}
 	
-	
-	
+	/**
+	 * Primer método para añadir un carácter al dorsal
+	 * @return
+	 */
 	public String getNewDorsal() {
 		Random rng = new Random();
-		char[] text = new char[4];
-	    for (int i = 0; i < 4; i++)
+		char[] text = new char[1];
+	    for (int i = 0; i < 1; i++)
 	    {
 	        text[i] = characters.charAt(rng.nextInt(characters.length()));
 	    }
 	    return new String(text);
 	}
 	
-	
-	public void inscribirAtleta(AtletaDTO atleta, int id_competicion, String dorsal, int precio, String metodoPago) {
+	public void inscribirAtleta(AtletaDTO atleta, int id_competicion, String dorsal, int precio, String metodoPago) {	
 		int id_metodoPago = getIdMetodoDePagoProvisional();
-		im.setMetodoDePago(id_metodoPago, metodoPago, false);
+		pc.setMetodoDePago(id_metodoPago, metodoPago);
 		im.inscribirse(atleta, id_competicion, dorsal, precio, getActualDate(), metodoPago, id_metodoPago);
+		asignarDorsal(atleta.getEmail(), id_competicion);
 	}
 	
 	public boolean checkAtletaInscrito(AtletaDTO atleta, int id_competicion) {
@@ -350,7 +306,64 @@ public class InscripcionController {
 		Date dateAct = new Date();
 		return dateFormat.format(dateAct);
 	}
+
+	/**
+	 * Obtiene todas las inscripciones de una competición
+	 * @param id
+	 */
+	public List<InscripcionDTO> getAtletasCompeticion(int id) {
+		return im.getInscripcionesPorDorsal(id);
+	}
 	
+	/**
+	 * Asigna un dorsal a un atleta en concreto, recién inscrito
+	 */
+	public void asignarDorsal(String email, int id_competicion) {
+		CompeticionDTO competicion = cm.obtenerCompeticion(id_competicion);
+		
+		if(pc.getEstado(im.getMetodoPago(email, id_competicion))) {
+			String dorsal = obtenerDorsal(competicion);
+			im.actualizarDorsal(dorsal, email, id_competicion);
+		}
+//		
+//		String dorsal = obtenerDorsal(competicion);
+//		im.actualizarDorsal(dorsal, email, id_competicion);
+		
+	}
+	
+	/**
+	 * Crea un número random como dorsal 
+	 * El mínimo es el reservado, y el máximo el número de plazas de la competición
+	 */
+	private String obtenerDorsal(CompeticionDTO competicion) {
+		Random random = new Random();
+		// El número de dorsales va de mínimo los reservados
+		// y por último el maximo de plazas
+		int dorsal = random.nextInt((competicion.getNumPlazas() - competicion.getDorsalesReservados())
+				+ competicion.getDorsalesReservados());
+		while(im.verificarDorsal(String.valueOf(dorsal), competicion.getId())) {
+			dorsal = random.nextInt((competicion.getNumPlazas() - competicion.getDorsalesReservados())
+					+ competicion.getDorsalesReservados());
+		}
+		
+		return String.valueOf(dorsal);
+	}
+	
+	/**
+	 * Se revisan si los dorsales de los demás ya están asignados, si falta alguno se actualiza también
+	 */
+	public void revisarDorsales(int id_competicion) {
+		List<InscripcionDTO> inscripciones = im.getInscripcionesPorCompeticion(id_competicion);
+		
+		for(InscripcionDTO incr : inscripciones) {
+			// Verifica si la inscripcion tiene dorsal asociado
+			if(!im.verificarDorsal(incr.getDorsal(), id_competicion)) {
+				asignarDorsal(incr.getEmail_atleta(), id_competicion);
+			}
+		}
+		
+	}
+
 	public float getPrecioInscripcion(int id_competicion) {
 		float cantidad = 0.0f;
 		List<InscripcionDTO> inscripciones = im.getInscripcionesPorCompeticion(id_competicion);
@@ -366,6 +379,7 @@ public class InscripcionController {
 			estado = true;
 		}
 		System.out.println("El id provisional para el metodo de pago es: " + id);
+		im.actualizaEstadoPago(id, tipo);
 		im.actualizaMetodoDePago(id, tipo, estado);
 	}
 	

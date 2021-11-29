@@ -20,5 +20,14 @@ public class MetodoDePagoController {
 		MetodoDePagoDTO metodoPago = pm.getPago(id_metodopago);
 		return metodoPago.isEstado();
 	}
+	
+	/**
+	 * Devuelve True si el metodo de pago etsa realizado y false si no
+	 * @param email
+	 * @return True si esta pagado, False si no
+	 */
+	public void setMetodoDePago(int id_metodopago, String metodoPago) {
+		pm.setMetodoDePago(id_metodopago, metodoPago, false);
+	}
 
 }

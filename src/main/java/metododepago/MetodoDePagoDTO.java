@@ -9,13 +9,15 @@ public class MetodoDePagoDTO {
 	private int id;
 	private String tipo;
 	private boolean estado;
-	private String email_atleta;
 	
-	public MetodoDePagoDTO(int id, String tipo, boolean estado, String email_atleta) {
+	public MetodoDePagoDTO() {
+		
+	}
+	
+	public MetodoDePagoDTO(int id, String tipo, boolean estado) {
 		this.id = id;
 		this.tipo = tipo;
 		this.estado = estado;
-		this.email_atleta = email_atleta;
 	}
 
 	public int getId() {
@@ -42,17 +44,6 @@ public class MetodoDePagoDTO {
 
 	public void setEstado(boolean estado) {
 		this.estado = estado;
-	}
-
-	public String getEmail_atleta() {
-		return email_atleta;
-	}
-
-	public void setEmail_atleta(String email_atleta) {
-		this.email_atleta = email_atleta;
-	}
-	
-	
-	
+	}		
 
 }
