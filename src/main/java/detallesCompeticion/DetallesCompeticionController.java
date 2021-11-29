@@ -9,6 +9,8 @@ import atleta.AtletaDTO;
 import atleta.AtletaModel;
 import inscripcion.InscripcionDTO;
 import inscripcion.InscripcionModel;
+import metododepago.MetodoDePagoDTO;
+import metododepago.MetodoDePagoModel;
 
 public class DetallesCompeticionController {
 	
@@ -21,6 +23,7 @@ public class DetallesCompeticionController {
 	
 	private InscripcionModel im;
 	private AtletaModel am;
+	private MetodoDePagoModel mm;
 	
 	private String[] columnNames = {"DNI",
             "Nombre",
@@ -40,6 +43,7 @@ public class DetallesCompeticionController {
 		
 		this.im = new InscripcionModel();
 		this.am = new AtletaModel();
+		this.mm = new MetodoDePagoModel();
 		
 
 		fillDetalles();
@@ -83,8 +87,11 @@ public class DetallesCompeticionController {
 		fillAtletasList();
 		for(InscripcionDTO ins : inscripciones) {
 			AtletaDTO atleta = getAtleta(ins.getEmail_atleta());
-			detalles.add(new DetallesCompeticionDTO(atleta.getDni(), atleta.getNombre(), ins.getCategoria(), ins.getUltFechaModif(), ins.getIEstado()));
+			MetodoDePagoDTO mp = mm.getPago(ins.getId_metodoPago());
+			detalles.add(new DetallesCompeticionDTO(atleta.getDni(), atleta.getNombre(), ins.getCategoria(), ins.getUltFechaModif(), mp.getTipo()));
 		}
 	}
+	
+	
 	
 }

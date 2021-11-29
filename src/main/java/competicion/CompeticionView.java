@@ -18,6 +18,7 @@ import javax.swing.border.EmptyBorder;
 
 import atleta.InscripcionAtletaView;
 import detallesCompeticion.DetallesCompeticionView;
+import formularioclubs.PreFormularioView;
 
 import java.awt.GridLayout;
 
@@ -37,9 +38,12 @@ public class CompeticionView extends JFrame {
 	
 	private DetallesCompeticionView dcv;
 	private InscripcionAtletaView iav;
+	private PreFormularioView pfv;
+	
 	private CompeticionController compContr;
 	private JPanel panel;
 	private JButton btnDetallesCompeticion;
+	private JButton btnFormularioClubs;
 	
 
 	/**
@@ -169,12 +173,14 @@ public class CompeticionView extends JFrame {
 	private JPanel getPanel() {
 		if (panel == null) {
 			panel = new JPanel();
-			panel.setLayout(new GridLayout(0, 2, 0, 0));
+			panel.setLayout(new GridLayout(0, 3, 0, 0));
 			panel.add(getBtnDetallesCompeticion());
 			panel.add(getBtnTablaCarrerasForContentPane());
+			panel.add(getBtnFormularioClubs());
 		}
 		return panel;
 	}
+	
 	private JButton getBtnDetallesCompeticion() {
 		if (btnDetallesCompeticion == null) {
 			btnDetallesCompeticion = new JButton("VER DETALLES");
@@ -208,5 +214,29 @@ public class CompeticionView extends JFrame {
 		}
 		
 		return true;
+	}
+	private JButton getBtnFormularioClubs() {
+		if (btnFormularioClubs == null) {
+			btnFormularioClubs = new JButton("INSCRIBIR POR LOTES");
+			btnFormularioClubs.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					if(checkNotSelected()) {
+						JOptionPane.showMessageDialog(null, "No ha seleccionado ninguna competicion, por favor seleccione una competicion");
+					}
+					else {
+						CompeticionDTO competicion = getCompeticion();
+						if(competicion == null) {
+							JOptionPane.showMessageDialog(null, "No se ha podido encontrar la competición deseada, vuelva a intentarlo.");
+						}
+						else {
+							pfv = new PreFormularioView(competicion.getId());
+							pfv.setVisible(true);
+						}
+					}
+					
+				}
+			});
+		}
+		return btnFormularioClubs;
 	}
 }
