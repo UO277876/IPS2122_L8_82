@@ -321,13 +321,13 @@ public class InscripcionController {
 	public void asignarDorsal(String email, int id_competicion) {
 		CompeticionDTO competicion = cm.obtenerCompeticion(id_competicion);
 		
-//		if(pc.getEstado(im.getMetodoPago(email, id_competicion))) {
+		if(pc.getEstado(im.getMetodoPago(email, id_competicion))) {
+			String dorsal = obtenerDorsal(competicion);
+			im.actualizarDorsal(dorsal, email, id_competicion);
+		}
+//		
 //		String dorsal = obtenerDorsal(competicion);
 //		im.actualizarDorsal(dorsal, email, id_competicion);
-//	}
-		
-		String dorsal = obtenerDorsal(competicion);
-		im.actualizarDorsal(dorsal, email, id_competicion);
 		
 	}
 	
@@ -357,7 +357,7 @@ public class InscripcionController {
 		
 		for(InscripcionDTO incr : inscripciones) {
 			// Verifica si la inscripcion tiene dorsal asociado
-			if(im.verificarDorsal(incr.getDorsal(), id_competicion)) {
+			if(!im.verificarDorsal(incr.getDorsal(), id_competicion)) {
 				asignarDorsal(incr.getEmail_atleta(), id_competicion);
 			}
 		}

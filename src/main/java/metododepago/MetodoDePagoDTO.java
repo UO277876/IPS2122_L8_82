@@ -10,6 +10,10 @@ public class MetodoDePagoDTO {
 	private String tipo;
 	private boolean estado;
 	
+	public MetodoDePagoDTO() {
+		
+	}
+	
 	public MetodoDePagoDTO(int id, String tipo, boolean estado) {
 		this.id = id;
 		this.tipo = tipo;
