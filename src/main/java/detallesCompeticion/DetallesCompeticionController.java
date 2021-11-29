@@ -87,7 +87,6 @@ public class DetallesCompeticionController {
 		fillAtletasList();
 		for(InscripcionDTO ins : inscripciones) {
 			AtletaDTO atleta = getAtleta(ins.getEmail_atleta());
-			System.out.println(ins.getIEstado());
 			MetodoDePagoDTO mp = mm.getPago(ins.getId_metodoPago());
 			detalles.add(new DetallesCompeticionDTO(atleta.getDni(), atleta.getNombre(), ins.getCategoria(), ins.getUltFechaModif(), mp.getTipo()));
 		}
