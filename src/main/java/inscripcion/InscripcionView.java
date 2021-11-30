@@ -190,10 +190,10 @@ public class InscripcionView extends JFrame {
 	}
 	
 	private ListadoDTO getListado(){
-		String nombre = (String) getTbListado().getValueAt(getTbListado().getSelectedRow(), 1);
-		String estado = (String) getTbListado().getValueAt(getTbListado().getSelectedRow(), 2);
-		String fecha = (String) getTbListado().getValueAt(getTbListado().getSelectedRow(), 3);
-		String hayCancelacion = (String) getTbListado().getValueAt(getTbListado().getSelectedRow(), 4);
+		String nombre = (String) getTbListado().getValueAt(getTbListado().getSelectedRow(), 0);
+		String estado = (String) getTbListado().getValueAt(getTbListado().getSelectedRow(), 1);
+		String fecha = (String) getTbListado().getValueAt(getTbListado().getSelectedRow(), 2);
+		String hayCancelacion = (String) getTbListado().getValueAt(getTbListado().getSelectedRow(), 3);
 		ListadoDTO listado = new ListadoDTO(nombre, estado, fecha, hayCancelacion);
 		return listado;
 		
