@@ -35,9 +35,9 @@ insert into Inscripcion(dorsal,tiempo,precio,email_atleta, ultFechaModif,categor
 	('B','---',5,'laurarl@hotmail.es','2021-02-12','femenino','tarjeta', 11888, 5332);
 	
 insert into Competicion(id,inicio,fin,tipo,numPlazas, fecha, nombre, descr, distancia, hayCancelacion, porcentajeDevuelto, fechaLimite, dorsalesReservados) values 
-	(43432,'2021-11-11','2021-12-12','asfalto',50, '2022-01-12','cantabria', 'descripcion',25, true,40,'2021-12-20',2),
-	(97554,'2021-11-11','2021-12-01','montaña',60, '2022-10-15','montañas', 'descripcion',40, true,10,'2021-12-21',3),
-	(123,'2021-11-11','2021-12-01','asfalto',30, '2022-03-17','rios', 'descripcion',15, true,20,'2021-12-19',2);
+	(43432,'2021-11-11','2021-12-12','asfalto',50, '2022-01-12','cantabria', 'descripcion',25, true,40.0,'2021-12-20',2),
+	(97554,'2021-11-11','2021-12-01','montaña',60, '2022-10-15','montañas', 'descripcion',40, true,10.0,'2021-12-21',3),
+	(123,'2021-11-11','2021-12-01','asfalto',30, '2022-03-17','rios', 'descripcion',15, true,20.0,'2021-12-19',2);
 
 insert into MetodoDePago(id, tipo, estado) values
 	(543, "tc", true),

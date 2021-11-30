@@ -85,7 +85,8 @@ public class InscripcionController {
 			if(dto.getEstado().equals("pre-inscrito")) {
 				devolucion = 0;
 			} else {
-				devolucion = (competi.getPorcentaje()/100) * ins.getPrecio();
+				double uwu = (double) ins.getPrecio();
+				devolucion = (competi.getPorcentaje()/100) * uwu;
 				System.out.println(devolucion);
 			}
 			
