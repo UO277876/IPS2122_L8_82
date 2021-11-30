@@ -20,6 +20,7 @@ public class CancelacionView extends JFrame {
 	private JLabel lbAviso;
 	
 	public CancelacionView(InscripcionView iv, double cantidadDevuelta) {
+		setResizable(false);
 		this.cantidadDevuelta = cantidadDevuelta;
 		this.iv = iv;
 		

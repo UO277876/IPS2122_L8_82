@@ -77,30 +77,29 @@ public class InscripcionController {
 	 */
 	public double cancelar(ListadoDTO dto, String email) {
 		CompeticionDTO competi =cm.obtenerCompeticionNombre(dto.getNombre()) ;
+		double devolucion = 0;
 		
 		if(Util.isoStringToDate(competi.getFechaLimite()).after(new Date())) {
+			InscripcionDTO ins = im.getInscripcion(email, competi.getId());
+			
 			if(dto.getEstado().equals("pre-inscrito")) {
-				return 0;
+				devolucion = 0;
 			} else {
-				InscripcionDTO ins = im.getInscripcion(email, competi.getId());
-				MetodoDePagoDTO mp = pc.getMetodoPago(ins.getId_metodoPago());
-				
-				// 1. Se elimina la plaza de la competicion
-				cm.actualizarPlazas(competi.getId(), competi.getNumPlazas() - 1);
-				
-				double cantidadDevuelta = (competi.getPorcentaje()/100) * mp.getCantidad();
-				
-				// 2. Se elimina el metodo de pago asociado
-				pc.eliminarMetodoDePago(ins.getId_metodoPago());
-				
-				// 3. Se elimina la inscripcion
-				im.eliminarInscripcion(ins);
-				
-				return cantidadDevuelta;
+				devolucion = (competi.getPorcentaje()/100) * ins.getPrecio();
+				System.out.println(devolucion);
 			}
+			
+			// 1. Se elimina la plaza de la competicion
+			cm.actualizarPlazas(competi.getId(), competi.getNumPlazas() - 1);
+			
+			// 2. Se elimina el metodo de pago asociado
+			pc.eliminarMetodoDePago(ins.getId_metodoPago());
+			
+			// 3. Se elimina la inscripcion
+			im.eliminarInscripcion(ins);
 		}
 		
-		return 0;
+		return devolucion;
 	}
 	
 	
