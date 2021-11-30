@@ -52,6 +52,7 @@ public class InscripcionView extends JFrame {
 	private JButton getBtnCancelarIns() {
 		if (btnCancelarInscripcion == null) {
 			btnCancelarInscripcion = new JButton("Cancelar inscripción");
+			btnCancelarInscripcion.setEnabled(false);
 			btnCancelarInscripcion.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					borrarInscripcion();
@@ -81,6 +82,7 @@ public class InscripcionView extends JFrame {
 			btnEmail.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					listarPorEmail();
+					getBtnCancelarIns().setEnabled(true);
 				}
 			});
 			btnEmail.setBackground(new Color(0, 204, 0));
@@ -144,6 +146,8 @@ public class InscripcionView extends JFrame {
 	}
 	
 	private void borrarInscripcion() {
+		String email = txEmail.getText();	
+		
 		if(!checkNotSelected()) {
 			ListadoDTO dto = getListado();
 			boolean cancelacion = ic.hayCancelacion(dto);
@@ -151,7 +155,7 @@ public class InscripcionView extends JFrame {
 			if(cancelacion) {
 				if(confirmarCancelacion(dto)) {
 					if(ic.checkEstadoCompeticion(dto)) {
-						double cantidadDevuelta = ic.cancelar(dto);
+						double cantidadDevuelta = ic.cancelar(dto, email);
 						crearVentanaCancelacion(cantidadDevuelta);
 					} else {
 						JOptionPane.showMessageDialog(null, "Solo se puede cancelar donde no se ha participado.");

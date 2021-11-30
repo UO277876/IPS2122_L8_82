@@ -34,6 +34,16 @@ public class CompeticionController {
 		return cm.getListadoCompeticiones(id).size() > 0;
 	}
 	
+	// PARA CANCELACIONES 
+	public CompeticionDTO obtenerCompeticionNombre(String nombre) {
+		return cm.getListaCompeticionesName(nombre).get(0);
+	}
+	
+	public void actualizarPlazas(int id, int plazas) {
+		cm.actualizarPlazas(id, plazas);
+	}
+	// -------------
+	
 	/**
 	 * Devuelve los datos de una inscripcion usando su nombre para realizar su busqueda
 	 * 

@@ -16,6 +16,16 @@ public class MetodoDePagoModel {
 	public static final String SQL_SET_METODO_DE_PAGO =
 			"INSERT into MetodoDePago (id, tipo, estado) values (?,?,?)";
 	public static final String OBTENER_TODO = "SELECT * FROM MetodoDePago";
+	public static final String ELIMINAR_METODOPAGO = "DELETE FROM MetodoDePago WHERE id = ?";
+	
+	/**
+	 * Elimina un metodo de pago
+	 * @param id
+	 */
+	public void eliminarMetodoPago(int id) {
+		validateNotNull(id, MSG_ID);
+		db.executeUpdate(ELIMINAR_METODOPAGO, id);
+	}
 	
 	/**
 	 * Obtiene la competición de un solo id

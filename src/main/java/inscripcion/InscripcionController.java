@@ -50,6 +50,9 @@ public class InscripcionController {
 		this.emailProvisionalParaPago = email;
 	}
 	
+	/**
+	 * Comprueba que la competicion admita cancelaciones
+	 */
 	public boolean hayCancelacion(ListadoDTO dto) {
 		if(dto.getHayCancelacion().equals("si")) {
 			return true;
@@ -58,6 +61,9 @@ public class InscripcionController {
 		}
 	}
 	
+	/**
+	 * Devuelve true si el estado de la competicion no es participado
+	 */
 	public boolean checkEstadoCompeticion(ListadoDTO dto) {
 		if(!dto.getEstado().equals("participado")) {
 			return true;
@@ -66,23 +72,26 @@ public class InscripcionController {
 		}
 	}
 	
-	public double cancelar(ListadoDTO dto) {
-		CompeticionDTO competi = ;
+	/**
+	 * Cancela una inscripción
+	 */
+	public double cancelar(ListadoDTO dto, String email) {
+		CompeticionDTO competi =cm.obtenerCompeticionNombre(dto.getNombre()) ;
 		
 		if(Util.isoStringToDate(competi.getFechaLimite()).after(new Date())) {
 			if(dto.getEstado().equals("pre-inscrito")) {
 				return 0;
 			} else {
-				InscripcionDTO ins = ;
+				InscripcionDTO ins = im.getInscripcion(email, competi.getId());
 				MetodoDePagoDTO mp = pc.getMetodoPago(ins.getId_metodoPago());
 				
 				// 1. Se elimina la plaza de la competicion
-				cm.actualizarPlazas(competi.getId());
+				cm.actualizarPlazas(competi.getId(), competi.getNumPlazas() - 1);
 				
 				double cantidadDevuelta = (competi.getPorcentaje()/100) * mp.getCantidad();
 				
 				// 2. Se elimina el metodo de pago asociado
-				pc.eliminarMetodoPago(ins.getId_metodoPago());
+				pc.eliminarMetodoDePago(ins.getId_metodoPago());
 				
 				// 3. Se elimina la inscripcion
 				im.eliminarInscripcion(ins);
@@ -90,6 +99,8 @@ public class InscripcionController {
 				return cantidadDevuelta;
 			}
 		}
+		
+		return 0;
 	}
 	
 	

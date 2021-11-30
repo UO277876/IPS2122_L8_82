@@ -39,5 +39,12 @@ public class MetodoDePagoController {
 	public void setMetodoDePago(int id_metodopago, String metodoPago) {
 		pm.setMetodoDePago(id_metodopago, metodoPago, false);
 	}
+	
+	/**
+	 * Elimina un metodo de pago
+	 */
+	public void eliminarMetodoDePago(int id_metodopago) {
+		pm.eliminarMetodoPago(id_metodopago);
+	}
 
 }

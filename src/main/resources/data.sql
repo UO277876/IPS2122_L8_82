@@ -9,7 +9,7 @@ insert into Atleta(email,nombre,apellidos,genero,fechaNacimiento,dni) values
 	
 delete from Competicion;
 insert into Competicion(id,inicio,fin,tipo,numPlazas, fecha, nombre, descr, distancia, hayCancelacion, dorsalesReservados) values 
-	(3244,'2021-05-04','2021-05-12','asfalto',50, '2021-06-12','asfalto por oviedo', 'Carrera que recorre toda la ciudad de Oviedo',25, true,2),
+	(3244,'2021-05-04','2021-05-12','asfalto',50, '2021-06-12','asfalto por oviedo', 'Carrera que recorre toda la ciudad de Oviedo',25, false,2),
 	(56564,'2021-07-10','2021-08-01','montaña',60, '2021-10-15','somiedo', 'Carrera que recorre parte de la fauna de Somiedo',40, false,3),
 	(5332,'2021-01-21','2021-02-28','montaña',30, '2021-03-17','lagunas', 'Recorrido por las lagunas',15, false,2),
 	(6712,'2021-12-13','2021-12-14','asfalto',30, '2021-12-28','luarca', 'Luarca Racing',25, false,3),
