@@ -14,7 +14,7 @@ public class InscripcionDTO {
 	private final String ESTADO1 = "solicitado";
 	private final String ESTADO2 = "inscrito";
 	private final String ESTADO3 = "participado";
-	private final String ESTADO4 = "Pre-inscrito";
+	private final String ESTADO4 = "pre-inscrito";
 	
 	private final String metalic = "metalico";
 	private final String tc = "tarjeta";

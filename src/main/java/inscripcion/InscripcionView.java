@@ -149,6 +149,14 @@ public class InscripcionView extends JFrame {
 			boolean cancelacion = ic.hayCancelacion(dto);
 			
 			if(cancelacion) {
+				if(confirmarCancelacion(dto)) {
+					if(ic.checkEstadoCompeticion(dto)) {
+						double cantidadDevuelta = ic.cancelar(dto);
+						crearVentanaCancelacion(cantidadDevuelta);
+					} else {
+						JOptionPane.showMessageDialog(null, "Solo se puede cancelar donde no se ha participado.");
+					}
+				}
 				
 			} else {
 				JOptionPane.showMessageDialog(null, "La inscripción seleccionada no admite cancelaciones.");
@@ -157,6 +165,24 @@ public class InscripcionView extends JFrame {
 		} else {
 			JOptionPane.showMessageDialog(null, "No ha seleccionado inscripción.");
 		}
+	}
+	
+	private void crearVentanaCancelacion(double cantidadDevuelta) {
+		CancelacionView vc = new CancelacionView(this,cantidadDevuelta);
+		vc.setLocationRelativeTo(this);
+		vc.setVisible(true);
+	}
+	
+	/**
+	 * Abre una ventana de confirmación para cancelar o no la inscripción
+	 */
+	private boolean confirmarCancelacion(ListadoDTO dto) {
+		boolean yes = false;
+		int resp = JOptionPane.showConfirmDialog(this,  "¿Está seguro de cancelar la inscripción?");
+		if(resp == JOptionPane.YES_OPTION) {
+			yes = true;
+		}
+		return yes;
 	}
 	
 	private ListadoDTO getListado(){

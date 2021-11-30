@@ -22,6 +22,16 @@ public class MetodoDePagoController {
 	}
 	
 	/**
+	 * Devuelve el metodo de pago
+	 * @param email
+	 * @return True si esta pagado, False si no
+	 */
+	public MetodoDePagoDTO getMetodoPago(int id_metodopago) {
+		MetodoDePagoDTO metodoPago = pm.getPago(id_metodopago);
+		return metodoPago;
+	}
+	
+	/**
 	 * Devuelve True si el metodo de pago etsa realizado y false si no
 	 * @param email
 	 * @return True si esta pagado, False si no

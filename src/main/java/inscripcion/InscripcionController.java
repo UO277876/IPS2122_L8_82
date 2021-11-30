@@ -12,7 +12,9 @@ import atleta.AtletaDTO;
 import clasificacion.CategoriasDTO;
 import competiciones.CompeticionController;
 import competiciones.CompeticionDTO;
+import giis.demo.util.Util;
 import metododepago.MetodoDePagoController;
+import metododepago.MetodoDePagoDTO;
 
 public class InscripcionController {
 	
@@ -46,6 +48,48 @@ public class InscripcionController {
 	
 	public void setEmailProvisionalParaPago(String email) {
 		this.emailProvisionalParaPago = email;
+	}
+	
+	public boolean hayCancelacion(ListadoDTO dto) {
+		if(dto.getHayCancelacion().equals("si")) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public boolean checkEstadoCompeticion(ListadoDTO dto) {
+		if(!dto.getEstado().equals("participado")) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public double cancelar(ListadoDTO dto) {
+		CompeticionDTO competi = ;
+		
+		if(Util.isoStringToDate(competi.getFechaLimite()).after(new Date())) {
+			if(dto.getEstado().equals("pre-inscrito")) {
+				return 0;
+			} else {
+				InscripcionDTO ins = ;
+				MetodoDePagoDTO mp = pc.getMetodoPago(ins.getId_metodoPago());
+				
+				// 1. Se elimina la plaza de la competicion
+				cm.actualizarPlazas(competi.getId());
+				
+				double cantidadDevuelta = (competi.getPorcentaje()/100) * mp.getCantidad();
+				
+				// 2. Se elimina el metodo de pago asociado
+				pc.eliminarMetodoPago(ins.getId_metodoPago());
+				
+				// 3. Se elimina la inscripcion
+				im.eliminarInscripcion(ins);
+				
+				return cantidadDevuelta;
+			}
+		}
 	}
 	
 	
