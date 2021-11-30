@@ -76,7 +76,7 @@ public class PagarConTransferenciaView extends JFrame{
 			btnAceptar = new JButton("Aceptar");
 			btnAceptar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					ic.actualizaMetodoDePago(ic.getIdMetodoDePagoProvisional(), "transferencia", "solicitado");
+					ic.actualizaMetodoDePago(ic.getIdMetodoDePagoProvisional(), "transferencia");
 					JOptionPane.showMessageDialog(null, "Se ha completado su registro");
 					reset();
 				}

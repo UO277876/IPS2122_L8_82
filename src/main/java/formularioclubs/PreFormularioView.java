@@ -9,6 +9,7 @@ import javax.swing.JSpinner;
 import java.awt.Font;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.awt.event.ActionEvent;
 
 public class PreFormularioView extends JFrame {
@@ -32,6 +33,8 @@ public class PreFormularioView extends JFrame {
 	
 	
 	private FormularioParaClubsView fpcv;
+	private LeerFicheroClubs lf;
+	
 	
 	public PreFormularioView(int id_competicion) {
 		
@@ -76,8 +79,12 @@ public class PreFormularioView extends JFrame {
 			btnLeerFichero.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					if(checkAllGood()) {
-						fpcv = new FormularioParaClubsView(id_competicion, (Integer) spinnerNumAt.getValue());
-						fpcv.setVisible(true);
+						try {
+							lf = new LeerFicheroClubs();
+							lf.registrarAtletas(id_competicion);
+						} catch (IOException e) {
+							JOptionPane.showMessageDialog(null, "El fichero no se ha podido cargar, compruebe que todo esta correctamente");
+						}
 					}
 					else {
 						JOptionPane.showMessageDialog(null, "No ha indicado el nombre del club, por favor rellene el campo y vuelva a intentarlo");
