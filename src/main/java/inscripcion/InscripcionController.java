@@ -124,7 +124,8 @@ public class InscripcionController {
 		
 		for(InscripcionDTO ic : this.idto) {
 			lm = obtenerCompeticion(ic.id_competicion);
-			ListadoDTO list = new ListadoDTO(lm.getNombre(), ic.getIEstado(), ic.getUltFechaModif());
+			ListadoDTO list = new ListadoDTO(lm.getNombre(), ic.getIEstado(), ic.getUltFechaModif(), 
+					lm.isHayCancelacion());
 			//linea = lm.getNombre() + " - " + ic.getIEstado() + " - " + ic.getUltFechaModif();
 			
 			result.add(list);

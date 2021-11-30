@@ -549,7 +549,7 @@ public class CompeticionCreacionView extends JFrame {
 			}
 			
 			} catch (NumberFormatException e) {
-			JOptionPane.showMessageDialog(null, "No puede introducir caracteres en el número de plazas/distancia/porcentaje");
+			JOptionPane.showMessageDialog(null, "No puede introducir caracteres en cuadros con valores numéricos");
 		}
 		return null;
 		
@@ -647,7 +647,7 @@ public class CompeticionCreacionView extends JFrame {
 			correcto = false;
 		}
 		
-		if(dorsales > numPlazas) {
+		if(dorsales > numPlazas || dorsales < 0) {
 			listado += ">" + "El número de dorsales reservados debe ser menor que el número de plazas" + "\n";
 			correcto = false;
 		}

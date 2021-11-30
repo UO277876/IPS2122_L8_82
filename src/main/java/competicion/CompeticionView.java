@@ -62,8 +62,7 @@ public class CompeticionView extends JFrame {
 	 * Create the frame.
 	 */
 	public CompeticionView() {
-		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setTitle("Listado de Competiciones");
 		setBounds(100, 100, 656, 475);
 		contentPane = new JPanel();
 		contentPane.setForeground(Color.WHITE);

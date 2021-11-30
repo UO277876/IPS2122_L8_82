@@ -5,11 +5,25 @@ public class ListadoDTO {
 	private String nombre;
 	private String estado;
 	private String fecha;
+	private String hayCancelacion;
 	
-	public ListadoDTO(String name, String estado, String date) {
+	public ListadoDTO(String name, String estado, String date, boolean hayCancelacion) {
 		this.nombre = name;
 		this.estado = estado;
 		this.fecha = date;
+		
+		if(hayCancelacion) {
+			setHayCancelacion("si");
+		} else {
+			setHayCancelacion("no");
+		}
+	}
+	
+	public ListadoDTO(String name, String estado, String date, String hayCancelacion) {
+		this.nombre = name;
+		this.estado = estado;
+		this.fecha = date;		
+		this.hayCancelacion = hayCancelacion;
 	}
 
 	public String getNombre() {
@@ -35,7 +49,14 @@ public class ListadoDTO {
 	public void setFecha(String date) {
 		this.fecha = date;
 	}
-	
+
+	public String getHayCancelacion() {
+		return hayCancelacion;
+	}
+
+	public void setHayCancelacion(String hayCancelacion) {
+		this.hayCancelacion = hayCancelacion;
+	}
 	
 
 }
