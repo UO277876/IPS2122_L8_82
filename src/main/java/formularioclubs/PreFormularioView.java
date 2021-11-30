@@ -109,6 +109,11 @@ public class PreFormularioView extends JFrame {
 	private JButton getBtnCancelar() {
 		if (btnCancelar == null) {
 			btnCancelar = new JButton("Cancelar");
+			btnCancelar.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					setVisible(false);
+				}
+			});
 			btnCancelar.setBounds(10, 136, 133, 21);
 		}
 		return btnCancelar;

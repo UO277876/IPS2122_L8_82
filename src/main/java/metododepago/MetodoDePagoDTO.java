@@ -5,6 +5,7 @@ public class MetodoDePagoDTO {
 	public final static String trans = "transferencia";
 	public final static String tc = "tc";
 	public final static String pre = "preinscrito";
+	public final static String club = "club";
 	
 	private int id;
 	private String tipo;
@@ -33,7 +34,7 @@ public class MetodoDePagoDTO {
 	}
 
 	public void setTipo(String tipo) {
-		if(tipo.equals(trans) || tipo.equals(tc) || tipo.equals(pre)) {
+		if(tipo.equals(trans) || tipo.equals(tc) || tipo.equals(pre) || tipo.equals(club)) {
 			this.tipo = tipo;
 		}
 	}
