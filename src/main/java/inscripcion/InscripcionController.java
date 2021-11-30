@@ -90,7 +90,7 @@ public class InscripcionController {
 			}
 			
 			// 1. Se elimina la plaza de la competicion
-			cm.actualizarPlazas(competi.getId(), competi.getNumPlazas() - 1);
+			cm.actualizarPlazas(competi.getId(), competi.getNumPlazas() + 1);
 			
 			// 2. Se elimina el metodo de pago asociado
 			pc.eliminarMetodoDePago(ins.getId_metodoPago());

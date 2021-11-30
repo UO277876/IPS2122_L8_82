@@ -46,8 +46,8 @@ insert into MetodoDePago(id, tipo, estado) values
 	(5435, "tc", true);
 	
 insert into Inscripcion(dorsal,tiempo,precio,email_atleta, ultFechaModif,categoriaSexo, metodoPago, id_metodoPago, id_competicion) values 
-	('23','---',15,'mariafdz92@hotmail.es','2021-05-05','femenino','metalico', 543, 43432),
-	('A','---',8,'mariafdz92@hotmail.es','2021-07-22','femenino','metalico', 432, 97554),
+	('23','---',15,'mariafdz92@hotmail.es','2021-05-05','femenino','tarjeta', 543, 43432),
+	('A','---',8,'mariafdz92@hotmail.es','2021-07-22','femenino','tarjeta', 432, 97554),
 	('54','---',13,'juangg73@hotmail.es','2021-07-20','masculino','transferencia', 5353, 43432),
-	('12','---',23,'albertoce11@hotmail.es','2021-05-07','masculino','metalico', 5435, 123);
+	('12','---',23,'albertoce11@hotmail.es','2021-05-07','masculino','tarjeta', 5435, 123);
 	

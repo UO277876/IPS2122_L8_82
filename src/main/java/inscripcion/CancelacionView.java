@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import java.awt.Rectangle;
 
 @SuppressWarnings("serial")
 public class CancelacionView extends JFrame {
@@ -20,6 +21,7 @@ public class CancelacionView extends JFrame {
 	private JLabel lbAviso;
 	
 	public CancelacionView(InscripcionView iv, double cantidadDevuelta) {
+		setBounds(400,400,310,200);
 		setResizable(false);
 		this.cantidadDevuelta = cantidadDevuelta;
 		this.iv = iv;
