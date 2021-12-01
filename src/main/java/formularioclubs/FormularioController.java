@@ -32,13 +32,14 @@ public class FormularioController {
 	
 	private String[][] data;
 	
+
+	
 	public FormularioController(int id_competicion, int numAtletas) {
 		this.id_competicion = id_competicion;
 		this.numeroAtletas = numAtletas;
 		createTable();
 		
 		this.atletas = new ArrayList<AtletaDTO>();
-		
 		
 		this.im = new InscripcionModel();
 		this.am = new AtletaModel();

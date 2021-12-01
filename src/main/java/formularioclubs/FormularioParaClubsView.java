@@ -13,6 +13,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
@@ -49,8 +51,15 @@ public class FormularioParaClubsView extends JFrame {
 	private JLabel lblCorrecto;
 	private JButton btnFinalizar;
 	
+
+	private List<String> emails;
+	
+	
 	public FormularioParaClubsView(int id_competicion, int numAtletas) {
 		getContentPane().setBackground(Color.WHITE);
+		
+
+		this.emails = new ArrayList<String>();
 		
 		this.id_competicion = id_competicion;
 		formularioController = new FormularioController(id_competicion, numAtletas);
@@ -146,33 +155,52 @@ public class FormularioParaClubsView extends JFrame {
 	}
 	
 	public void Inscribir() {
-		
-		for(int i = 0; i < table.getRowCount(); i++) {
-			ic.setEmailProvisionalParaPago(table.getValueAt(i, 0).toString());
-			ic.setIdProvisionalParaPago(id_competicion);
-			ic.setIdMetodoDePagoProvisional(ic.getNewIdMetodoPago());
-			
-
-			String email = table.getValueAt(i, 0).toString();
-			String nombre = table.getValueAt(i, 1).toString();
-			String dni = table.getValueAt(i, 3).toString();
-			String genero = table.getValueAt(i, 5).toString();
-			genero = genero.toLowerCase();
-			String edad = table.getValueAt(i, 4).toString();
-			String apellidos = table.getValueAt(i, 2).toString();
-			
-			if(control(i)) {
-				boolean añadido = ac.crearAtletaFechaSinModificar(email,nombre,apellidos,dni,genero,edad);
-				setTexto(añadido);
-				
-				ic.inscribirAtleta(ac.obtenerAtletaByEmail(ic.getEmailProvisionalParaPago()), ic.getIdProvisionalParaPago(), ic.getNewDorsal(), 13, "preinscrito");
-				ic.revisarDorsales(id_competicion);
-				
-				System.out.println("Inscripcion Correcta, tenga una buena tarde");
-					
-			}
-			
+		emails = new ArrayList<String>();
+		boolean correcto = true;
+		for(int j = 0; j < table.getRowCount(); j++) {
+			correcto = control(j);
 		}
+		
+		for(int k = 0; k < table.getRowCount(); k++) {
+			String email = table.getValueAt(k, 0).toString();
+			emails.add(email);
+		}
+		
+		if(correcto && !controlarEmails()) {
+			
+			for(int i = 0; i < table.getRowCount(); i++) {
+				
+				ic.setEmailProvisionalParaPago(table.getValueAt(i, 0).toString());
+				ic.setIdProvisionalParaPago(id_competicion);
+				ic.setIdMetodoDePagoProvisional(ic.getNewIdMetodoPago());
+				
+
+				String email = table.getValueAt(i, 0).toString();
+				String nombre = table.getValueAt(i, 1).toString();
+				String dni = table.getValueAt(i, 3).toString();
+				String genero = table.getValueAt(i, 5).toString();
+				genero = genero.toLowerCase();
+				String edad = table.getValueAt(i, 4).toString();
+				String apellidos = table.getValueAt(i, 2).toString();
+				
+				
+				if(control(i)) {
+					boolean añadido = ac.crearAtletaFechaSinModificar(email,nombre,apellidos,dni,genero,edad);
+					setTexto(añadido);
+					
+					ic.inscribirAtleta(ac.obtenerAtletaByEmail(ic.getEmailProvisionalParaPago()), ic.getIdProvisionalParaPago(), ic.getNewDorsal(), 13, "preinscrito");
+					ic.revisarDorsales(id_competicion);
+					
+					System.out.println("Inscripcion Correcta, tenga una buena tarde");
+						
+				}
+				
+			}
+		}
+		else {
+			JOptionPane.showMessageDialog(null, "Ha habido algun fallo, revise los datos y vuelva a intentarlo");
+		}
+		
 	
 	}
 	
@@ -200,13 +228,26 @@ public class FormularioParaClubsView extends JFrame {
 			correcto = false;
 		}
 		
-		listado += ">" + controlarFecha(i);
+		if(table.getValueAt(i, 5).toString().equals("masculino") || table.getValueAt(i, 5).toString().equals("femenino")) {
+			
+			correcto = true;
+		}
+		else {
+			listado += ">" + "El campo genero no tiene un formato valido" + "\n";
+			correcto = false;
+		}
+		
+		if(!controlarFecha(i)) {
+			listado += ">" + "Formato fecha incorrecto";
+			correcto = false;
+		}
+		
 		
 		txtIncidencias.setText(listado);
 		return correcto;
 	}
 	
-	private String controlarFecha(int i) {
+	private boolean controlarFecha(int i) {
 		try {
 			String edad = table.getValueAt(i, 4).toString();
 			String[] parts = edad.split("-");
@@ -215,16 +256,30 @@ public class FormularioParaClubsView extends JFrame {
 			int dia = Integer.valueOf(parts[2]);
 			
 			if(año >= 1920 && mes <= 12 && mes > 0 && dia <= 31 && dia > 0 ) {
-				return "Formato fecha correcto";
+				return true;
 			} else {
-				return "Parámetro fecha incorrecto";
+				return false;
 			}
 		
 		} catch(NumberFormatException e ) {
-			return "Formato fecha incorrecto";
+			return false;
 		}
 	}
 	
+	private boolean controlarEmails() {
+		boolean emailRepetido = false;
+		for(int i  = 0; i < emails.size(); i++) {
+			for(int j = 0; j < emails.size(); j++) {
+				if(i != j) {
+					if(emails.get(i).equals(emails.get(j))) {
+						JOptionPane.showMessageDialog(null, "Parece que hay emails iguales, por favor corrijalo");
+						emailRepetido = true;
+					}
+				}
+			}
+		}
+		return emailRepetido;
+	}
 	
 	
 	private void setTexto(boolean añadido) {

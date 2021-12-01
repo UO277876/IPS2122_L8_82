@@ -11,6 +11,7 @@ import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.awt.event.ActionEvent;
+import java.awt.Color;
 
 public class PreFormularioView extends JFrame {
 	
@@ -37,6 +38,7 @@ public class PreFormularioView extends JFrame {
 	
 	
 	public PreFormularioView(int id_competicion) {
+		getContentPane().setBackground(Color.WHITE);
 		
 		this.id_competicion = id_competicion;
 		
@@ -51,7 +53,7 @@ public class PreFormularioView extends JFrame {
 		getContentPane().add(getLblNewLabel());
 		getContentPane().add(getTxtClub());
 		
-		setBounds(0, 0, 455, 216);
+		setBounds(0, 0, 502, 216);
 	}
 	
 	private JButton getBtnFormulario() {
@@ -68,7 +70,7 @@ public class PreFormularioView extends JFrame {
 					}
 				}
 			});
-			btnFormulario.setBounds(150, 136, 133, 21);
+			btnFormulario.setBounds(162, 136, 157, 21);
 		}
 		return btnFormulario;
 	}
@@ -91,7 +93,7 @@ public class PreFormularioView extends JFrame {
 					}
 				}
 			});
-			btnLeerFichero.setBounds(293, 136, 133, 21);
+			btnLeerFichero.setBounds(329, 136, 133, 21);
 		}
 		return btnLeerFichero;
 	}
@@ -101,7 +103,7 @@ public class PreFormularioView extends JFrame {
 			lblNumAt = new JLabel("Seleccione el numero de atletas que quiere inscribir:");
 			lblNumAt.setFont(new Font("Calibri", Font.PLAIN, 16));
 			lblNumAt.setHorizontalAlignment(SwingConstants.CENTER);
-			lblNumAt.setBounds(10, 79, 365, 14);
+			lblNumAt.setBounds(10, 79, 365, 27);
 		}
 		return lblNumAt;
 	}
@@ -109,7 +111,7 @@ public class PreFormularioView extends JFrame {
 	private JSpinner getSpinnerNumAt() {
 		if (spinnerNumAt == null) {
 			spinnerNumAt = new JSpinner();
-			spinnerNumAt.setBounds(379, 75, 47, 20);
+			spinnerNumAt.setBounds(385, 75, 77, 31);
 		}
 		return spinnerNumAt;
 	}
@@ -121,7 +123,7 @@ public class PreFormularioView extends JFrame {
 					setVisible(false);
 				}
 			});
-			btnCancelar.setBounds(10, 136, 133, 21);
+			btnCancelar.setBounds(19, 136, 133, 21);
 		}
 		return btnCancelar;
 	}
@@ -136,7 +138,7 @@ public class PreFormularioView extends JFrame {
 	private JTextField getTxtClub() {
 		if (txtClub == null) {
 			txtClub = new JTextField();
-			txtClub.setBounds(151, 27, 275, 31);
+			txtClub.setBounds(187, 27, 275, 31);
 			txtClub.setColumns(10);
 		}
 		return txtClub;
