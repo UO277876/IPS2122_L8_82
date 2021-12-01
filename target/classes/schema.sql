@@ -43,7 +43,6 @@ create table MetodoDePago(
 	id int NOT NULL,
 	tipo varchar(32) NOT NULL,
 	estado boolean,
-	cantidad double,
 	primary key (id)
 );
 

@@ -157,6 +157,7 @@ public class InscripcionView extends JFrame {
 					if(ic.checkEstadoCompeticion(dto)) {
 						double cantidadDevuelta = ic.cancelar(dto, email);
 						crearVentanaCancelacion(cantidadDevuelta);
+						getBtnCancelarIns().setEnabled(false);
 					} else {
 						JOptionPane.showMessageDialog(null, "Solo se puede cancelar donde no se ha participado.");
 					}

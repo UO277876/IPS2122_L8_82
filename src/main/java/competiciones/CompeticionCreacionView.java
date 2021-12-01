@@ -449,7 +449,7 @@ public class CompeticionCreacionView extends JFrame {
 				}
 			});
 			btInscripcion.setFont(new Font("Tahoma", Font.PLAIN, 13));
-			btInscripcion.setBounds(494, 302, 176, 21);
+			btInscripcion.setBounds(494, 278, 176, 21);
 		}
 		return btInscripcion;
 	}
@@ -505,7 +505,7 @@ public class CompeticionCreacionView extends JFrame {
 			btRegistro.setFont(new Font("Tahoma", Font.BOLD, 13));
 			btRegistro.setBackground(Color.BLUE);
 
-			btRegistro.setBounds(496, 341, 96, 28);
+			btRegistro.setBounds(494, 309, 96, 28);
 
 		}
 		return btRegistro;
@@ -542,7 +542,7 @@ public class CompeticionCreacionView extends JFrame {
 					// NOTA: Cuando no hay cancelación, se pone por defecto a porcentaje 0.0
 					// y a fecha límite 2
 					correcto = cc.addCompeticionConCancelacion(nombre, descripcion, fecha, numPlazas, distancia, tipo, inicio,
-							fin,true,0.0,"2021-12-12",dorsalesReservados);
+							fin,true,0,"2021-12-12",dorsalesReservados);
 					return ifCorrecto(nombre, correcto);
 				}
 
@@ -793,7 +793,7 @@ public class CompeticionCreacionView extends JFrame {
 			txFin.setForeground(Color.GRAY);
 			txFin.setFont(new Font("Tahoma", Font.PLAIN, 13));
 			txFin.setColumns(10);
-			txFin.setBounds(628, 262, 155, 28);
+			txFin.setBounds(628, 240, 155, 28);
 		}
 		return txFin;
 	}

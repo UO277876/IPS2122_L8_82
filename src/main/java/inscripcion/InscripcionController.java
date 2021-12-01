@@ -14,7 +14,6 @@ import competiciones.CompeticionController;
 import competiciones.CompeticionDTO;
 import giis.demo.util.Util;
 import metododepago.MetodoDePagoController;
-import metododepago.MetodoDePagoDTO;
 
 public class InscripcionController {
 	
@@ -85,8 +84,7 @@ public class InscripcionController {
 			if(dto.getEstado().equals("pre-inscrito")) {
 				devolucion = 0;
 			} else {
-				double uwu = (double) ins.getPrecio();
-				devolucion = (competi.getPorcentaje()/100) * uwu;
+				devolucion = (competi.getPorcentajeDevuelto()/100) * ins.getPrecio();
 				System.out.println(devolucion);
 			}
 			

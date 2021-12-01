@@ -75,8 +75,8 @@ public class CompeticionModel {
 
 		db.executeUpdate(INTRODUCIR_COMPETICION_CON_CANCELACION, dto.getId(), Util.isoStringToDate(dto.getInicio()),
 				Util.isoStringToDate(dto.getFin()), dto.getTipo(), dto.getNumPlazas(),
-				Util.isoStringToDate(dto.getFecha()), dto.getNombre(), dto.getDescripcion(), dto.getDistancia(),
-				dto.isHayCancelacion(),dto.getPorcentaje(),Util.isoStringToDate(dto.getFechaLimite()), dto.getDorsalesReservados());
+				Util.isoStringToDate(dto.getFecha()), dto.getNombre(), dto.getDescr(), dto.getDistancia(),
+				dto.isHayCancelacion(),dto.getPorcentajeDevuelto(),Util.isoStringToDate(dto.getFechaLimite()), dto.getDorsalesReservados());
 	}
 
 	/**
@@ -84,9 +84,9 @@ public class CompeticionModel {
 	 */
 	public List<CompeticionDTO> getListaCompeticionesName(String name) {
 		validateNotNull(name, MSG_NOMBRE);
-		validateNotEmpty(name, MSG_NOMBRE);
 
 		List<CompeticionDTO> result = db.executeQueryPojo(CompeticionDTO.class, SQL_GET_LISTA_NOMBRE, name);
+		
 		return result;
 	}
 
