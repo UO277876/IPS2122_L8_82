@@ -13,12 +13,14 @@ import javax.swing.JTextField;
 @SuppressWarnings("serial")
 public class CancelacionView extends JFrame {
 	
+	@SuppressWarnings("unused")
 	private InscripcionView iv;
 	private double cantidadDevuelta;
 	
 	private JButton btnAceptar;
 	private JTextField txCantidad;
 	private JLabel lbAviso;
+	private JLabel lbAviso2;
 	
 	public CancelacionView(InscripcionView iv, double cantidadDevuelta) {
 		setBounds(400,400,310,200);
@@ -31,7 +33,7 @@ public class CancelacionView extends JFrame {
 		setTitle("Cancelación");
 		getContentPane().add(getBtnAceptar());
 		
-		JLabel lbCantidad = new JLabel("Cantidad devuelta:");
+		JLabel lbCantidad = new JLabel("Cantidad a devolver:");
 		lbCantidad.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lbCantidad.setBounds(31, 66, 120, 13);
 		getContentPane().add(lbCantidad);
@@ -44,17 +46,18 @@ public class CancelacionView extends JFrame {
 		lbCantidad.setLabelFor(getTxCantidad());
 		getContentPane().add(getTxCantidad());
 		getContentPane().add(getLbAviso());
+		getContentPane().add(getLbAviso2());
 	}
 	
 	private JTextField getTxCantidad() {
 		if (txCantidad == null) {
 			txCantidad = new JTextField();
+			txCantidad.setForeground(Color.BLACK);
 			txCantidad.setBackground(Color.WHITE);
-			txCantidad.setEnabled(false);
 			txCantidad.setEditable(false);
 			txCantidad.setColumns(10);
 			txCantidad.setBounds(161, 61, 85, 26);
-			txCantidad.setText(String.valueOf(cantidadDevuelta) + " euros");
+			txCantidad.setText(String.valueOf(cantidadDevuelta) + " €");
 		}
 		return txCantidad;
 	}
@@ -77,7 +80,7 @@ public class CancelacionView extends JFrame {
 	}
 	
 	private void reset() {
-		getTxCantidad().setText("0" + " euros");
+		getTxCantidad().setText("0" + " €");
 		setVisible(false);
 	}
 	private JLabel getLbAviso() {
@@ -87,5 +90,14 @@ public class CancelacionView extends JFrame {
 			lbAviso.setBounds(31, 102, 259, 13);
 		}
 		return lbAviso;
+	}
+	private JLabel getLbAviso2() {
+		if (lbAviso2 == null) {
+			lbAviso2 = new JLabel("*Se le devolvera en unos dias");
+			lbAviso2.setForeground(Color.GRAY);
+			lbAviso2.setFont(new Font("Tahoma", Font.PLAIN, 11));
+			lbAviso2.setBounds(31, 130, 154, 13);
+		}
+		return lbAviso2;
 	}
 }

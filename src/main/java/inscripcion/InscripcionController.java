@@ -82,10 +82,11 @@ public class InscripcionController {
 			InscripcionDTO ins = im.getInscripcion(email, competi.getId());
 			
 			if(dto.getEstado().equals("pre-inscrito")) {
-				devolucion = 0;
+				devolucion = 0.0;
 			} else {
-				devolucion = (competi.getPorcentajeDevuelto()/100) * ins.getPrecio();
-				System.out.println(devolucion);
+				double por = (double) competi.getPorcentajeDevuelto()/100;
+				double precio = (double) ins.getPrecio();
+				devolucion = por * precio;
 			}
 			
 			// 1. Se elimina la plaza de la competicion
@@ -98,7 +99,7 @@ public class InscripcionController {
 			im.eliminarInscripcion(ins);
 		}
 		
-		return devolucion;
+		return Math.round(devolucion);
 	}
 	
 	
