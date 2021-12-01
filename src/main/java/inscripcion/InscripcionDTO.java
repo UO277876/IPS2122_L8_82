@@ -11,10 +11,11 @@ import competiciones.CompeticionModel;
 
 public class InscripcionDTO {
 	
+	// Solicitado - Transferencia, Pre-Inscrito - Metalico
 	private final String ESTADO1 = "solicitado";
 	private final String ESTADO2 = "inscrito";
 	private final String ESTADO3 = "participado";
-	private final String ESTADO4 = "Pre-inscrito";
+	private final String ESTADO4 = "pre-inscrito";
 	
 	private final String metalic = "metalico";
 	private final String tc = "tarjeta";
@@ -108,10 +109,11 @@ public class InscripcionDTO {
 	public void actualizaEstado() {
 		if(!tiempo.equals("---")) {
 			SimpleDateFormat dateFormat = new SimpleDateFormat ("yyyy-MM-dd");
-			setEstado(ESTADO1);
+			setEstado(ESTADO3);
 			Date dateAct = new Date();
 			this.ultFechaModif = dateFormat.format(dateAct);
 		} 
+		
 		else if(metodoPago.equals(metalic)) {
 			SimpleDateFormat dateFormat = new SimpleDateFormat ("yyyy-MM-dd");
 			setEstado(ESTADO4);
@@ -120,7 +122,7 @@ public class InscripcionDTO {
 		}
 		else if(metodoPago.equals(transf)) {
 			SimpleDateFormat dateFormat = new SimpleDateFormat ("yyyy-MM-dd");
-			setEstado(ESTADO3);
+			setEstado(ESTADO1);
 			Date dateAct = new Date();
 			this.ultFechaModif = dateFormat.format(dateAct);
 		} else {

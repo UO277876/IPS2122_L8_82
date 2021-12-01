@@ -149,7 +149,6 @@ public class PagarConTarjetaView extends JFrame {
 		this.getTxtCVC().setText("");
 		this.getTxtFechaCaducidad().setText("");
 		this.getTxtNumero().setText("");
-		this.mdpv.setVisible(false);
 		this.setVisible(false);
 	}
 	

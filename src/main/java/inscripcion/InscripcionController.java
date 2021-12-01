@@ -12,6 +12,7 @@ import atleta.AtletaDTO;
 import clasificacion.CategoriasDTO;
 import competiciones.CompeticionController;
 import competiciones.CompeticionDTO;
+import giis.demo.util.Util;
 import metododepago.MetodoDePagoController;
 
 public class InscripcionController {
@@ -46,6 +47,59 @@ public class InscripcionController {
 	
 	public void setEmailProvisionalParaPago(String email) {
 		this.emailProvisionalParaPago = email;
+	}
+	
+	/**
+	 * Comprueba que la competicion admita cancelaciones
+	 */
+	public boolean hayCancelacion(ListadoDTO dto) {
+		if(dto.getHayCancelacion().equals("si")) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	/**
+	 * Devuelve true si el estado de la competicion no es participado
+	 */
+	public boolean checkEstadoCompeticion(ListadoDTO dto) {
+		if(!dto.getEstado().equals("participado")) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	/**
+	 * Cancela una inscripción
+	 */
+	public double cancelar(ListadoDTO dto, String email) {
+		CompeticionDTO competi =cm.obtenerCompeticionNombre(dto.getNombre()) ;
+		double devolucion = 0;
+		
+		if(Util.isoStringToDate(competi.getFechaLimite()).after(new Date())) {
+			InscripcionDTO ins = im.getInscripcion(email, competi.getId());
+			
+			if(dto.getEstado().equals("pre-inscrito")) {
+				devolucion = 0.0;
+			} else {
+				double por = (double) competi.getPorcentajeDevuelto()/100;
+				double precio = (double) ins.getPrecio();
+				devolucion = por * precio;
+			}
+			
+			// 1. Se elimina la plaza de la competicion
+			cm.actualizarPlazas(competi.getId(), competi.getNumPlazas() + 1);
+			
+			// 2. Se elimina el metodo de pago asociado
+			pc.eliminarMetodoDePago(ins.getId_metodoPago());
+			
+			// 3. Se elimina la inscripcion
+			im.eliminarInscripcion(ins);
+		}
+		
+		return Math.round(devolucion);
 	}
 	
 	
@@ -124,7 +178,8 @@ public class InscripcionController {
 		
 		for(InscripcionDTO ic : this.idto) {
 			lm = obtenerCompeticion(ic.id_competicion);
-			ListadoDTO list = new ListadoDTO(lm.getNombre(), ic.getIEstado(), ic.getUltFechaModif());
+			ListadoDTO list = new ListadoDTO(lm.getNombre(), ic.getIEstado(), ic.getUltFechaModif(), 
+					lm.isHayCancelacion());
 			//linea = lm.getNombre() + " - " + ic.getIEstado() + " - " + ic.getUltFechaModif();
 			
 			result.add(list);

@@ -111,7 +111,7 @@ public class InscripcionAtletaView extends JFrame {
 					ic.setIdProvisionalParaPago(competicion.getId());
 
 					ic.setIdMetodoDePagoProvisional(ic.getNewIdMetodoPago());
-					//System.out.println("El id provisional para el metodo de pago es: " + ic.getIdMetodoDePagoProvisional());
+					System.out.println("El id provisional para el metodo de pago es: " + ic.getIdMetodoDePagoProvisional());
 					if(ac.obtenerAtletaByEmail(ic.getEmailProvisionalParaPago()) == null) {
 
 						JOptionPane.showMessageDialog(null, "Debe registrarse para poder continuar.");
@@ -123,7 +123,7 @@ public class InscripcionAtletaView extends JFrame {
 						JOptionPane.showMessageDialog(null, "El email introducido ya esta registrado para esa competicion. No se puede registrar dos veces, intentelo de nuevo.");
 					}
 					else {
-						ic.inscribirAtleta(ac.obtenerAtletaByEmail(ic.getEmailProvisionalParaPago()), ic.getIdProvisionalParaPago(), ic.getNewDorsal(), 13, "c");
+						ic.inscribirAtleta(ac.obtenerAtletaByEmail(ic.getEmailProvisionalParaPago()), ic.getIdProvisionalParaPago(), ic.getNewDorsal(), 13, "preinscrito");
 						ic.revisarDorsales(competicion.getId());
 
 						System.out.println("Inscripcion Correcta, tenga una buena tarde");

@@ -34,6 +34,16 @@ public class CompeticionController {
 		return cm.getListadoCompeticiones(id).size() > 0;
 	}
 	
+	// PARA CANCELACIONES 
+	public CompeticionDTO obtenerCompeticionNombre(String nombre) {
+		return cm.getListaCompeticionesName(nombre).get(0);
+	}
+	
+	public void actualizarPlazas(int id, int plazas) {
+		cm.actualizarPlazas(id, plazas);
+	}
+	// -------------
+	
 	/**
 	 * Devuelve los datos de una inscripcion usando su nombre para realizar su busqueda
 	 * 
@@ -73,7 +83,7 @@ public class CompeticionController {
 		CompeticionDTO competi = new CompeticionDTO();
 		competi.setId(id);
 		competi.setNombre(nombre);
-		competi.setDescripcion(descripcion);
+		competi.setDescr(descripcion);
 		competi.setNumPlazas(numPlazas);
 		competi.setTipo(tipo);
 		competi.setDistancia(distancia);
@@ -99,7 +109,7 @@ public class CompeticionController {
 	 * @return True si se ha añadido correctamente y False si no
 	 */
 	public boolean addCompeticionConCancelacion(String nombre, String descripcion, String fecha, int numPlazas, int distancia, String tipo,
-			String inicio, String fin, boolean hayCancelacion, double porcentaje, String fechaLimite, int dorsalesReservados) {
+			String inicio, String fin, boolean hayCancelacion, int porcentaje, String fechaLimite, int dorsalesReservados) {
 		// 1. Crear ID
 		Random random = new Random();
 		int id = random.nextInt(4735);
@@ -112,7 +122,7 @@ public class CompeticionController {
 		CompeticionDTO competi = new CompeticionDTO();
 		competi.setId(id);
 		competi.setNombre(nombre);
-		competi.setDescripcion(descripcion);
+		competi.setDescr(descripcion);
 		competi.setNumPlazas(numPlazas);
 		competi.setTipo(tipo);
 		competi.setDistancia(distancia);
@@ -120,7 +130,7 @@ public class CompeticionController {
 		competi.setInicio(inicio);
 		competi.setFecha(fecha);
 		competi.setHayCancelacion(hayCancelacion);
-		competi.setPorcentaje(porcentaje);
+		competi.setPorcentajeDevuelto(porcentaje);
 		competi.setFechaLimite(fechaLimite);
 		competi.setDorsalesReservados(dorsalesReservados);
 		

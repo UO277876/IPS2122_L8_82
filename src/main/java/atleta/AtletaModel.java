@@ -41,13 +41,6 @@ public class AtletaModel {
 				Util.isoStringToDate(atleta.getFechaNacimiento()), atleta.getDni());
 	}
 	
-	public void añadirAtletaFechaSinModificar(AtletaDTO atleta) {
-		validateNotNull(atleta,"El atleta no puede ser null");
-		
-		db.executeUpdate(añadir_atleta, atleta.getEmail(), atleta.getGenero(), atleta.getNombre(), atleta.getApellidos(),
-				atleta.getFechaNacimiento(), atleta.getDni());
-	}
-	
 	public List<AtletaDTO> getAtletas(){
 		List<AtletaDTO> result = db.executeQueryPojo(AtletaDTO.class, obtener_todos_los_atletas);
 		return result;
