@@ -16,6 +16,7 @@ import giis.demo.tkrun.CarrerasModel;
 import giis.demo.tkrun.CarrerasView;
 import inscripcion.ClasificacionesView;
 import inscripcion.InscripcionView;
+import resultados.ResultadosView;
 
 /**
  * Punto de entrada principal que incluye botones para la ejecucion de las pantallas 
@@ -30,6 +31,7 @@ public class SwingMain {
 	private CompeticionCreacionView ccv;
 	private JFrame frame;
 	private ClasificacionesView cv;
+	private ResultadosView rv;
 	//private CompeticionController cc;
 
 	/**
@@ -143,6 +145,16 @@ public class SwingMain {
 			}
 		});
 		frame.getContentPane().add(btnCrearCompeticion);
+		
+		JButton btnResultados = new JButton("Resultados");
+		btnResultados.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//ccv.setVisible(true);
+				rv = new ResultadosView();
+				rv.setVisible(true);
+			}
+		});
+		frame.getContentPane().add(btnResultados);
 		
 		
 	}

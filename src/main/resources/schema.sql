@@ -75,5 +75,5 @@ create table Resultados(
 	estado String,
 	foreign key(id_competicion) references Competicion(id),
 	foreign key(dorsal) references Inscripcion(dorsal),
-	primary key(id_competicion, dosal)
+	primary key(id_competicion, dorsal)
 );
