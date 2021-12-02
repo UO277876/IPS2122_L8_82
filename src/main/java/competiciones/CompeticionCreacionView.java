@@ -687,7 +687,7 @@ public class CompeticionCreacionView extends JFrame {
 		
 		listado += controlarFecha(getTxFechaLimite().getText(), "fecha de límite de cancelación");
 		
-		if (porcentaje < 0 && porcentaje > 100) {
+		if (porcentaje < 0 || porcentaje > 100) {
 			listado += "> " + "El porcentaje debe ser mayor que 0 y menor que 100" + "\n";
 			correcto = false;
 		}
