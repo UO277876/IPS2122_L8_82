@@ -11,6 +11,7 @@ import javax.swing.JButton;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Color;
 
 public class MetodoDePagoView extends JFrame{
 	
@@ -39,6 +40,7 @@ public class MetodoDePagoView extends JFrame{
 	
 	
 	public MetodoDePagoView(InscripcionController ic, AtletaController ac) {
+		getContentPane().setBackground(Color.WHITE);
 		this.ic = ic;
 		this.ac = ac;
 		this.pagarTarjView = new PagarConTarjetaView(this, ic);
@@ -133,7 +135,7 @@ public class MetodoDePagoView extends JFrame{
 		if (lblFechaInscripcion == null) {
 			lblFechaInscripcion = new JLabel("");
 			lblFechaInscripcion.setFont(new Font("Calibri", Font.PLAIN, 16));
-			lblFechaInscripcion.setBounds(48, 196, 427, 53);
+			lblFechaInscripcion.setBounds(48, 183, 427, 53);
 		}
 		return lblFechaInscripcion;
 	}

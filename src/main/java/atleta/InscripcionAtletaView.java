@@ -15,6 +15,7 @@ import inscripcion.InscripcionController;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Color;
 
 @SuppressWarnings("serial")
 public class InscripcionAtletaView extends JFrame {
@@ -50,6 +51,7 @@ public class InscripcionAtletaView extends JFrame {
 	private JPanel getPanel() {
 		if (panel == null) {
 			panel = new JPanel();
+			panel.setBackground(Color.WHITE);
 			panel.setLayout(null);
 			panel.add(getLblIndiqueEmail());
 			panel.add(getTxtIndiqueEmail());

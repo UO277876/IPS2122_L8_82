@@ -17,11 +17,22 @@ public class CompeticionModel {
 	private static final String LISTADO_COMPETICIONES = "SELECT * FROM Competicion c WHERE id = ? ";
 	private static final String SQL_GET_LISTA_NOMBRE = "SELECT * from Competicion where nombre = ?";
 	private static final String GET_COMPETICIONES = "SELECT * from Competicion";
-	private static final String INTRODUCIR_COMPETICION_SIN_CANCELACION = "INSERT INTO Competicion(id, inicio, fin, tipo, numPlazas, fecha, nombre, descr, distancia, hayCancelacion, dorsalesReservados) "
-			+ "VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+	//private static final String INTRODUCIR_COMPETICION_SIN_CANCELACION = "INSERT INTO Competicion(id, inicio, fin, tipo, numPlazas, fecha, nombre, descr, distancia, hayCancelacion, dorsalesReservados) "
+	//		+ "VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 
 	private static final String INTRODUCIR_COMPETICION_CON_CANCELACION = "INSERT INTO Competicion(id, inicio, fin, tipo, numPlazas, fecha, nombre, descr, distancia, hayCancelacion, porcentajeDevuelto, fechaLimite, dorsalesReservados) "
 			+ "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+	
+	private static final String UPDATE_PLAZAS = "UPDATE Competicion SET numPlazas = ? WHERE id = ?";
+	
+	/**
+	 * Actualiza las plazas
+	 */
+	public void actualizarPlazas(int id, int plazas) {
+		validateNotNull(id, MSG_ID_NO_NULO);
+
+		db.executeUpdate(UPDATE_PLAZAS, plazas, id);
+	}
 
 	/**
 	 * Obtiene la competición de un solo id
@@ -64,8 +75,8 @@ public class CompeticionModel {
 
 		db.executeUpdate(INTRODUCIR_COMPETICION_CON_CANCELACION, dto.getId(), Util.isoStringToDate(dto.getInicio()),
 				Util.isoStringToDate(dto.getFin()), dto.getTipo(), dto.getNumPlazas(),
-				Util.isoStringToDate(dto.getFecha()), dto.getNombre(), dto.getDescripcion(), dto.getDistancia(),
-				dto.isHayCancelacion(),dto.getPorcentaje(),Util.isoStringToDate(dto.getFechaLimite()), dto.getDorsalesReservados());
+				Util.isoStringToDate(dto.getFecha()), dto.getNombre(), dto.getDescr(), dto.getDistancia(),
+				dto.isHayCancelacion(),dto.getPorcentajeDevuelto(),Util.isoStringToDate(dto.getFechaLimite()), dto.getDorsalesReservados());
 	}
 
 	/**
@@ -73,9 +84,9 @@ public class CompeticionModel {
 	 */
 	public List<CompeticionDTO> getListaCompeticionesName(String name) {
 		validateNotNull(name, MSG_NOMBRE);
-		validateNotEmpty(name, MSG_NOMBRE);
 
 		List<CompeticionDTO> result = db.executeQueryPojo(CompeticionDTO.class, SQL_GET_LISTA_NOMBRE, name);
+		
 		return result;
 	}
 

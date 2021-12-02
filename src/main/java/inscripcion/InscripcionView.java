@@ -24,6 +24,7 @@ public class InscripcionView extends JFrame {
 	private JLabel lbEmail;
 	private JButton btnEmail;
 	private JTextField txEmail;
+	private JButton btnCancelarInscripcion;
 
 	// Otros atributos
 	private InscripcionController ic;
@@ -40,10 +41,29 @@ public class InscripcionView extends JFrame {
 		getContentPane().add(getBtnEmail());
 		getContentPane().add(getTxEmail());
 		getContentPane().add(getScrollPane_1());
+	
+		getContentPane().add(getBtnCancelarIns());
 		setBounds(100, 100, 700, 400);
 
 		// Inicializacion de la clase InscripcionController
 		this.ic = new InscripcionController();
+	}
+	
+	private JButton getBtnCancelarIns() {
+		if (btnCancelarInscripcion == null) {
+			btnCancelarInscripcion = new JButton("Cancelar inscripción");
+			btnCancelarInscripcion.setEnabled(false);
+			btnCancelarInscripcion.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					borrarInscripcion();
+				}
+			});
+			btnCancelarInscripcion.setForeground(Color.WHITE);
+			btnCancelarInscripcion.setFont(new Font("Tahoma", Font.BOLD, 13));
+			btnCancelarInscripcion.setBackground(Color.BLUE);
+			btnCancelarInscripcion.setBounds(451, 63, 190, 21);
+		}
+		return btnCancelarInscripcion;
 	}
 
 	private JLabel getLbEmail() {
@@ -51,7 +71,7 @@ public class InscripcionView extends JFrame {
 			lbEmail = new JLabel("Introduzca el email:");
 			lbEmail.setLabelFor(getTxEmail());
 			lbEmail.setFont(new Font("Tahoma", Font.PLAIN, 15));
-			lbEmail.setBounds(81, 35, 150, 13);
+			lbEmail.setBounds(32, 35, 150, 13);
 		}
 		return lbEmail;
 	}
@@ -61,18 +81,14 @@ public class InscripcionView extends JFrame {
 			btnEmail = new JButton("Aceptar");
 			btnEmail.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					try {
-						listarPorEmail();
-					} catch (ParseException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
+					listarPorEmail();
+					getBtnCancelarIns().setEnabled(true);
 				}
 			});
 			btnEmail.setBackground(new Color(0, 204, 0));
 			btnEmail.setFont(new Font("Tahoma", Font.BOLD, 13));
 			btnEmail.setForeground(Color.WHITE);
-			btnEmail.setBounds(486, 32, 85, 21);
+			btnEmail.setBounds(451, 32, 85, 21);
 		}
 		return btnEmail;
 	}
@@ -80,7 +96,7 @@ public class InscripcionView extends JFrame {
 	private JTextField getTxEmail() {
 		if (txEmail == null) {
 			txEmail = new JTextField();
-			txEmail.setBounds(216, 30, 260, 27);
+			txEmail.setBounds(170, 30, 271, 27);
 			txEmail.setColumns(10);
 		}
 		return txEmail;
@@ -89,7 +105,8 @@ public class InscripcionView extends JFrame {
 	private JScrollPane getScrollPane_1() {
 		if (scrpListado == null) {
 			scrpListado = new JScrollPane();
-			scrpListado.setBounds(81, 99, 546, 255);
+			scrpListado.setBackground(Color.WHITE);
+			scrpListado.setBounds(32, 99, 615, 255);
 			
 			scrpListado.setViewportView(getTbListado());
 		}
@@ -108,7 +125,7 @@ public class InscripcionView extends JFrame {
 	 * Añade pedidos y calcula su precio total
 	 * @throws ParseException 
 	 */
-	private void listarPorEmail() throws ParseException {
+	private void listarPorEmail() {
 		// 1.Verificar que la casilla email no esta vacía
 		if (isVacio()) {
 			JOptionPane.showMessageDialog(null, "Error: Campo email en blanco");
@@ -128,9 +145,74 @@ public class InscripcionView extends JFrame {
 		}
 	}
 	
+	private void borrarInscripcion() {
+		String email = txEmail.getText();	
+		
+		if(!checkNotSelected()) {
+			ListadoDTO dto = getListado();
+			boolean cancelacion = ic.hayCancelacion(dto);
+			
+			if(cancelacion) {
+				if(confirmarCancelacion(dto)) {
+					if(ic.checkEstadoCompeticion(dto)) {
+						double cantidadDevuelta = ic.cancelar(dto, email);
+						crearVentanaCancelacion(cantidadDevuelta);
+						getBtnCancelarIns().setEnabled(false);
+					} else {
+						JOptionPane.showMessageDialog(null, "Solo se puede cancelar donde no se ha participado.");
+					}
+				}
+				
+			} else {
+				JOptionPane.showMessageDialog(null, "La inscripción seleccionada no admite cancelaciones.");
+			}
+			
+		} else {
+			JOptionPane.showMessageDialog(null, "No ha seleccionado inscripción.");
+		}
+	}
+	
+	private void crearVentanaCancelacion(double cantidadDevuelta) {
+		CancelacionView vc = new CancelacionView(this,cantidadDevuelta);
+		vc.setLocationRelativeTo(this);
+		vc.setVisible(true);
+	}
+	
+	/**
+	 * Abre una ventana de confirmación para cancelar o no la inscripción
+	 */
+	private boolean confirmarCancelacion(ListadoDTO dto) {
+		boolean yes = false;
+		int resp = JOptionPane.showConfirmDialog(this,  "¿Está seguro de cancelar la inscripción?");
+		if(resp == JOptionPane.YES_OPTION) {
+			yes = true;
+		}
+		return yes;
+	}
+	
+	private ListadoDTO getListado(){
+		String nombre = (String) getTbListado().getValueAt(getTbListado().getSelectedRow(), 0);
+		String estado = (String) getTbListado().getValueAt(getTbListado().getSelectedRow(), 1);
+		String fecha = (String) getTbListado().getValueAt(getTbListado().getSelectedRow(), 2);
+		String hayCancelacion = (String) getTbListado().getValueAt(getTbListado().getSelectedRow(), 3);
+		ListadoDTO listado = new ListadoDTO(nombre, estado, fecha, hayCancelacion);
+		return listado;
+		
+	}
+	
+	private boolean checkNotSelected() {
+		for(int i = 0; i < getTbListado().getRowCount(); i++) {
+			if(getTbListado().isRowSelected(i)) {
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
 	public void getListado(List<ListadoDTO> listadoIns) {
 		TableModel tmodel = SwingUtil.getTableModelFromPojos(listadoIns,
-				new String[] { "nombre", "estado", "fecha" });
+				new String[] { "nombre", "estado", "fecha", "hayCancelacion" });
 		getTbListado().setModel(tmodel);
 		SwingUtil.autoAdjustColumns(getTbListado());
 	}

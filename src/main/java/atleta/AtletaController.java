@@ -68,5 +68,23 @@ public class AtletaController {
 		return false;
 	}
 	
+	public boolean crearAtletaFechaSinModificar(String email, String nombre, String apellidos, String dni, String genero, String edad) {
+		AtletaDTO atleta = new AtletaDTO();
+		atleta.setEmail(email);
+		atleta.setDni(dni);
+		atleta.setFechaNacimiento(edad);
+		atleta.setGenero(genero);
+		atleta.setNombre(nombre);
+		atleta.setApellidos(apellidos);
+		
+		am.añadirAtletaFechaSinModificar(atleta);
+		
+		if(am.getAtletaByEmail(email).size() > 0) {
+			return true;
+		}
+		
+		return false;
+	}
+	
 
 }

@@ -50,6 +50,14 @@ public class InscripcionModel {
 	
 	public static final String SQL_UPDATE_ESTADO_PAGO = 
 			"UPDATE Inscripcion set metodoPago = ? where id_metodoPago = ?";
+	public static final String ELIMINAR_INSCRIPCION = "DELETE FROM Inscripcion WHERE email_atleta = ? and id_competicion = ?";
+	
+	/**
+	 * Elimina una inscripcion
+	 */
+	public void eliminarInscripcion(InscripcionDTO dto) {		
+		db.executeUpdate(ELIMINAR_INSCRIPCION, dto.getEmail_atleta(), dto.getId_competicion());
+	}
 	
 	/**
 	 * Obtiene todas las inscripciones de un atleta mediante el id de una carrera, ordenadas por categoria sexo
@@ -68,6 +76,14 @@ public class InscripcionModel {
 		
 		List<InscripcionDTO> result = db.executeQueryPojo(InscripcionDTO.class, obtener_inscripcion, email, id_competicion);
 		return result.get(0).getId_metodoPago();
+	}
+	
+	public InscripcionDTO getInscripcion(String email, int id_competicion) {
+		validateNotNull(email,MSG_EMAIL_NO_NULO);
+		validateNotNull(id_competicion,MSG_ID_NO_NULO);
+		
+		List<InscripcionDTO> result = db.executeQueryPojo(InscripcionDTO.class, obtener_inscripcion, email, id_competicion);
+		return result.get(0);
 	}
 	
 	/**
