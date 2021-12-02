@@ -9,6 +9,7 @@ public class MetodoDePagoDTO {
 	private int id;
 	private String tipo;
 	private boolean estado;
+	private double cantidad;
 	
 	public MetodoDePagoDTO() {
 		
@@ -18,6 +19,13 @@ public class MetodoDePagoDTO {
 		this.id = id;
 		this.tipo = tipo;
 		this.estado = estado;
+	}
+	
+	public MetodoDePagoDTO(int id, String tipo, boolean estado, double cantidad) {
+		this.id = id;
+		this.tipo = tipo;
+		this.estado = estado;
+		this.cantidad = cantidad;
 	}
 
 	public int getId() {
@@ -44,6 +52,16 @@ public class MetodoDePagoDTO {
 
 	public void setEstado(boolean estado) {
 		this.estado = estado;
+	}
+
+	public double getCantidad() {
+		return cantidad;
+	}
+
+	public void setCantidad(double cantidad) {
+		this.cantidad = cantidad;
 	}		
+	
+	
 
 }

@@ -13,6 +13,7 @@ import javax.swing.DropMode;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Color;
 
 public class PagarConTransferenciaView extends JFrame{
 	private JLabel lblConfirmacionDeRegistro;
@@ -27,6 +28,7 @@ public class PagarConTransferenciaView extends JFrame{
 	private MetodoDePagoView mdpv;
 	
 	public PagarConTransferenciaView(MetodoDePagoView mdpv, InscripcionController ic) {
+		getContentPane().setBackground(Color.WHITE);
 		this.setResizable(false);
 		
 		this.mdpv = mdpv;
@@ -40,34 +42,42 @@ public class PagarConTransferenciaView extends JFrame{
 		getContentPane().add(getBtnAceptar());
 		getContentPane().add(getBtnCancelar());
 		
-		setBounds(100, 100, 460, 400);
+		setBounds(100, 100, 591, 376);
 		
 	}
 	private JLabel getLblConfirmacionDeRegistro() {
 		if (lblConfirmacionDeRegistro == null) {
-			lblConfirmacionDeRegistro = new JLabel("New label");
-			lblConfirmacionDeRegistro.setBounds(44, 37, 45, 13);
+			lblConfirmacionDeRegistro = new JLabel("Para terminar de confirma su registro siga las siguientes instrucciones:");
+			lblConfirmacionDeRegistro.setHorizontalAlignment(SwingConstants.CENTER);
+			lblConfirmacionDeRegistro.setFont(new Font("Calibri", Font.PLAIN, 16));
+			lblConfirmacionDeRegistro.setBounds(44, 37, 501, 28);
 		}
 		return lblConfirmacionDeRegistro;
 	}
 	private JLabel getLblCantidadAPagar() {
 		if (lblCantidadAPagar == null) {
-			lblCantidadAPagar = new JLabel("New label");
-			lblCantidadAPagar.setBounds(44, 82, 45, 13);
+			lblCantidadAPagar = new JLabel("Debe abonar la cantidad de 0.0 euros antes de 48 horas ");
+			lblCantidadAPagar.setHorizontalAlignment(SwingConstants.CENTER);
+			lblCantidadAPagar.setFont(new Font("Calibri", Font.PLAIN, 16));
+			lblCantidadAPagar.setBounds(44, 82, 501, 28);
 		}
 		return lblCantidadAPagar;
 	}
 	private JLabel getLblPlazoParaPagar() {
 		if (lblPlazoParaPagar == null) {
-			lblPlazoParaPagar = new JLabel("New label");
-			lblPlazoParaPagar.setBounds(44, 135, 45, 13);
+			lblPlazoParaPagar = new JLabel("al siguiente numero de cuenta:");
+			lblPlazoParaPagar.setHorizontalAlignment(SwingConstants.CENTER);
+			lblPlazoParaPagar.setFont(new Font("Calibri", Font.PLAIN, 16));
+			lblPlazoParaPagar.setBounds(44, 110, 501, 28);
 		}
 		return lblPlazoParaPagar;
 	}
 	private JLabel getLblNumeroDeCuenta() {
 		if (lblNumeroDeCuenta == null) {
-			lblNumeroDeCuenta = new JLabel("New label");
-			lblNumeroDeCuenta.setBounds(44, 184, 45, 13);
+			lblNumeroDeCuenta = new JLabel("4010 8901 0252 1448");
+			lblNumeroDeCuenta.setFont(new Font("Calibri", Font.PLAIN, 20));
+			lblNumeroDeCuenta.setHorizontalAlignment(SwingConstants.CENTER);
+			lblNumeroDeCuenta.setBounds(44, 184, 501, 51);
 		}
 		return lblNumeroDeCuenta;
 	}
@@ -81,14 +91,14 @@ public class PagarConTransferenciaView extends JFrame{
 					reset();
 				}
 			});
-			btnAceptar.setBounds(341, 232, 85, 21);
+			btnAceptar.setBounds(460, 300, 85, 21);
 		}
 		return btnAceptar;
 	}
 	private JButton getBtnCancelar() {
 		if (btnCancelar == null) {
 			btnCancelar = new JButton("Cancelar");
-			btnCancelar.setBounds(246, 232, 85, 21);
+			btnCancelar.setBounds(365, 300, 85, 21);
 		}
 		return btnCancelar;
 	}

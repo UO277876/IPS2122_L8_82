@@ -30,7 +30,7 @@ public class SwingMain {
 	private CompeticionCreacionView ccv;
 	private JFrame frame;
 	private ClasificacionesView cv;
-	private CompeticionController cc;
+	//private CompeticionController cc;
 
 	/**
 	 * Launch the application.
@@ -101,6 +101,8 @@ public class SwingMain {
 		JButton btnClasificaciones = new JButton("Clasificaciones");
 		btnClasificaciones.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				//cv.setVisible(true);
+				cv = new ClasificacionesView();
 				cv.setVisible(true);
 			}
 		});
@@ -117,6 +119,8 @@ public class SwingMain {
 		JButton btnListadoIns = new JButton("Listado de inscripciones");
 		btnListadoIns.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				//iiv.setVisible(true);
+				iiv = new InscripcionView();
 				iiv.setVisible(true);
 			}
 		});
@@ -133,6 +137,8 @@ public class SwingMain {
 		JButton btnCrearCompeticion = new JButton("Crear Competición");
 		btnCrearCompeticion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				//ccv.setVisible(true);
+				ccv = new CompeticionCreacionView();
 				ccv.setVisible(true);
 			}
 		});

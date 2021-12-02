@@ -18,6 +18,7 @@ import javax.swing.border.EmptyBorder;
 
 import atleta.InscripcionAtletaView;
 import detallesCompeticion.DetallesCompeticionView;
+import formularioclubs.PreFormularioView;
 
 import java.awt.GridLayout;
 
@@ -40,6 +41,7 @@ public class CompeticionView extends JFrame {
 	private CompeticionController compContr;
 	private JPanel panel;
 	private JButton btnDetallesCompeticion;
+	private JButton btnInscripcionClubs;
 	
 
 	/**
@@ -62,8 +64,7 @@ public class CompeticionView extends JFrame {
 	 * Create the frame.
 	 */
 	public CompeticionView() {
-		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setTitle("Listado de Competiciones");
 		setBounds(100, 100, 656, 475);
 		contentPane = new JPanel();
 		contentPane.setForeground(Color.WHITE);
@@ -169,9 +170,10 @@ public class CompeticionView extends JFrame {
 	private JPanel getPanel() {
 		if (panel == null) {
 			panel = new JPanel();
-			panel.setLayout(new GridLayout(0, 2, 0, 0));
+			panel.setLayout(new GridLayout(0, 3, 0, 0));
 			panel.add(getBtnDetallesCompeticion());
 			panel.add(getBtnTablaCarrerasForContentPane());
+			panel.add(getBtnInscripcionClubs());
 		}
 		return panel;
 	}
@@ -208,5 +210,30 @@ public class CompeticionView extends JFrame {
 		}
 		
 		return true;
+	}
+	private JButton getBtnInscripcionClubs() {
+		if (btnInscripcionClubs == null) {
+			btnInscripcionClubs = new JButton("Inscripcion para Clubs");
+			btnInscripcionClubs.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					
+					if(checkNotSelected()) {
+						JOptionPane.showMessageDialog(null, "No ha seleccionado ninguna competicion, por favor seleccione una competicion");
+					}
+					else {
+						CompeticionDTO competicion = getCompeticion();
+						if(competicion == null) {
+							JOptionPane.showMessageDialog(null, "No se ha podido encontrar la competición deseada, vuelva a intentarlo.");
+						}
+						else {
+							PreFormularioView pfv = new PreFormularioView(competicion.getId());
+							pfv.setVisible(true);
+						}
+					}
+					
+				}
+			});
+		}
+		return btnInscripcionClubs;
 	}
 }
